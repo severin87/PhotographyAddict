@@ -9,9 +9,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PhotographyAddicted.Web.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PhotographyAddicted.Web.Models;
+using PhotographyAddicted.Web.Areas.Identity.Data;
 
 namespace PhotographyAddicted.Web
 {
@@ -34,11 +35,13 @@ namespace PhotographyAddicted.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDbContext<PhotographyAddictedContext>(options =>
+                     options.UseSqlServer(
+                         this.Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<PhotographyAddictedUser>()
+                .AddEntityFrameworkStores<PhotographyAddictedContext>();
+            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
