@@ -53,7 +53,7 @@ namespace PhotographyAddicted.Web
 
             services.AddResponseCompression(options =>
             {
-                options.Providers.Add<GzipCompressionProvider>();
+                options.EnableForHttps = true;
             });
 
 
