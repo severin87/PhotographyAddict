@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{265C04EA-6588-4FC9-9FF5-20836193E562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotographyAddicted.Web", "PhotographyAddicted.Web\PhotographyAddicted.Web.csproj", "{AD1A5288-EE76-4C9D-8691-08C459997623}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD1A5288-EE76-4C9D-8691-08C459997623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1A5288-EE76-4C9D-8691-08C459997623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1A5288-EE76-4C9D-8691-08C459997623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1A5288-EE76-4C9D-8691-08C459997623}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AD1A5288-EE76-4C9D-8691-08C459997623} = {265C04EA-6588-4FC9-9FF5-20836193E562}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34DE4D9C-DCAB-4448-8A57-195E10EE8AEA}
+	EndGlobalSection
+EndGlobal
