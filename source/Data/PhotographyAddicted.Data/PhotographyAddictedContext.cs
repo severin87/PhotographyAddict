@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PhotographyAddicted.Data.Models;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
 namespace PhotographyAddicted.Web.Models
@@ -16,7 +17,8 @@ namespace PhotographyAddicted.Web.Models
         {
         }
 
-        //public DbSet<PhotographyAddictedUser> photographyAddictedUsers;
+        public DbSet<PhotographyAddictedUser> photographyAddictedUsers { get; set;}
+        public DbSet<Theme> Themes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

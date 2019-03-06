@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\PhotographyAddicted.Data.Common\PhotographyAddicted.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Data\PhotographyAddicted.Data.Models\PhotographyAddicted.Data.Models.csproj" />
+    <ProjectReference Include="..\PhotographyAddicted.Services.Models\PhotographyAddicted.Services.Models.csproj" />
+  </ItemGroup>
+
+</Project>
