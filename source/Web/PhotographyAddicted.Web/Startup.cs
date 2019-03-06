@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PhotographyAddicted.Web.Models;
 using PhotographyAddicted.Web.Areas.Identity.Data;
+using PhotographyAddicted.Data.Common;
+using PhotographyAddicted.Data;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace PhotographyAddicted.Web
 {
@@ -39,11 +42,27 @@ namespace PhotographyAddicted.Web
                      options.UseSqlServer(
                          this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<PhotographyAddictedUser>()
+            services.AddDefaultIdentity<PhotographyAddictedUser>(options =>
+            {
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+            })
                 .AddEntityFrameworkStores<PhotographyAddictedContext>();
-            
+
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+            });
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            //Add IRepository
+
+            services.AddScoped(typeof(IRepository<>),typeof(DbRepository<>));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +80,7 @@ namespace PhotographyAddicted.Web
             }
 
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

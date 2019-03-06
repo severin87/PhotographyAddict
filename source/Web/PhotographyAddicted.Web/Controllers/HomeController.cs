@@ -4,12 +4,21 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PhotographyAddicted.Data.Common;
+using PhotographyAddicted.Web.Areas.Identity.Data;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private IRepository<PhotographyAddictedUser> userInfo;
+
+        public HomeController(IRepository<PhotographyAddictedUser> userInfo)
+        {
+            this.userInfo = userInfo;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -17,7 +26,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = $"Your application has {this.userInfo.All().Count()} users.";
 
             return View();
         }

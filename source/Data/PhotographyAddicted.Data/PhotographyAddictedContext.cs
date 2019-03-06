@@ -16,6 +16,8 @@ namespace PhotographyAddicted.Web.Models
         {
         }
 
+        //public DbSet<PhotographyAddictedUser> photographyAddictedUsers;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
