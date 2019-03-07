@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Data.Common;
+using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.Models.Home;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using PhotographyAddicted.Web.Models;
 
@@ -12,11 +14,11 @@ namespace PhotographyAddicted.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IRepository<PhotographyAddictedUser> userInfo;
+        private readonly IUserService userService;
 
-        public HomeController(IRepository<PhotographyAddictedUser> userInfo)
+        public HomeController(IUserService userService)
         {
-            this.userInfo = userInfo;
+            this.userService = userService;
         }
 
         public IActionResult Index()
@@ -26,16 +28,26 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = $"Your application has {this.userInfo.All().Count()} users.";
+            ViewData["Message"] = $"Your application has {this.userService.GetCount()} users.";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
+            var infos = userService.GetSpecificUser(2);
+
+            var viewModel = new IndexViewModel()
+            {
+                UserInfos = infos
+            };
+
+            return View(viewModel);
+
+            //ViewData["Message"] = "Your contact page.";
+
+            //return View();
         }
 
         public IActionResult Privacy()

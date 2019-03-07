@@ -6,6 +6,6 @@ namespace PhotographyAddicted.Services.Models.Home
 {
     public class IndexViewModel
     {
-        public IEnumerable<UserInfo> UserInfos { get; set; }
+        public IEnumerable<IndexUserViewModel> UserInfos { get; set; }
     }
 }

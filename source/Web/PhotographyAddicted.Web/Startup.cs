@@ -16,6 +16,7 @@ using PhotographyAddicted.Web.Areas.Identity.Data;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data;
 using Microsoft.AspNetCore.ResponseCompression;
+using PhotographyAddicted.Services.DataServices;
 
 namespace PhotographyAddicted.Web
 {
@@ -62,6 +63,7 @@ namespace PhotographyAddicted.Web
             //Add IRepository
 
             services.AddScoped(typeof(IRepository<>),typeof(DbRepository<>));
+            services.AddScoped<IUserService,UserService>();
 
         }
 

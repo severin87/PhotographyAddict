@@ -1,17 +1,44 @@
-﻿@{
+﻿@model PhotographyAddicted.Services.Models.Home.IndexViewModel
+@{
     ViewData["Title"] = "Contact";
 }
 <h2>@ViewData["Title"]</h2>
 <h3>@ViewData["Message"]</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@foreach (var user in Model.UserInfos)
+{   <div class="col-md-4">
+    <h1> @user.Name</h1>
+    <h1> @user.Password</h1>
+    <h1> @user.ThemeTitle</h1>
+    </div>
+    }
 
-<address>
-    <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+    @*<div class="row">
+            @foreach (var user in Model.UserInfos)
+            {
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body>
+                            @user.Name
+                            @user.Password
+                        </div>
+                        <div class="panel-footer>
+                            @user.ThemeTitle
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
+
+
+    @*<address>
+            One Microsoft Way<br />
+            Redmond, WA 98052-6399<br />
+            <abbr title="Phone">P:</abbr>
+            425.555.0100
+        </address>
+
+        <address>
+            <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
+            <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+        </address>*@

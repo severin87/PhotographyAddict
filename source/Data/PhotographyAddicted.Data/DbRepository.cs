@@ -16,13 +16,10 @@ namespace PhotographyAddicted.Data
         private  DbSet<TEntity> dbSet;
 
         public DbRepository(PhotographyAddictedContext context)
-
         {
-
             this.context = context;
 
             this.dbSet = this.context.Set<TEntity>();
-
         }
 
 

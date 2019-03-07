@@ -8,6 +8,8 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface IUserService
     {
-        IEnumerable<IndexViewModel> GetRandomUser(int random);
+        IEnumerable<IndexUserViewModel> GetSpecificUser(int random);
+
+        int GetCount();
     }
 }
