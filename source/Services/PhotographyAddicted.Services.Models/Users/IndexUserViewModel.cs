@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotographyAddicted.Services.Models.Home
+namespace PhotographyAddicted.Services.Models.Users
 {
     public class IndexUserViewModel
     {

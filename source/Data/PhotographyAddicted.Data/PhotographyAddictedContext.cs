@@ -17,7 +17,7 @@ namespace PhotographyAddicted.Web.Models
         {
         }
 
-        public DbSet<PhotographyAddictedUser> photographyAddictedUsers { get; set;}
+        public DbSet<PhotographyAddictedUser> PhotographyAddictedUsers { get; set;}
         public DbSet<Theme> Themes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

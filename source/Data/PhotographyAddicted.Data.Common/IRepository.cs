@@ -15,5 +15,6 @@ namespace PhotographyAddicted.Data.Common
         void Delete(TEntity entity);
 
         Task<int> SaveChangesAsync();
+        
     }
 }

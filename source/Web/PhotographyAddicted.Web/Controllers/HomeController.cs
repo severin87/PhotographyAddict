@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Services.DataServices;
-using PhotographyAddicted.Services.Models.Home;
+using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly IUserService userService;
 

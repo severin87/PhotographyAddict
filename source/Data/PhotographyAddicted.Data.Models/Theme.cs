@@ -11,7 +11,7 @@ namespace PhotographyAddicted.Data.Models
 
         public string Title { get; set; }
 
-       
+        public string AuthorOpinion { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }

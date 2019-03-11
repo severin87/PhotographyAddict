@@ -1,5 +1,5 @@
 ﻿using PhotographyAddicted.Data.Common;
-using PhotographyAddicted.Services.Models.Home;
+using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace PhotographyAddicted.Services.DataServices
         }
 
         public IEnumerable<IndexUserViewModel> GetSpecificUser(int specific)
-        {
+        { 
             var user = userInfo.All()
                 .OrderBy(g => Guid.NewGuid())
                 .Select(

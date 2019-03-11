@@ -1,4 +1,4 @@
-﻿@model PhotographyAddicted.Services.Models.Home.IndexViewModel
+﻿@model PhotographyAddicted.Services.Models.Users.IndexViewModel
 @{
     ViewData["Title"] = "Contact";
 }
@@ -6,12 +6,12 @@
 <h3>@ViewData["Message"]</h3>
 
 @foreach (var user in Model.UserInfos)
-{   <div class="col-md-4">
-    <h1> @user.Name</h1>
-    <h1> @user.Password</h1>
-    <h1> @user.ThemeTitle</h1>
-    </div>
-    }
+{  
+
+            <h1>@user.Name</h1>
+            <h1>@user.ThemeTitle</h1>
+            
+}
 
     @*<div class="row">
             @foreach (var user in Model.UserInfos)

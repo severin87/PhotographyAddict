@@ -64,6 +64,7 @@ namespace PhotographyAddicted.Web
 
             services.AddScoped(typeof(IRepository<>),typeof(DbRepository<>));
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IThemeService, ThemeService>();
 
         }
 

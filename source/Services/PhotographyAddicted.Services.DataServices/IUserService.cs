@@ -1,4 +1,4 @@
-﻿using PhotographyAddicted.Services.Models.Home;
+﻿using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface IUserService
     {
-        IEnumerable<IndexUserViewModel> GetSpecificUser(int random);
+        IEnumerable<IndexUserViewModel> GetSpecificUser(int specific);
 
         int GetCount();
     }
