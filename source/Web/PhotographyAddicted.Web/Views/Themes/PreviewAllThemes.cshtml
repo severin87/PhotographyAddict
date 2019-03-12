@@ -1,18 +1,17 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.ThemesViewModel
+
 @{
     ViewData["Title"] = "PreviewAllThemes";
 }
 
-<h2>PreviewAllThemes</h2>
-
 <h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+
 
 @foreach (var theme in Model.ThemeInfos)
 {
 
     <h1>@theme.Title</h1>
     <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="Details" asp-route-id="@theme.Id">View </a>
-    @*<a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="Details" asp-route-id="">View </a>*@
+
 }
 

@@ -16,6 +16,7 @@
     <ProjectReference Include="..\..\Data\PhotographyAddicted.Data.Models\PhotographyAddicted.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\PhotographyAddicted.Data\PhotographyAddicted.Data.csproj" />
     <ProjectReference Include="..\..\Services\PhotographyAddicted.Services.DataServices\PhotographyAddicted.Services.DataServices.csproj" />
+    <ProjectReference Include="..\..\Services\PhotographyAddicted.Services.Mapping\PhotographyAddicted.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

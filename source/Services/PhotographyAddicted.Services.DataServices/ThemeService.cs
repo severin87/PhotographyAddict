@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
+using PhotographyAddicted.Services.Mapping;
 using PhotographyAddicted.Services.Models.Themes;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
@@ -38,14 +39,9 @@ namespace PhotographyAddicted.Services.DataServices
 
         public IEnumerable<ThemeDetailsViewModel> GetAllThemes()
         {
-            var allThemes = userInfo.All().Include(g => g.PhotographyAddictedUser).Select(x=> new ThemeDetailsViewModel
-            {
-                 AuthorOpinion = x.AuthorOpinion,
-                 Title = x.Title,
-                 UserName = x.PhotographyAddictedUser.UserName,
-                 Id = x.Id,
-            }).ToList();
-            return allThemes;
+            var allThemes = userInfo.All().Include(g => g.PhotographyAddictedUser)
+                .To<ThemeDetailsViewModel>().ToList();
+            return allThemes; //.To<IndexUserViewModel>()
         }
 
         public ThemeDetailsViewModel ViewSpecificTheme(int id)
@@ -54,8 +50,7 @@ namespace PhotographyAddicted.Services.DataServices
             {
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
-                UserName = m.PhotographyAddictedUser.UserName,
-             
+                UserName = m.PhotographyAddictedUser.UserName,             
                 
             }).FirstOrDefault();
                     

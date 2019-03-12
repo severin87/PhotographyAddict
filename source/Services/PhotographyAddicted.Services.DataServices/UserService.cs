@@ -36,7 +36,7 @@ namespace PhotographyAddicted.Services.DataServices
                     ThemeTitle = x.Themes.FirstOrDefault().Title
                 }).Take(specific).ToList();
 
-            return user;
+            return user; 
         }
     }
 }

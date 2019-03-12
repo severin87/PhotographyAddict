@@ -17,6 +17,9 @@ using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.Mapping;
+using PhotographyAddicted.Services.Models.Themes;
+using PhotographyAddicted.Services.Models.Users;
 
 namespace PhotographyAddicted.Web
 {
@@ -24,6 +27,7 @@ namespace PhotographyAddicted.Web
     {
         public Startup(IConfiguration configuration)
         {
+            
             Configuration = configuration;
         }
 
@@ -32,6 +36,9 @@ namespace PhotographyAddicted.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            AutoMapperConfig.RegisterMappings(typeof(ThemesViewModel).Assembly,typeof(CreateThemeInputViewModel).Assembly);
+           
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
