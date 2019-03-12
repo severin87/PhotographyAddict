@@ -12,6 +12,10 @@ namespace PhotographyAddicted.Web.Models
 {
     public class PhotographyAddictedContext : IdentityDbContext<PhotographyAddictedUser>
     {
+
+        public PhotographyAddictedContext()
+        {          
+        }
         public PhotographyAddictedContext(DbContextOptions<PhotographyAddictedContext> options)
             : base(options)
         {
@@ -19,7 +23,7 @@ namespace PhotographyAddicted.Web.Models
 
         public DbSet<PhotographyAddictedUser> PhotographyAddictedUsers { get; set;}
         public DbSet<Theme> Themes { get; set; }
-
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -10,7 +10,7 @@ namespace PhotographyAddicted.Data.Common
 
         Task AddAsync(TEntity entity);
 
-        void Update(TEntity entity);
+        void Update(TEntity currentEntity, TEntity updatedEntity);
 
         void Delete(TEntity entity);
 

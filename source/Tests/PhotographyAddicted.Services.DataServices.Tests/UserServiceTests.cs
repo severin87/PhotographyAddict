@@ -39,12 +39,29 @@ namespace PhotographyAddicted.Services.DataServices.Tests
 
             var dbContext = new PhotographyAddictedContext(options);
 
+            dbContext.Add(new PhotographyAddictedUser() { Id = "blq"});
             dbContext.Add(new PhotographyAddictedUser());
             dbContext.Add(new PhotographyAddictedUser());
-            dbContext.Add(new PhotographyAddictedUser());
+          
+            await dbContext.SaveChangesAsync();
+            dbContext.PhotographyAddictedUsers.Add(new PhotographyAddictedUser());
             await dbContext.SaveChangesAsync();
 
+            var opit = dbContext.PhotographyAddictedUsers.FirstOrDefault(c=>c.Id=="blq");
+            //dbContext.Remove(opit);
+            //await dbContext.SaveChangesAsync();
+
             var repository = new DbRepository<PhotographyAddictedUser>(dbContext);
+            //PhotographyAddictedUser opitProba = new PhotographyAddictedUser() {Id = "veche" };
+            //repository.Update(opit,opitProba);
+            //await repository.SaveChangesAsync();
+
+            var service = new UserService(repository);
+            var count = service.GetCount();
+                       
+            Assert.Equal(4, count);
+            Assert.Equal(2,service.GetSpecificUser(2).Count());
+
         }
     }    
 
