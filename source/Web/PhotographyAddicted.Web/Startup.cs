@@ -75,8 +75,8 @@ namespace PhotographyAddicted.Web
             services.AddScoped<IThemeService, ThemeService>();
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {
-                facebookOptions.AppId = "363629904233822";
-                facebookOptions.AppSecret = "46593054dff5430e7d85941b48e1d77d"
+                facebookOptions.AppId = Configuration["AppId"];
+                facebookOptions.AppSecret = Configuration["AppSecret"];
             });
 
         }
