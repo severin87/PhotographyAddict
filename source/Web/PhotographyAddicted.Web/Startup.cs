@@ -44,13 +44,14 @@ namespace PhotographyAddicted.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+                        
             services.AddDbContext<PhotographyAddictedContext>(options =>
                      options.UseSqlServer(
                          this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<PhotographyAddictedUser>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;

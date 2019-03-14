@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Web.Areas.Identity.Data;
+using PhotographyAddicted.Data.Common;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 {
@@ -47,6 +48,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 
             [Required]
             [EmailAddress]
+          
             [Display(Name = "Email")]
             public string Email { get; set; }
 

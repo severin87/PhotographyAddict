@@ -1,6 +1,7 @@
 ﻿using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PhotographyAddicted.Data.Models
@@ -12,7 +13,7 @@ namespace PhotographyAddicted.Data.Models
         {
             ThemeComments = new HashSet<ThemeComment>();
         }
-
+    
         public int Id { get; set; }
 
         public string Title { get; set; }

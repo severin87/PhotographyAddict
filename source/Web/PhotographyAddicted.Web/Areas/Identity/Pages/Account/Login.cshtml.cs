@@ -69,12 +69,24 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-
+            
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                // It's necessary  when change UserName from email to Username !!!
+
+                var signedUser = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                if (signedUser==null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }                                
+                var result = await _signInManager.PasswordSignInAsync(signedUser.UserName,
+                Input.Password, Input.RememberMe, lockoutOnFailure: true);
+
+                // Can turn it back if you don't want turn UserName to Email !!!
+                //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
