@@ -5,28 +5,28 @@ using System.Text;
 
 namespace PhotographyAddicted.Data.Models
 {
-    public class Theme
+    public class Image
     {
-
-        public Theme()
+        public Image()
         {
-            ThemeComments = new HashSet<ThemeComment>();
+            ImageCommnets = new HashSet<ImageComment>();
         }
 
         public int Id { get; set; }
 
+        public byte[] Picture { get; set; }
+
         public string Title { get; set; }
+
+        public int Scores { get; set; }
 
         public string Category { get; set; }
 
-        public string AuthorOpinion { get; set; }
+        public string Description { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
 
-        public int ComentsCount { get; set; }
-
-        public virtual ICollection<ThemeComment> ThemeComments { get; set; }
-
+        public virtual ICollection<ImageComment> ImageCommnets { get; set; }
     }
 }

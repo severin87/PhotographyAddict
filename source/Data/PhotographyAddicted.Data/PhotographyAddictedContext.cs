@@ -22,7 +22,10 @@ namespace PhotographyAddicted.Web.Models
 
         public DbSet<PhotographyAddictedUser> PhotographyAddictedUsers { get; set;}
         public DbSet<Theme> Themes { get; set; }
-        
+        public DbSet<Image> Images { get; set; }
+        public DbSet<ImageComment> ImageComments { get; set; }
+        public DbSet<ThemeComment> ThemeComments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);            

@@ -10,8 +10,12 @@ namespace PhotographyAddicted.Services.Models.Themes
 
         public int Id { get; set; }
 
+        [Required]
+        [MinLength(4)]
         public string Title { get; set; }
 
+        [Required]
+        [MinLength(15)]
         public string AuthorOpinion { get; set; }
 
     }
