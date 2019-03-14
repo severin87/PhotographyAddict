@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
-using PhotographyAddicted.Services.Mapping;
 using PhotographyAddicted.Services.Models.Themes;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
@@ -15,11 +14,11 @@ namespace PhotographyAddicted.Services.DataServices
     public class ThemeService : IThemeService
     {
 
-        private IRepository<Theme> userInfo;
+        private IRepository<Theme> themeDbSet;
 
-        public ThemeService(IRepository<Theme> userInfo)
+        public ThemeService(IRepository<Theme> themeDbSet)
         {
-            this.userInfo = userInfo;
+            this.themeDbSet = themeDbSet;
         }
 
         public async Task<int> CreateTheme(CreateThemeInputViewModel input)
@@ -31,23 +30,45 @@ namespace PhotographyAddicted.Services.DataServices
                 Title = input.Title
             };
 
-            await userInfo.AddAsync(theme);
-            await userInfo.SaveChangesAsync();
+            await themeDbSet.AddAsync(theme);
+            await themeDbSet.SaveChangesAsync();
 
             return theme.Id;
         }
 
         public IEnumerable<ThemeDetailsViewModel> GetAllThemes()
         {
-            var allThemes = userInfo.All().Include(g => g.PhotographyAddictedUser)
-                .To<ThemeDetailsViewModel>().ToList();
-            return allThemes; //.To<IndexUserViewModel>()
+            var allThemes = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Select(m => new ThemeDetailsViewModel
+            {
+                Id = m.Id,
+                AuthorOpinion = m.AuthorOpinion,
+                Title = m.Title,
+                UserName = m.PhotographyAddictedUser.UserName,
+
+            }).ToList();
+
+            return allThemes;
+
+        }
+
+        public async Task<int> UpdateTheme(UpdateTheme input)
+        {
+            var updateTheme = themeDbSet.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updateTheme.AuthorOpinion = input.AuthorOpinion;
+            updateTheme.Title = input.Title;      
+
+            themeDbSet.Update(updateTheme);
+            await themeDbSet.SaveChangesAsync();
+
+            return updateTheme.Id;
+            // return null;
         }
 
         public ThemeDetailsViewModel ViewSpecificTheme(int id)
         {
-            var specificTheme = userInfo.All().Include(g=>g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
-            {
+            var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
+            {   Id=m.Id,
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
                 UserName = m.PhotographyAddictedUser.UserName,             

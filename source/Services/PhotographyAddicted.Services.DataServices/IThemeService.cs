@@ -14,5 +14,7 @@ namespace PhotographyAddicted.Services.DataServices
         
         IEnumerable<ThemeDetailsViewModel> GetAllThemes();
 
+        Task<int> UpdateTheme(UpdateTheme input);
+
     }
 }

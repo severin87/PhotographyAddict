@@ -1,13 +1,11 @@
-﻿
-using PhotographyAddicted.Data.Models;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace PhotographyAddicted.Services.Models.Themes
 {
-    public class ThemeDetailsViewModel 
+    public class UpdateTheme
     {
         public int Id { get; set; }
 
@@ -15,7 +13,6 @@ namespace PhotographyAddicted.Services.Models.Themes
 
         public string AuthorOpinion { get; set; }
 
-        public string UserName { get; set; }
-
+        //public string PhotographyAddictedUserId { get; set; }
     }
 }

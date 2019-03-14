@@ -19,6 +19,25 @@ namespace PhotographyAddicted.Web.Controllers
             this.themeService = themeService;
         }
 
+        
+        public IActionResult UpdateTheme(int id)
+        {
+            return this.View(id);
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> UpdateTheme(CreateThemeInputViewModel input)
+        //{
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return View(input);
+        //    }
+
+        //    input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    int themeId = await themeService.CreateTheme(input);
+        //    return this.RedirectToAction("Details", new { id = themeId });
+        //}
+
         [Authorize]
         public IActionResult CreateTheme()
         {
@@ -32,6 +51,7 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 return View(input);
             }
+
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int themeId = await themeService.CreateTheme(input);
             return this.RedirectToAction("Details", new { id = themeId });
