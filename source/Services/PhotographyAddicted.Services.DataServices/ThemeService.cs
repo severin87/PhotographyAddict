@@ -56,14 +56,13 @@ namespace PhotographyAddicted.Services.DataServices
             var updateTheme = themeDbSet.All().SingleOrDefault(t => t.Id == input.Id);
 
             updateTheme.AuthorOpinion = input.AuthorOpinion;
-            updateTheme.Title = input.Title;      
+            updateTheme.Title = input.Title;
 
-            themeDbSet.Update(updateTheme);
             await themeDbSet.SaveChangesAsync();
 
             return updateTheme.Id;
-            // return null;
-        }
+     
+        }     
 
         public ThemeDetailsViewModel ViewSpecificTheme(int id)
         {
@@ -75,6 +74,19 @@ namespace PhotographyAddicted.Services.DataServices
                 
             }).FirstOrDefault();
                     
+            return specificTheme;
+        }
+
+        public UpdateTheme ViewUpdateThemeById(int id)
+        {
+            var specificTheme = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m => new UpdateTheme
+            {
+                Id = m.Id,
+                AuthorOpinion = m.AuthorOpinion,
+                Title = m.Title,             
+
+            }).FirstOrDefault();
+
             return specificTheme;
         }
     }

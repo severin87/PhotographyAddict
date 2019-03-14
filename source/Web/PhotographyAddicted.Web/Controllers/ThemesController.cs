@@ -22,21 +22,23 @@ namespace PhotographyAddicted.Web.Controllers
         
         public IActionResult UpdateTheme(int id)
         {
-            return this.View(id);
+            var updatedTheme = this.themeService.ViewUpdateThemeById(id);
+
+            return this.View(updatedTheme);
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> UpdateTheme(CreateThemeInputViewModel input)
-        //{
-        //    if (!this.ModelState.IsValid)
-        //    {
-        //        return View(input);
-        //    }
-
-        //    input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    int themeId = await themeService.CreateTheme(input);
-        //    return this.RedirectToAction("Details", new { id = themeId });
-        //}
+        [HttpPost]
+        public async Task<IActionResult> UpdateTheme(UpdateTheme input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+            
+            int themeId = await themeService.UpdateTheme(input);
+            return this.RedirectToAction("Details", new { id = themeId });
+           
+        }
 
         [Authorize]
         public IActionResult CreateTheme()

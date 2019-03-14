@@ -48,10 +48,10 @@ namespace PhotographyAddicted.Data
             return this.context.SaveChangesAsync();
         }
 
-        public void Update(TEntity updatedEntity)
-        {
-            context.Entry(updatedEntity).State = EntityState.Modified;
-        }
+        //public void Update(TEntity updatedEntity)
+        //{
+        //    context.Entry(updatedEntity).State = EntityState.Modified;
+        //}
 
         //public Task UpdateAsync(TEntity currentEntity, TEntity updatedEntity)
         //{

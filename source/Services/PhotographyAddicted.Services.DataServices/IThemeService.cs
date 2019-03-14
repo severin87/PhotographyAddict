@@ -10,11 +10,15 @@ namespace PhotographyAddicted.Services.DataServices
     {
         Task<int> CreateTheme(CreateThemeInputViewModel input);
 
+        Task<int> UpdateTheme(UpdateTheme input);
+
+        UpdateTheme ViewUpdateThemeById(int id);
+
         ThemeDetailsViewModel ViewSpecificTheme(int id);
         
         IEnumerable<ThemeDetailsViewModel> GetAllThemes();
 
-        Task<int> UpdateTheme(UpdateTheme input);
+        
 
     }
 }
