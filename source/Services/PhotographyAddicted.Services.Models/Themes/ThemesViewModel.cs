@@ -6,6 +6,8 @@ namespace PhotographyAddicted.Services.Models.Themes
 {
     public class ThemesViewModel
     {
+
         public IEnumerable<ThemeDetailsViewModel> ThemeInfos { get; set; }
+
     }
 }

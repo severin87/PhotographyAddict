@@ -12,6 +12,7 @@ namespace PhotographyAddicted.Web.Controllers
 {
     public class ThemesController : BaseController
     {
+
         private IThemeService themeService;
 
         public ThemesController(IThemeService themeService)
@@ -36,8 +37,8 @@ namespace PhotographyAddicted.Web.Controllers
             }
             
             int themeId = await themeService.UpdateTheme(input);
-            return this.RedirectToAction("Details", new { id = themeId });
-           
+
+            return this.RedirectToAction("Details", new { id = themeId });           
         }
 
         [Authorize]
@@ -56,12 +57,14 @@ namespace PhotographyAddicted.Web.Controllers
 
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int themeId = await themeService.CreateTheme(input);
+
             return this.RedirectToAction("Details", new { id = themeId });
         }
 
         public IActionResult Details(int id)
         {
-            var specificTheme = themeService.ViewSpecificTheme(id);
+            var specificTheme = themeService.ViewSpecificDetailsTheme(id);
+
             return this.View(specificTheme);
         }
 
@@ -76,5 +79,6 @@ namespace PhotographyAddicted.Web.Controllers
 
             return View(allThemes);
         }
+
     }
 }

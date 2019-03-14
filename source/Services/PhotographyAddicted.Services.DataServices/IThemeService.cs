@@ -14,11 +14,9 @@ namespace PhotographyAddicted.Services.DataServices
 
         UpdateTheme ViewUpdateThemeById(int id);
 
-        ThemeDetailsViewModel ViewSpecificTheme(int id);
+        ThemeDetailsViewModel ViewSpecificDetailsTheme(int id);
         
-        IEnumerable<ThemeDetailsViewModel> GetAllThemes();
-
-        
+        IEnumerable<ThemeDetailsViewModel> GetAllThemes();        
 
     }
 }

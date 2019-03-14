@@ -7,6 +7,7 @@ namespace PhotographyAddicted.Data.Models
 {
     public class Theme
     {
+
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -14,6 +15,8 @@ namespace PhotographyAddicted.Data.Models
         public string AuthorOpinion { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
+
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
+
     }
 }

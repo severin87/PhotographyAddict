@@ -64,7 +64,7 @@ namespace PhotographyAddicted.Services.DataServices
      
         }     
 
-        public ThemeDetailsViewModel ViewSpecificTheme(int id)
+        public ThemeDetailsViewModel ViewSpecificDetailsTheme(int id)
         {
             var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
             {   Id=m.Id,
@@ -89,5 +89,6 @@ namespace PhotographyAddicted.Services.DataServices
 
             return specificTheme;
         }
+
     }
 }

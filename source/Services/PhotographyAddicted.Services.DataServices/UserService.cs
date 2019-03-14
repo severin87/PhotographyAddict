@@ -10,23 +10,24 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public class UserService : IUserService
     {
-        private IRepository<PhotographyAddictedUser> userInfo;
 
-        public UserService(IRepository<PhotographyAddictedUser> userInfo)
+        private IRepository<PhotographyAddictedUser> userDbset;
+
+        public UserService(IRepository<PhotographyAddictedUser> userDbset)
         {
-            this.userInfo = userInfo;
+            this.userDbset = userDbset;
         }
 
         public int GetCount()
         {
-            int count =this.userInfo.All().Count();
+            int count =this.userDbset.All().Count();
 
             return count;
         }
 
         public IEnumerable<IndexUserViewModel> GetSpecificUser(int specific)
         { 
-            var user = userInfo.All()
+            var user = userDbset.All()
                 .OrderBy(g => Guid.NewGuid())
                 .Select(
                 x => new IndexUserViewModel
@@ -38,5 +39,6 @@ namespace PhotographyAddicted.Services.DataServices
 
             return user; 
         }
+
     }
 }

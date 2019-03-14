@@ -13,29 +13,28 @@ namespace PhotographyAddicted.Data
 
         private PhotographyAddictedContext context;
 
-        private  DbSet<TEntity> dbSet;
+        private  DbSet<TEntity> DbSet;
 
         public DbRepository(PhotographyAddictedContext context)
         {
             this.context = context;
 
-            this.dbSet = this.context.Set<TEntity>();
+            this.DbSet = this.context.Set<TEntity>();
         }
-
 
         public Task AddAsync(TEntity entity)
         {
-            return this.dbSet.AddAsync(entity);
+            return this.DbSet.AddAsync(entity);
         }
 
         public System.Linq.IQueryable<TEntity> All()
         {
-            return this.dbSet;
+            return this.DbSet;
         }
 
         public void Delete(TEntity entity)
         {
-            this.dbSet.Remove(entity);
+            this.DbSet.Remove(entity);
         }
 
         public void Dispose()
@@ -48,18 +47,5 @@ namespace PhotographyAddicted.Data
             return this.context.SaveChangesAsync();
         }
 
-        //public void Update(TEntity updatedEntity)
-        //{
-        //    context.Entry(updatedEntity).State = EntityState.Modified;
-        //}
-
-        //public Task UpdateAsync(TEntity currentEntity, TEntity updatedEntity)
-        //{
-
-        //    var entity =  dbSet.Find(currentEntity);
-        //    entity = updatedEntity;
-        //    //dbSet.Update(entity);
-        //    return this.context.SaveChangesAsync();
-        //}
     }
 }

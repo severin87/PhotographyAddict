@@ -9,6 +9,7 @@ namespace PhotographyAddicted.Services.Models.Themes
 {
     public class ThemeDetailsViewModel 
     {
+
         public int Id { get; set; }
 
         public string Title { get; set; }

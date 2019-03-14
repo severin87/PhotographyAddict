@@ -7,6 +7,7 @@ namespace PhotographyAddicted.Services.Models.Themes
 {
     public class CreateThemeInputViewModel
     {
+
         [Required]
         public string Title { get; set; }
 
@@ -15,5 +16,6 @@ namespace PhotographyAddicted.Services.Models.Themes
         public string AuthorOpinion { get; set; }
      
         public string PhotographyAddictedUserId { get; set; }
+
     }
 }
