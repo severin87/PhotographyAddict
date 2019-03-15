@@ -10,6 +10,8 @@ namespace PhotographyAddicted.Services.DataServices
     {
         IEnumerable<IndexUserViewModel> GetSpecificUser(int specific);
 
+        UserProfileViewModel GetCurrentUserProfile(string id);
+
         int GetCount();
     }
 }
