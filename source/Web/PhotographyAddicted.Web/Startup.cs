@@ -71,6 +71,7 @@ namespace PhotographyAddicted.Web
 
             services.AddScoped(typeof(IRepository<>),typeof(DbRepository<>));
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IThemeService, ThemeService>();
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {

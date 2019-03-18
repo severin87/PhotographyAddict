@@ -55,6 +55,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqne na lubimi snimki i avtori.
         //TODO: tochki na glasa
         //TODO: Suobshteniq
+        //TODO: Technika na vsqka snimka
 
     }
 }
