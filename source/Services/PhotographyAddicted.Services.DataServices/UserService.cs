@@ -1,4 +1,6 @@
-﻿using PhotographyAddicted.Data.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotographyAddicted.Data.Common;
+using PhotographyAddicted.Services.Models.Images;
 using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
@@ -27,7 +29,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         public UserProfileViewModel GetCurrentUserProfile(string id)
         {
-            var user = userDbset.All().Where(i => i.Id == id).Select(u =>
+            var user = userDbset.All().Include(i => i.Images).Where(i => i.Id == id).Select(u =>
             new UserProfileViewModel
             {
                 UserName = u.UserName,
@@ -41,6 +43,7 @@ namespace PhotographyAddicted.Services.DataServices
                 LastLogin = u.LastLogin,
                 Blocked = u.Blocked,
                 IsBanned = u.IsBanned,
+                Images = u.Images
             }).FirstOrDefault();
                                                           
                 return user;
@@ -48,7 +51,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         public IEnumerable<IndexUserViewModel> GetSpecificUser(int specific)
         { 
-            var user = userDbset.All()
+            var users = userDbset.All()
                 .OrderBy(g => Guid.NewGuid())
                 .Select(
                 x => new IndexUserViewModel
@@ -58,8 +61,22 @@ namespace PhotographyAddicted.Services.DataServices
                     ThemeTitle = x.Themes.FirstOrDefault().Title
                 }).Take(specific).ToList();
 
-            return user; 
+            return users; 
         }
 
+        public IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id)
+        {
+            var photos = userDbset.All().Include(i => i.Images)
+                 .Where(i => i.Id == id).SelectMany(l => l.Images)
+                 .Select(
+                 x => new ImagePreviewViewModel
+                 {
+                     Title = x.Title,
+                     Scores = x.Scores,
+                     Picture = x.Picture,
+                 }).Take(20).ToList();
+
+            return photos;
+        }
     }
 }

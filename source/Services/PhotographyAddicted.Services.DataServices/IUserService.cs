@@ -1,4 +1,5 @@
-﻿using PhotographyAddicted.Services.Models.Users;
+﻿using PhotographyAddicted.Services.Models.Images;
+using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace PhotographyAddicted.Services.DataServices
         IEnumerable<IndexUserViewModel> GetSpecificUser(int specific);
 
         UserProfileViewModel GetCurrentUserProfile(string id);
+
+        IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id);
 
         int GetCount();
     }

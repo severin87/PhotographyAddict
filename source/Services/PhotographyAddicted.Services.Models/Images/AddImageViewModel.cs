@@ -15,6 +15,8 @@ namespace PhotographyAddicted.Services.Models.Images
 
         public string Description { get; set; }
 
+        public DateTime UploadedDate { get; set; }
+
         public string PhotographyAddictedUserId { get; set; }
 
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }

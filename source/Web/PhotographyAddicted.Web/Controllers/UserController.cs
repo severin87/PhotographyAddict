@@ -21,6 +21,7 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult ViewUserProfile()
         {
             var userProfile = userService.GetCurrentUserProfile(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+           
             return View(userProfile);
         }
     }

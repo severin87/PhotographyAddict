@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotographyAddicted.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -30,6 +31,8 @@ namespace PhotographyAddicted.Services.Models.Users
         // public string Role { get; set; }
 
         public string Rang { get; set; }
+               
+        public virtual ICollection<Image> Images { get; set; }
 
     }
 }

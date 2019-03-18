@@ -14,6 +14,8 @@ namespace PhotographyAddicted.Data.Models
 
         public int Id { get; set; }
 
+        public DateTime UploadedDate { get; set; }
+
         public byte[] Picture { get; set; }
 
         public string Title { get; set; }

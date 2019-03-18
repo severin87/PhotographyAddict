@@ -27,8 +27,9 @@ namespace PhotographyAddicted.Services.DataServices
                 Title = input.Title,
                 Picture = input.Picture,
                 Category = input.Category,
-                Description = input.Description,     
-                PhotographyAddictedUserId =input.PhotographyAddictedUserId,
+                Description = input.Description,
+                PhotographyAddictedUserId = input.PhotographyAddictedUserId,
+                UploadedDate = DateTime.UtcNow,
             };
             await imageInfo.AddAsync(newImage);
             await imageInfo.SaveChangesAsync();
