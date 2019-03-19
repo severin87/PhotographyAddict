@@ -10,19 +10,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Web.Areas.Identity.Data;
+using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.Models.Users;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly IUserService userService;
         private readonly SignInManager<PhotographyAddictedUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<PhotographyAddictedUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<PhotographyAddictedUser> signInManager, IUserService userService, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
             _logger = logger;
+            this.userService = userService;
         }
 
         [BindProperty]
@@ -47,6 +51,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
+
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -81,14 +86,18 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
-                }                                
-                var result = await _signInManager.PasswordSignInAsync(signedUser.UserName,
-                Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                }
+
+                signedUser.LastLogin = DateTime.UtcNow;
+
+                var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, 
+                Input.Password, Input.RememberMe,  lockoutOnFailure: true);
 
                 // Can turn it back if you don't want turn UserName to Email !!!
                 //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
+                    await _signInManager.UserManager.UpdateAsync(signedUser);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

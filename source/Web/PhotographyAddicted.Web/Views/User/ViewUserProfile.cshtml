@@ -39,23 +39,30 @@
                     <dd>
                         @Html.DisplayFor(model => model.UserName)
                     </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.SelfDescription)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.SelfDescription)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Technique)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Technique)
-                    </dd>
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.SelfDescription)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.SelfDescription)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Technique)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Technique)
+                        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.ProfilePicture)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.ProfilePicture)
+                        @if (Model.ProfilePicture != null)
+                        {
+                            <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 130px; height: 70%; width: auto;" />
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => model.ProfilePicture)
+                        }
                     </dd>
                     <dt>
                         @Html.DisplayNameFor(model => model.CreationDate)
@@ -63,12 +70,12 @@
                     <dd>
                         @Html.DisplayFor(model => model.CreationDate)
                     </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Blocked)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Blocked)
-                    </dd>
+                    @*<dt>
+                            @Html.DisplayNameFor(model => model.Blocked)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Blocked)
+                        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.LastLogin)
                     </dt>
@@ -87,12 +94,12 @@
                     <dd>
                         @Html.DisplayFor(model => model.AverageScore)
                     </dd>
-                    <dt>
+                    @*<dt>
                         @Html.DisplayNameFor(model => model.IsBanned)
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.IsBanned)
-                    </dd>
+                    </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.Rang)
                     </dt>
@@ -101,6 +108,14 @@
                     </dd>
                 </dl>
             </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <div>
                 <a asp-controller="Image" asp-action="AddImage">Add image !!!</a> |
                 <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
@@ -115,23 +130,34 @@
                     foreach (var item in Model.Images.OrderByDescending(p => p.UploadedDate).Take(10))
                     {
                         if (item.Picture != null)
-                        {                  
+                        {
                             <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                            @item.Scores                     
+                            @item.Scores
                         }
                     }
                 }
             </div>
         </div>
-    </div>   
+    </div>
     <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <hr />
+    <div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.SelfDescription)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.SelfDescription)
+            </dd>
+            <br>
+            <dt>
+                @Html.DisplayNameFor(model => model.Technique)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Technique)
+            </dd>
+        </dl>
+    </div>
+
 </body>
 

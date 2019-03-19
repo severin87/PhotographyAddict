@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.Models.Users;
 
 namespace PhotographyAddicted.Web.Controllers
 {
@@ -23,6 +26,29 @@ namespace PhotographyAddicted.Web.Controllers
             var userProfile = userService.GetCurrentUserProfile(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
            
             return View(userProfile);
+        }
+
+        [Authorize]
+        public IActionResult ChangeProfilePicture()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeProfilePicture( EditUserViewModel input, IFormFile ProfilePicture)
+        {
+            if (ModelState.IsValid)
+            {
+                input.Id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await userService.AddProfilePicture(input, ProfilePicture);
+
+                return RedirectToAction("ViewUserProfile", "User"); //, new { area = "" }
+            }
+            else
+            {
+                return this.View(input); // this.View(sev);
+            }
+
         }
     }
 }
