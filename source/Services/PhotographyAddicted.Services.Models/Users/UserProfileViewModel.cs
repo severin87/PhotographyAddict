@@ -7,6 +7,8 @@ namespace PhotographyAddicted.Services.Models.Users
 {
     public class UserProfileViewModel
     {
+        public string Id { get; set; }
+
         public string UserName { get; set; }
 
         public string SelfDescription { get; set; }

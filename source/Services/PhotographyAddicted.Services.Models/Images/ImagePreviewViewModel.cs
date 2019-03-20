@@ -7,6 +7,7 @@ namespace PhotographyAddicted.Services.Models.Images
 {
     public class ImagePreviewViewModel
     {
+        public int Id { get; set; }
 
         public byte[] Picture { get; set; }
 

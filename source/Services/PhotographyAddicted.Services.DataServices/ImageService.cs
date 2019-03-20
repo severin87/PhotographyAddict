@@ -37,16 +37,33 @@ namespace PhotographyAddicted.Services.DataServices
             return newImage.Id; 
         }
 
+        public ImagePreviewViewModel GetImageById(int imageId)
+        {
+            var currentImage = imageInfo.All().Where(i => i.Id == imageId)
+                .Select(p => new ImagePreviewViewModel
+                {
+                    Id = imageId,
+                    Title = p.Title,
+                    Picture = p.Picture,
+                    Scores = p.Scores,
+                    ImageCategory = p.ImageCategory,
+                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,                 
+                }).FirstOrDefault();
+
+            return currentImage;
+        }
+
         public IEnumerable<ImagePreviewViewModel> GetImagesByUser(string userId)
         {
             var usersImages = imageInfo.All().Where(i => i.PhotographyAddictedUserId == userId)
                 .Select( p => new ImagePreviewViewModel
                 {
+                    Id = p.Id,
                     Title = p.Title,
                     Picture = p.Picture,
                     Scores = p.Scores,
                     ImageCategory = p.ImageCategory,
-                     
+                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,                     
                 })
                 .ToList();
 

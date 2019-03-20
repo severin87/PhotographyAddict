@@ -45,6 +45,7 @@ namespace PhotographyAddicted.Services.DataServices
             var user = userDbset.All().Include(i => i.Images).Where(i => i.Id == id).Select(u =>
             new UserProfileViewModel
             {
+                Id = u.Id,
                 UserName = u.UserName,
                 ProfilePicture = u.ProfilePicture,
                 Technique = u.Technique,

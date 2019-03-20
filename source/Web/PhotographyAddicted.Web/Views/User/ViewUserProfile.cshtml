@@ -40,17 +40,17 @@
                         @Html.DisplayFor(model => model.UserName)
                     </dd>
                     @*<dt>
-                            @Html.DisplayNameFor(model => model.SelfDescription)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.SelfDescription)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Technique)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Technique)
-                        </dd>*@
+            @Html.DisplayNameFor(model => model.SelfDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelfDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Technique)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Technique)
+        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.ProfilePicture)
                     </dt>
@@ -71,11 +71,11 @@
                         @Html.DisplayFor(model => model.CreationDate)
                     </dd>
                     @*<dt>
-                            @Html.DisplayNameFor(model => model.Blocked)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Blocked)
-                        </dd>*@
+            @Html.DisplayNameFor(model => model.Blocked)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Blocked)
+        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.LastLogin)
                     </dt>
@@ -95,16 +95,22 @@
                         @Html.DisplayFor(model => model.AverageScore)
                     </dd>
                     @*<dt>
-                        @Html.DisplayNameFor(model => model.IsBanned)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.IsBanned)
-                    </dd>*@
+            @Html.DisplayNameFor(model => model.IsBanned)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsBanned)
+        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.Rang)
                     </dt>
                     <dd>
                         @Html.DisplayFor(model => model.Rang)
+                    </dd>
+                    <dt>
+                        @Model.UserName -
+                    </dt>
+                    <dd>
+                        <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="ViewUsersPictures" asp-route-id="@Model.Id">Pictures </a>@*asp-route-id="@Model.Id"*@
                     </dd>
                 </dl>
             </div>
@@ -127,12 +133,11 @@
             <div>
                 @if (Model != null)
                 {
-                    foreach (var item in Model.Images.OrderByDescending(p => p.UploadedDate).Take(10))
+                    foreach (var item in Model.Images.OrderByDescending(p => p.Scores).Take(8))
                     {
                         if (item.Picture != null)
                         {
-                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                            @item.Scores
+                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />                            
                         }
                     }
                 }

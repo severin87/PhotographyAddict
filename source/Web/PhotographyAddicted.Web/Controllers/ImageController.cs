@@ -34,6 +34,24 @@ namespace PhotographyAddicted.Web.Controllers
             return View();
         }
 
+        public IActionResult ViewUsersPictures(string Id)
+        {
+            PreviewUsersImages userPictures = new PreviewUsersImages
+            {
+                PreviewImages = imageService.GetImagesByUser(Id)
+            };
+
+            return View(userPictures);
+        }
+
+        public IActionResult ViewPictureDetails(int id)
+        {
+            int sev = id;
+            var userPictures = imageService.GetImageById(id);
+
+            return View(userPictures);
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddImage(AddImageViewModel input, IFormFile Picture)

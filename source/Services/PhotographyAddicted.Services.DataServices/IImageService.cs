@@ -10,6 +10,8 @@ namespace PhotographyAddicted.Services.DataServices
     {
         IEnumerable<ImagePreviewViewModel> GetImagesByUser(string userId);
 
+        ImagePreviewViewModel GetImageById(int imageId);
+
         Task<int> AddImage (AddImageViewModel input);
     }
 }
