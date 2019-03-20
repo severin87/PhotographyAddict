@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190319224823_FixAllCascadeDeletingProblemsSecondProbe")]
+    partial class FixAllCascadeDeletingProblemsSecondProbe
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,7 +170,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<int?>("ImageId");
+                    b.Property<int>("ImageId");
 
                     b.Property<string>("PhotographyAddictedUserId");
 
@@ -212,7 +214,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<string>("PhotographyAddictedUserId");
 
-                    b.Property<int?>("ThemeId");
+                    b.Property<int>("ThemeId");
 
                     b.Property<string>("UserOpinion");
 
@@ -360,7 +362,8 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("ImageComments")
-                        .HasForeignKey("PhotographyAddictedUserId");
+                        .HasForeignKey("PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>
@@ -375,7 +378,8 @@ namespace PhotographyAddicted.Data.Migrations
                 {
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("ThemeComments")
-                        .HasForeignKey("PhotographyAddictedUserId");
+                        .HasForeignKey("PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("PhotographyAddicted.Data.Models.Theme", "Theme")
                         .WithMany("ThemeComments")

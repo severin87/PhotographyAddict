@@ -11,20 +11,16 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface IUserService
     {
-        IEnumerable<IndexUserViewModel> GetSpecificUser(int specific);
-
+        
         UserProfileViewModel GetCurrentUserProfile(string id);
         
         Task<string> AddProfilePicture(EditUserViewModel input, IFormFile ProfilePicture);
 
         IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id);
 
-        void AddUserLastLogin();
-
-        int UsersImagesCount(string id);
-
         int UsersScores(string id);
 
-        int GetCount();
+        int GetUsersCount();
+
     }
 }

@@ -11,7 +11,7 @@ namespace PhotographyAddicted.Data.Models
 
         public string UserOpinion { get; set; }
 
-        public int ThemeId { get; set; }
+        public int? ThemeId { get; set; }
         public virtual Theme Theme { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }

@@ -28,28 +28,11 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = $"Your application has {this.userService.GetCount()} users.";
+            ViewData["Message"] = $"Your application has {this.userService.GetUsersCount()} users.";
 
             return View();
         }
-
-        public IActionResult Contact()
-        {
-
-            var infos = userService.GetSpecificUser(2);
-
-            var viewModel = new IndexViewModel()
-            {
-                UserInfos = infos
-            };
-
-            return View(viewModel);
-
-            //ViewData["Message"] = "Your contact page.";
-
-            //return View();
-        }
-
+        
         public IActionResult Privacy()
         {
             return View();

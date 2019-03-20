@@ -28,7 +28,38 @@ namespace PhotographyAddicted.Web.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);            
+            base.OnModelCreating(builder);
+
+            builder.Entity<Image>()
+            .HasOne(p => p.PhotographyAddictedUser)
+            .WithMany(b => b.Images)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+            //builder.Entity<ImageComment>()
+            //.HasOne(p => p.PhotographyAddictedUser)
+            //.WithMany(b => b.ImageComments)
+            //.OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<ImageComment>()
+            .HasOne(p => p.Image)
+            .WithMany(b => b.ImageCommnets)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Theme>()
+            .HasOne(p => p.PhotographyAddictedUser)
+            .WithMany(b => b.Themes)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            //builder.Entity<ThemeComment>()
+            //.HasOne(p => p.PhotographyAddictedUser)
+            //.WithMany(b => b.ThemeComments)
+            //.OnDelete(DeleteBehavior.SetNull);
+
+            builder.Entity<ThemeComment>()
+            .HasOne(p => p.Theme)
+            .WithMany(b => b.ThemeComments)
+            .OnDelete(DeleteBehavior.Cascade);
         }
 
     }

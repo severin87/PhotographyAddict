@@ -22,11 +22,9 @@ namespace PhotographyAddicted.Services.DataServices
         {
             this.userDbset = userDbset;
         }
-
         
         public async Task<string> AddProfilePicture( EditUserViewModel input, IFormFile ProfilePicture)
         {
-
             if (ProfilePicture.Length > 0)
             {
                 using (var stream = new MemoryStream())
@@ -40,24 +38,8 @@ namespace PhotographyAddicted.Services.DataServices
             user.ProfilePicture = input.ProfilePicture;
             await userDbset.SaveChangesAsync();
             return user.Id;
-
         }
-
-
-        public void AddUserLastLogin()
-        {
-            
-           
-        }
-
-        
-        public int GetCount()
-        {
-            int count =this.userDbset.All().Count();
-
-            return count;
-        }
-
+                
         public UserProfileViewModel GetCurrentUserProfile(string id)
         {
             var user = userDbset.All().Include(i => i.Images).Where(i => i.Id == id).Select(u =>
@@ -80,21 +62,13 @@ namespace PhotographyAddicted.Services.DataServices
                 return user;
         }
 
-        public IEnumerable<IndexUserViewModel> GetSpecificUser(int specific)
-        { 
-            var users = userDbset.All()
-                .OrderBy(g => Guid.NewGuid())
-                .Select(
-                x => new IndexUserViewModel
-                {
-                    Name = x.UserName,
-                    Password = x.PasswordHash,
-                    ThemeTitle = x.Themes.FirstOrDefault().Title
-                }).Take(specific).ToList();
+        public int GetUsersCount()
+        {
+            int count = this.userDbset.All().Count();
 
-            return users; 
+            return count;
         }
-
+        
         public IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id)
         {
             var photos = userDbset.All().Include(i => i.Images)
@@ -110,34 +84,16 @@ namespace PhotographyAddicted.Services.DataServices
             return photos;
         }
 
-        public int UsersImagesCount(string id)
-        {
-            var usersImages = 0;
-            //try
-            //{
-            //    usersImages = userDbset.All().Include(i => i.Images).Where(i => i.Id == id)
-            //    .Select(c => c.Images).Count();
-            //}
-            //catch (Exception)
-            //{
-
-            //}
-            usersImages = userDbset.All().Include(i => i.Images).Where(i => i.Id == id)
-                .Select(c => c.Images).Count();
-
-            return usersImages;
-        }
-
         public int UsersScores(string id)
         {
-            int userImC = userDbset.All().Include(i => i.Images)
+            int userImagesCount = userDbset.All().Include(i => i.Images)
                    .Where(i => i.Id == id).FirstOrDefault().Images.Count();
             var userScores = 0;
             
-            if (userImC != 0)
+            if (userImagesCount != 0)
             {
                 userScores = (userDbset.All().Include(i => i.Images)
-                .Where(i => i.Id == id).Select(i => i.Images.Sum(s => s.Scores)).Sum())/userImC;
+                .Where(i => i.Id == id).Select(i => i.Images.Sum(s => s.Scores)).Sum())/ userImagesCount;
             }
             else
             {

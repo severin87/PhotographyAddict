@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PhotographyAddicted.Services.DataServices;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
@@ -14,15 +15,20 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<PhotographyAddictedUser> _userManager;
         private readonly SignInManager<PhotographyAddictedUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private IImageCommentService imageComments;
+        private IThemeCommentService themeComments;
 
         public DeletePersonalDataModel(
             UserManager<PhotographyAddictedUser> userManager,
             SignInManager<PhotographyAddictedUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger, IImageCommentService imageComments,
+            IThemeCommentService themeComments)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            this.imageComments =imageComments;
+            this.themeComments = themeComments;
         }
 
         [BindProperty]
@@ -66,7 +72,10 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
-
+            
+            await imageComments.DeleteUserImagesComments(user.Id);
+            await themeComments.DeleteUserThemesComments(user.Id);           
+            
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

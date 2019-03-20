@@ -48,7 +48,6 @@ namespace PhotographyAddicted.Services.DataServices
             }).ToList();
 
             return allThemes;
-
         }
 
         public async Task<int> UpdateTheme(UpdateTheme input)
@@ -60,11 +59,10 @@ namespace PhotographyAddicted.Services.DataServices
 
             await themeDbSet.SaveChangesAsync();
 
-            return updateTheme.Id;
-     
+            return updateTheme.Id;     
         }     
 
-        public ThemeDetailsViewModel ViewSpecificDetailsTheme(int id)
+        public ThemeDetailsViewModel ViewSpecificTheme(int id)
         {
             var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
             {   Id=m.Id,

@@ -13,28 +13,28 @@ namespace PhotographyAddicted.Data
 
         private PhotographyAddictedContext context;
 
-        private  DbSet<TEntity> DbSet;
+        private DbSet<TEntity> dbSet;
 
         public DbRepository(PhotographyAddictedContext context)
         {
             this.context = context;
 
-            this.DbSet = this.context.Set<TEntity>();
+            this.dbSet = this.context.Set<TEntity>();
         }
 
         public Task AddAsync(TEntity entity)
         {
-            return this.DbSet.AddAsync(entity);
+            return this.dbSet.AddAsync(entity);
         }
 
         public System.Linq.IQueryable<TEntity> All()
         {
-            return this.DbSet;
+            return this.dbSet;
         }
 
         public void Delete(TEntity entity)
         {
-            this.DbSet.Remove(entity);
+            this.dbSet.Remove(entity);
         }
 
         public void Dispose()

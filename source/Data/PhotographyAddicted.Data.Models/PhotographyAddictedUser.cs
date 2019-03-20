@@ -56,6 +56,11 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: tochki na glasa
         //TODO: Suobshteniq
         //TODO: Technika na vsqka snimka
+        //TODO: Vkluchvane na CreationDate i na LasLogin za Facebook
+        //TODO: ogranichenie na kacheni snimki za den!!!
+        //TODO:  Da napravq Enumeraciite
+        //TODO:  Cascadno triene!
+        //TODO:  Repair FirstLAstLogin!
 
     }
 }

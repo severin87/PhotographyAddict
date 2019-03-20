@@ -16,6 +16,7 @@ namespace PhotographyAddicted.Web.Controllers
 {
     public class ImageController : BaseController
     {
+
         private readonly IRepository<Image> imageInfo;
 
         private readonly IImageService imageService;
@@ -33,6 +34,7 @@ namespace PhotographyAddicted.Web.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddImage(AddImageViewModel input, IFormFile Picture)
         {
@@ -42,7 +44,7 @@ namespace PhotographyAddicted.Web.Controllers
                     {
                         using (var stream = new MemoryStream())
                         {
-                            await Picture.CopyToAsync(stream);
+                            await Picture.CopyToAsync(stream).ConfigureAwait(false);
                             input.Picture = stream.ToArray();
                         }
                     }

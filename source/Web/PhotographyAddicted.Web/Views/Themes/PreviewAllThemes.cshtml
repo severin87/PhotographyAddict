@@ -6,12 +6,9 @@
 
 <h2>@ViewData["Title"]</h2>
 
-
 @foreach (var theme in Model.ThemeInfos)
 {
-
     <h1>@theme.Title</h1>
-    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="Details" asp-route-id="@theme.Id">View </a>
-
+    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@theme.Id">View </a>
 }
 

@@ -11,6 +11,7 @@ using PhotographyAddicted.Services.Models.Users;
 
 namespace PhotographyAddicted.Web.Controllers
 {
+    [Authorize]
     public class UserController : BaseController
     {
 
@@ -20,15 +21,14 @@ namespace PhotographyAddicted.Web.Controllers
         {
             this.userService = userService;
         }
-
+        
         public IActionResult ViewUserProfile()
         {
             var userProfile = userService.GetCurrentUserProfile(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
            
             return View(userProfile);
         }
-
-        [Authorize]
+        
         public IActionResult ChangeProfilePicture()
         {
             return View();

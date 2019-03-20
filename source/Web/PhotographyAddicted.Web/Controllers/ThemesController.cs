@@ -10,6 +10,7 @@ using PhotographyAddicted.Services.DataServices;
 
 namespace PhotographyAddicted.Web.Controllers
 {
+    [Authorize]
     public class ThemesController : BaseController
     {
 
@@ -38,10 +39,9 @@ namespace PhotographyAddicted.Web.Controllers
             
             int themeId = await themeService.UpdateTheme(input);
 
-            return this.RedirectToAction("Details", new { id = themeId });           
+            return this.RedirectToAction("SpecificTheme", new { id = themeId });           
         }
 
-        [Authorize]
         public IActionResult CreateTheme()
         {
             return this.View();
@@ -58,16 +58,18 @@ namespace PhotographyAddicted.Web.Controllers
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             int themeId = await themeService.CreateTheme(input);
 
-            return this.RedirectToAction("Details", new { id = themeId });
+            return this.RedirectToAction("SpecificTheme", new { id = themeId });
         }
 
-        public IActionResult Details(int id)
+        [AllowAnonymous]
+        public IActionResult SpecificTheme(int id)
         {
-            var specificTheme = themeService.ViewSpecificDetailsTheme(id);
+            var specificTheme = themeService.ViewSpecificTheme(id);
 
             return this.View(specificTheme);
         }
 
+        [AllowAnonymous]
         public IActionResult PreviewAllThemes()
         {
             var themes = themeService.GetAllThemes();
