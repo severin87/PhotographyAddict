@@ -46,10 +46,31 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult ViewPictureDetails(int id)
         {
-            int sev = id;
             var userPictures = imageService.GetImageById(id);
 
             return View(userPictures);
+        }
+
+        [Authorize]
+        public IActionResult EditPictureInfo(int id)
+        {
+            var userPictures = imageService.GetImageById(id);
+
+            return this.View(userPictures);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EditPictureInfo(ImagePreviewViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            int imageId = await imageService.UpdateTheme(input);
+
+            return this.RedirectToAction("ViewPictureDetails", new { id = imageId });
         }
 
         [Authorize]

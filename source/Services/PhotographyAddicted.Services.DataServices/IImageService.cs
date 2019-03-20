@@ -13,5 +13,7 @@ namespace PhotographyAddicted.Services.DataServices
         ImagePreviewViewModel GetImageById(int imageId);
 
         Task<int> AddImage (AddImageViewModel input);
+
+        Task<int> UpdateTheme(ImagePreviewViewModel input);
     }
 }

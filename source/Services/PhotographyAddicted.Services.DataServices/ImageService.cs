@@ -47,10 +47,24 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = p.Picture,
                     Scores = p.Scores,
                     ImageCategory = p.ImageCategory,
-                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,                 
+                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,     
+                    Description =p.Description,
                 }).FirstOrDefault();
 
             return currentImage;
+        }
+
+        public async Task<int> UpdateTheme(ImagePreviewViewModel input)
+        {
+            var updateImageInfo = imageInfo.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updateImageInfo.ImageCategory = input.ImageCategory;
+            updateImageInfo.Title = input.Title;
+            updateImageInfo.Description = input.Description;
+
+            await imageInfo.SaveChangesAsync();
+
+            return updateImageInfo.Id;
         }
 
         public IEnumerable<ImagePreviewViewModel> GetImagesByUser(string userId)
@@ -63,7 +77,7 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = p.Picture,
                     Scores = p.Scores,
                     ImageCategory = p.ImageCategory,
-                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,                     
+                    PhotographyAddictedUserId = p.PhotographyAddictedUserId,
                 })
                 .ToList();
 
