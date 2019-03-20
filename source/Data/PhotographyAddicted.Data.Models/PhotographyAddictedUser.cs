@@ -61,6 +61,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO:  Da napravq Enumeraciite
         //TODO:  Cascadno triene!
         //TODO:  Repair FirstLAstLogin!
+        //TODO: Link ot registraciq kum facebook registraciq
 
     }
 }

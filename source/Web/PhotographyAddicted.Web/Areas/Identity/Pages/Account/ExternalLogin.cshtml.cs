@@ -45,6 +45,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            public DateTime CreationDate { get; } = DateTime.UtcNow;
+
         }
 
         public IActionResult OnGetAsync()
@@ -75,10 +78,16 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
+            
+           
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
             if (result.Succeeded)
             {
+                var signedUser = await _signInManager.UserManager.FindByEmailAsync(info.Principal.FindFirstValue(ClaimTypes.Email));
+                signedUser.LastLogin = DateTime.UtcNow;
+                await _signInManager.UserManager.UpdateAsync(signedUser);
+
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
@@ -115,7 +124,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new PhotographyAddictedUser { UserName = Input.Email, Email = Input.Email };
+                var user = new PhotographyAddictedUser { UserName = Input.Email, Email = Input.Email,
+                    CreationDate = Input.CreationDate, LastLogin = Input.CreationDate,
+                };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
