@@ -1,0 +1,42 @@
+﻿@model PhotographyAddicted.Services.Models.Images.PreviewUsersImages
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "ViewUsersPictures";
+}
+
+<h2>ViewUsersPictures</h2>
+
+<div>
+    <h4>PreviewUsersImages</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+<div>
+
+</div>
+<div>
+    @foreach (var item in Model.PreviewImages)
+    {
+
+        if (item.Picture != null)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+        }
+
+        @item.Scores
+        @item.Title
+        @item.Id
+
+        if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            @*@Html.ActionLink("View", "ViewPictureDetails", "Image", new { Id = item.Id })*@
+            @Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = item.Id })
+            <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="ViewPictureDetails" asp-route-id="@item.Id " >View </a>
+        }
+
+    }
+
+</div>
+<a asp-action="Index">Back to List</a>

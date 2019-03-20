@@ -55,6 +55,11 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult EditPictureInfo(int id)
         {
             var userPictures = imageService.GetImageById(id);
+            if (userPictures.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("ViewPictureDetails", new { id = userPictures.Id });
+            }
+            
 
             return this.View(userPictures);
         }
