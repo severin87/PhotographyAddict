@@ -47,7 +47,6 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             public DateTime CreationDate { get; } = DateTime.UtcNow;
-
         }
 
         public IActionResult OnGetAsync()
