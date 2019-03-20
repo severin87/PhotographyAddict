@@ -59,9 +59,6 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Vkluchvane na CreationDate i na LasLogin za Facebook
         //TODO: ogranichenie na kacheni snimki za den!!!
         //TODO:  Da napravq Enumeraciite
-        //TODO:  Cascadno triene!
-        //TODO:  Repair FirstLAstLogin!
-        //TODO: Link ot registraciq kum facebook registraciq
 
     }
 }

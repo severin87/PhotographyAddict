@@ -18,7 +18,7 @@ namespace PhotographyAddicted.Data.Models
 
         public string Title { get; set; }
 
-        public string Category { get; set; }
+        public ThemeCategory ThemeCategory { get; set; }
 
         public string AuthorOpinion { get; set; }
 

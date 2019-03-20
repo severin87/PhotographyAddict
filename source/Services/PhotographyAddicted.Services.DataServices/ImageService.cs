@@ -26,7 +26,7 @@ namespace PhotographyAddicted.Services.DataServices
             {
                 Title = input.Title,
                 Picture = input.Picture,
-                Category = input.Category,
+                ImageCategory = input.ImageCategory,
                 Description = input.Description,
                 PhotographyAddictedUserId = input.PhotographyAddictedUserId,
                 UploadedDate = DateTime.UtcNow,
@@ -45,6 +45,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Title = p.Title,
                     Picture = p.Picture,
                     Scores = p.Scores,
+                    ImageCategory = p.ImageCategory,
+                     
                 })
                 .ToList();
 

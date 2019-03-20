@@ -12,7 +12,7 @@ namespace PhotographyAddicted.Services.Models.Images
 
         public string Title { get; set; }
 
-        public string Category { get; set; }
+        public ImageCategory ImageCategory { get; set; }
 
         public int Scores { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotographyAddicted.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -17,6 +18,8 @@ namespace PhotographyAddicted.Services.Models.Themes
         public string AuthorOpinion { get; set; }
      
         public string PhotographyAddictedUserId { get; set; }
+
+        public ThemeCategory ThemeCategory { get; set; }
 
     }
 }

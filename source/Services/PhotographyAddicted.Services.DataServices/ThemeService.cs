@@ -27,7 +27,9 @@ namespace PhotographyAddicted.Services.DataServices
             {
                 PhotographyAddictedUserId=input.PhotographyAddictedUserId,
                 AuthorOpinion = input.AuthorOpinion,
-                Title = input.Title
+                Title = input.Title,
+                ThemeCategory = input.ThemeCategory
+                
             };
 
             await themeDbSet.AddAsync(theme);
@@ -44,6 +46,7 @@ namespace PhotographyAddicted.Services.DataServices
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
                 UserName = m.PhotographyAddictedUser.UserName,
+                ThemeCategory = m.ThemeCategory
 
             }).ToList();
 
@@ -56,6 +59,7 @@ namespace PhotographyAddicted.Services.DataServices
 
             updateTheme.AuthorOpinion = input.AuthorOpinion;
             updateTheme.Title = input.Title;
+            updateTheme.ThemeCategory = input.ThemeCategory;
 
             await themeDbSet.SaveChangesAsync();
 
@@ -68,8 +72,8 @@ namespace PhotographyAddicted.Services.DataServices
             {   Id=m.Id,
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
-                UserName = m.PhotographyAddictedUser.UserName,             
-                
+                UserName = m.PhotographyAddictedUser.UserName,
+                ThemeCategory = m.ThemeCategory
             }).FirstOrDefault();
                     
             return specificTheme;
@@ -81,8 +85,8 @@ namespace PhotographyAddicted.Services.DataServices
             {
                 Id = m.Id,
                 AuthorOpinion = m.AuthorOpinion,
-                Title = m.Title,             
-
+                Title = m.Title,
+                ThemeCategory = m.ThemeCategory
             }).FirstOrDefault();
 
             return specificTheme;

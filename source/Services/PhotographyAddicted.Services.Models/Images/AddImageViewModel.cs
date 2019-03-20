@@ -1,4 +1,5 @@
-﻿using PhotographyAddicted.Web.Areas.Identity.Data;
+﻿using PhotographyAddicted.Data.Models;
+using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +14,7 @@ namespace PhotographyAddicted.Services.Models.Images
 
         public string Title { get; set; }
 
-        public string Category { get; set; }
+        public ImageCategory ImageCategory { get; set; }
 
         public string Description { get; set; }
 
@@ -22,5 +23,6 @@ namespace PhotographyAddicted.Services.Models.Images
         public string PhotographyAddictedUserId { get; set; }
 
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
+        
     }
 }

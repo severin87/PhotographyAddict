@@ -22,7 +22,7 @@ namespace PhotographyAddicted.Data.Models
 
         public int Scores { get; set; }
 
-        public string Category { get; set; }
+        public ImageCategory ImageCategory { get; set; }
 
         public string Description { get; set; }
 
