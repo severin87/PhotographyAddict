@@ -26,8 +26,14 @@ namespace PhotographyAddicted.Web.Models
         public DbSet<ImageComment> ImageComments { get; set; }
         public DbSet<ThemeComment> ThemeComments { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
             base.OnModelCreating(builder);
 
             builder.Entity<Image>()

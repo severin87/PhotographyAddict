@@ -21,6 +21,6 @@
 
 @foreach (var comment in Model.ThemeComments)
 {
-    <li> @comment.UserOpinion @comment.PhotographyAddictedUser.UserName </li>
+<li>@comment.PhotographyAddictedUser.UserName : @comment.UserOpinion</li>
 }
 
