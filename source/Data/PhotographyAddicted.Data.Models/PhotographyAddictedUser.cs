@@ -57,6 +57,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Suobshteniq
         //TODO: Technika na vsqka snimka
         //TODO: ogranichenie na kacheni snimki za den!!!
+        //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
+
 
     }
 }

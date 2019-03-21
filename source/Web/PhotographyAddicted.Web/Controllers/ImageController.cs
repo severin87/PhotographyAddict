@@ -58,8 +58,7 @@ namespace PhotographyAddicted.Web.Controllers
             if (userPictures.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("ViewPictureDetails", new { id = userPictures.Id });
-            }
-            
+            }            
 
             return this.View(userPictures);
         }
