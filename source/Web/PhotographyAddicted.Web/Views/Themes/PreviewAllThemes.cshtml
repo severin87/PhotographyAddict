@@ -8,7 +8,7 @@
 
 @foreach (var theme in Model.ThemeInfos)
 {
-    <h1>@theme.Title</h1>
+<h1>@theme.Title - @theme.UserName - @theme.ThemeCategory</h1>
     <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@theme.Id">View </a>
 }
 

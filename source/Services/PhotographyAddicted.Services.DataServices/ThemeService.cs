@@ -68,25 +68,35 @@ namespace PhotographyAddicted.Services.DataServices
 
         public ThemeDetailsViewModel ViewSpecificTheme(int id)
         {
-            var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
-            {   Id=m.Id,
-                AuthorOpinion = m.AuthorOpinion,
-                Title = m.Title,
-                UserName = m.PhotographyAddictedUser.UserName,
-                ThemeCategory = m.ThemeCategory
-            }).FirstOrDefault();
+            var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser)
+                .Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
+                {
+                  Id =m.Id,
+                  AuthorOpinion = m.AuthorOpinion,
+                  Title = m.Title,
+                  UserName = m.PhotographyAddictedUser.UserName,
+                  ThemeCategory = m.ThemeCategory,
+                  PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                  ThemeComments = m.ThemeComments,
+                  PhotographyAddictedUser = m.PhotographyAddictedUser,
+
+                }).FirstOrDefault();
                     
             return specificTheme;
         }
 
         public UpdateTheme ViewUpdateThemeById(int id)
         {
-            var specificTheme = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Where(x => x.Id == id).Select(m => new UpdateTheme
+            var specificTheme = themeDbSet.All().Include(g => g.PhotographyAddictedUser)
+                .Where(x => x.Id == id).Select(m => new UpdateTheme
             {
                 Id = m.Id,
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
-                ThemeCategory = m.ThemeCategory
+                ThemeCategory = m.ThemeCategory,
+                PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+
+                
             }).FirstOrDefault();
 
             return specificTheme;

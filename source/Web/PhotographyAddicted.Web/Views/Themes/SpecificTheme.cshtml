@@ -1,12 +1,26 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.ThemeDetailsViewModel
+@using PhotographyAddicted.Data.Models
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
 @{
     ViewData["Title"] = "SpecificTheme";
 }
 
 <h2>Details</h2>
 
-<h1>@Model.Title</h1>
-<h1>@Model.AuthorOpinion</h1>
-<h1>@Model.UserName</h1>
-<a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
+<h1>
+    @Model.Title - @Model.PhotographyAddictedUser.UserName - @Model.ThemeCategory
+
+    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
+    }
+</h1>
+<h3>@Model.AuthorOpinion</h3>
+
+@foreach (var comment in Model.ThemeComments)
+{
+    <li> @comment.UserOpinion @comment.PhotographyAddictedUser.UserName </li>
+}
 

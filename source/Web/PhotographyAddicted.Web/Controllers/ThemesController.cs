@@ -24,7 +24,13 @@ namespace PhotographyAddicted.Web.Controllers
         
         public IActionResult UpdateTheme(int id)
         {
+
             var updatedTheme = this.themeService.ViewUpdateThemeById(id);
+
+            if (updatedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("SpecificTheme", new { id = updatedTheme.Id });
+            }
 
             return this.View(updatedTheme);
         }

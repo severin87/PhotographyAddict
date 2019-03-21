@@ -21,5 +21,6 @@ namespace PhotographyAddicted.Services.Models.Themes
 
         public ThemeCategory ThemeCategory { get; set; }
 
+        public string PhotographyAddictedUserId { get; set; }
     }
 }
