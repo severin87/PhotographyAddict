@@ -22,6 +22,7 @@ namespace PhotographyAddicted.Web.Controllers
             this.userService = userService;
         }
 
+        [AllowAnonymous]
         public IActionResult PreviewUsers()
         {
             IndexUserProfileViewModel usersProfiles = new IndexUserProfileViewModel
@@ -31,7 +32,8 @@ namespace PhotographyAddicted.Web.Controllers
 
             return View(usersProfiles);
         }
-        
+
+        [AllowAnonymous]
         public IActionResult ViewUserProfile(string Id)
         {
             var userProfile = userService.GetCurrentUserProfile(Id);
