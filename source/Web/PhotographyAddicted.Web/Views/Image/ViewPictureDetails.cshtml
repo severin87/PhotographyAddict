@@ -62,9 +62,10 @@
 </div>
 <div>
     @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-    {
-        @*@Html.ActionLink("View", "ViewPictureDetails", "Image", new { Id = item.Id })*@
-        @Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })
+    {        
+        @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
+        <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="EditPictureInfo" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="DeleteImage" asp-route-id="@Model.Id">Delete</a>
 
     }
     <a asp-action="Index">Back to List</a>

@@ -28,6 +28,33 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [Authorize]
+        public IActionResult DeleteImage(int Id)
+        {
+            var deletedImage = imageService.FindDeletingImageById(Id);
+
+            if (deletedImage.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("ViewUsersPictures", "Image", new { id = deletedImage.PhotographyAddictedUserId });
+            }
+
+            return View(deletedImage);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(DeleteImageViewModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            await imageService.DeleteImage(input);
+            input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return this.RedirectToAction("ViewUsersPictures", "Image", new { id = input.PhotographyAddictedUserId });
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult AddImage()
         {
@@ -55,6 +82,7 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult EditPictureInfo(int id)
         {
             var userPictures = imageService.GetImageById(id);
+
             if (userPictures.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("ViewPictureDetails", new { id = userPictures.Id });

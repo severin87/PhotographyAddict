@@ -69,7 +69,24 @@ namespace PhotographyAddicted.Services.DataServices
 
             return count;
         }
-        
+
+        public IEnumerable<PreviewUsersViewModel> GetUsersInfos()
+        {
+            var usersInfos = userDbset.All().Select(u =>
+            new PreviewUsersViewModel
+            {
+                CreationDate = u.CreationDate,
+                Id = u.Id,
+                ImageCount = u.Images.Count(),
+                LastLogin = u.LastLogin,
+                ProfilePicture = u.ProfilePicture,
+                Rang = u.Rang,
+                UserName = u.UserName,                
+            });
+
+            return usersInfos;
+        }
+
         public IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id)
         {
             var photos = userDbset.All().Include(i => i.Images)

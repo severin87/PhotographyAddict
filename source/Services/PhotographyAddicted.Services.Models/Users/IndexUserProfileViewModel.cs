@@ -4,10 +4,10 @@ using System.Text;
 
 namespace PhotographyAddicted.Services.Models.Users
 {
-    public class IndexViewModel
+    public class IndexUserProfileViewModel
     {
 
-       public IEnumerable<IndexUserViewModel> UserInfos { get; set; }
+       public IEnumerable<PreviewUsersViewModel> UserInfos { get; set; }
 
     }
 }

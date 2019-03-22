@@ -22,5 +22,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         int GetUsersCount();
 
+        IEnumerable<PreviewUsersViewModel> GetUsersInfos();
+
     }
 }

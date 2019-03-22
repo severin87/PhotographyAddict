@@ -83,5 +83,28 @@ namespace PhotographyAddicted.Services.DataServices
 
             return usersImages;            
         }
+
+        public DeleteImageViewModel FindDeletingImageById(int Id)
+        {
+            var image = imageInfo.All().Where(x => x.Id == Id)
+                .Select(d => new DeleteImageViewModel
+                {
+                    Id = d.Id,
+                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                    Title = d.Title,
+                    Picture = d.Picture,
+
+                }).FirstOrDefault();
+
+            return image;
+        }
+
+        public async Task DeleteImage(DeleteImageViewModel input)
+        {
+            var image = imageInfo.All().Where(x => x.Id == input.Id).FirstOrDefault();
+
+            imageInfo.Delete(image);
+            await imageInfo.SaveChangesAsync();
+        }
     }
 }

@@ -28,12 +28,12 @@
         @item.Scores
         @item.Title
         @item.Id
-
+        <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="ViewPictureDetails" asp-route-id="@item.Id ">View </a>
         if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-            @*@Html.ActionLink("View", "ViewPictureDetails", "Image", new { Id = item.Id })*@
-            @Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = item.Id })
-            <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="ViewPictureDetails" asp-route-id="@item.Id " >View </a>
+            @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
+            <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="EditPictureInfo" asp-route-id="@item.Id">Edit</a>            
+            <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
         }
 
     }

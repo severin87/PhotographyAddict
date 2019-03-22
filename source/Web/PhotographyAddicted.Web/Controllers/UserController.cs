@@ -21,6 +21,16 @@ namespace PhotographyAddicted.Web.Controllers
         {
             this.userService = userService;
         }
+
+        public IActionResult PreviewUsers()
+        {
+            IndexUserProfileViewModel usersProfiles = new IndexUserProfileViewModel
+            {
+                UserInfos = userService.GetUsersInfos(),
+            };
+
+            return View(usersProfiles);
+        }
         
         public IActionResult ViewUserProfile()
         {
