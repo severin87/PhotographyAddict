@@ -104,7 +104,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         public int UsersScores(string id)
         {
-            int userImagesCount = userDbset.All().Include(i => i.Images)
+            int userImagesCount = userDbset.All()
                    .Where(i => i.Id == id).FirstOrDefault().Images.Count();
             var userScores = 0;
             

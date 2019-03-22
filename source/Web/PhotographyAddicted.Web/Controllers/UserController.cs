@@ -32,9 +32,9 @@ namespace PhotographyAddicted.Web.Controllers
             return View(usersProfiles);
         }
         
-        public IActionResult ViewUserProfile()
+        public IActionResult ViewUserProfile(string Id)
         {
-            var userProfile = userService.GetCurrentUserProfile(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userProfile = userService.GetCurrentUserProfile(Id);
            
             return View(userProfile);
         }

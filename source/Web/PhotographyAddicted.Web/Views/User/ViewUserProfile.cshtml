@@ -1,4 +1,6 @@
 ﻿@model PhotographyAddicted.Services.Models.Users.UserProfileViewModel
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 
 @{
     ViewData["Title"] = "ViewUserProfile";
@@ -12,13 +14,15 @@
         /* Create three equal columns that floats next to each other */
         .column {
             float: left;
-            width: 25%;               
+            width: 25%;
         }
+
         .columnRight {
             float: left;
             width: 75%;
-            padding: 10px;          
+            padding: 10px;
         }
+
         .row:after {
             content: "";
             display: table;
@@ -40,17 +44,17 @@
                         @Html.DisplayFor(model => model.UserName)
                     </dd>
                     @*<dt>
-            @Html.DisplayNameFor(model => model.SelfDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SelfDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Technique)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Technique)
-        </dd>*@
+                    @Html.DisplayNameFor(model => model.SelfDescription)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.SelfDescription)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Technique)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Technique)
+                </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.ProfilePicture)
                     </dt>
@@ -71,11 +75,11 @@
                         @Html.DisplayFor(model => model.CreationDate)
                     </dd>
                     @*<dt>
-            @Html.DisplayNameFor(model => model.Blocked)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Blocked)
-        </dd>*@
+                    @Html.DisplayNameFor(model => model.Blocked)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Blocked)
+                </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.LastLogin)
                     </dt>
@@ -95,11 +99,11 @@
                         @Html.DisplayFor(model => model.AverageScore)
                     </dd>
                     @*<dt>
-            @Html.DisplayNameFor(model => model.IsBanned)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.IsBanned)
-        </dd>*@
+                    @Html.DisplayNameFor(model => model.IsBanned)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.IsBanned)
+                </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.Rang)
                     </dt>
@@ -122,12 +126,14 @@
             <br>
             <br>
             <br>
-            <div>
-                <a asp-controller="Image" asp-action="AddImage">Add image !!!</a> |
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
-                <a asp-controller="Home" asp-action="Index">Back to Home</a>
-            </div>
-
+            @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <div>
+                   <a asp-controller="Image" asp-action="AddImage">Add image !!!</a> |
+                   <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
+                   <a asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
+            }   
         </div>
         <div class="columnRight">
             <div>
@@ -137,7 +143,7 @@
                     {
                         if (item.Picture != null)
                         {
-                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />                            
+                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
                         }
                     }
                 }

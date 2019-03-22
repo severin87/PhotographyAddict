@@ -27,10 +27,12 @@
 
 @foreach (var comment in Model.ThemeComments)
 {
-    <li>@comment.PhotographyAddictedUser.UserName : @comment.UserOpinion</li>
+<li>
+    @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - 
     @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
     {
         <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
     }
+</li>
 }
 

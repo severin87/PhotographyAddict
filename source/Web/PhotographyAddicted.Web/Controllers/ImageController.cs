@@ -54,12 +54,7 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("ViewUsersPictures", "Image", new { id = input.PhotographyAddictedUserId });
         }
 
-        [Authorize]
-        [HttpGet]
-        public IActionResult AddImage()
-        {
-            return View();
-        }
+        
 
         public IActionResult ViewUsersPictures(string Id)
         {
@@ -106,6 +101,13 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [Authorize]
+        [HttpGet]
+        public IActionResult AddImage()
+        {
+            return View();
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddImage(AddImageViewModel input, IFormFile Picture)
         {
@@ -123,7 +125,7 @@ namespace PhotographyAddicted.Web.Controllers
                 input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var imageId = await imageService.AddImage(input);
 
-                return RedirectToAction("ViewUserProfile", "User"); //, new { area = "" }
+                return RedirectToAction("ViewUserProfile", "User", new { Id = input.PhotographyAddictedUserId }); //, new { area = "" }
             }
             else
             {

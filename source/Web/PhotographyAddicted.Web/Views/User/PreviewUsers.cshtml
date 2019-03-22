@@ -26,7 +26,8 @@
             }
         </a>
         <h4>
-            @user.UserName - @userService.UsersScores(user.Id) - @user.CreationDate
+            @user.UserName - @userService.UsersScores(user.Id) - @user.CreationDate - 
+            <a asp-controller="User" asp-action="ViewUserProfile" asp-route-id="@user.Id">Go to profile!!!</a>
         </h4>
     }
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |

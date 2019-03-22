@@ -59,7 +59,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: ogranichenie na kacheni snimki za den!!!
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
-
+        //TODO: View na snimkite raboti stranno bavno.
 
 
     }
