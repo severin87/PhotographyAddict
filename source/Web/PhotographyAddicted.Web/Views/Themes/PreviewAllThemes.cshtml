@@ -4,7 +4,14 @@
     ViewData["Title"] = "PreviewAllThemes";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>
+    @ViewData["Title"] - 
+@if (this.User.Identity.IsAuthenticated)
+{
+    <a asp-area="" asp-controller="Themes" asp-action="CreateTheme" style="color: orangered">CreateTheme</a>
+    @*<li><a asp-area="" asp-controller="User" asp-action="ViewUserProfile">User Profile</a></li>*@
+}
+</h2>
 
 @foreach (var theme in Model.ThemeInfos)
 {
