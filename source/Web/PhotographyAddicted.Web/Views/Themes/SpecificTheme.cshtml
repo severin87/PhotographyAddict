@@ -16,8 +16,13 @@
     {
         <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
     }
+
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="AddThemeComment" asp-route-id="@Model.Id" >Add coment! </a>
+    }
 </h1>
-<h3>@Model.AuthorOpinion</h3>
+<h3>@Model.UserName : @Model.AuthorOpinion</h3>
 
 @foreach (var comment in Model.ThemeComments)
 {
