@@ -21,7 +21,33 @@ namespace PhotographyAddicted.Web.Controllers
             this.themeService = themeService;
         }
 
-        
+        [Authorize]
+        public IActionResult DeleteTheme(int Id)
+        {
+            var deletedTheme = themeService.FindDeletingThemeById(Id);
+
+            if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("PreviewAllThemes", "Themes");
+            }
+
+            return View(deletedTheme);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteTheme(DeleteThemeViewModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            await themeService.DeleteTheme(input);
+
+            return this.RedirectToAction("PreviewAllThemes", "Themes");
+        }
+
         public IActionResult UpdateTheme(int id)
         {
 

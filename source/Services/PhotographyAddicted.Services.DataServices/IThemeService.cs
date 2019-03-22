@@ -16,7 +16,11 @@ namespace PhotographyAddicted.Services.DataServices
 
         ThemeDetailsViewModel ViewSpecificTheme(int id);
         
-        IEnumerable<ThemeDetailsViewModel> GetAllThemes();        
+        IEnumerable<ThemeDetailsViewModel> GetAllThemes();
+
+        DeleteThemeViewModel FindDeletingThemeById(int Id);
+
+        Task DeleteTheme(DeleteThemeViewModel input);
 
     }
 }

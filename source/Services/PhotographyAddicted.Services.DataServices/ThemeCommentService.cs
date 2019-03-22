@@ -48,7 +48,7 @@ namespace PhotographyAddicted.Services.DataServices
             await themeCommentDbSet.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteThemeComment(DeleteThemeComment input)
+        public async Task<int> DeleteThemeComment(DeleteThemeCommentViewModel input)
         {
             var themeComment = themeCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
             var tempId = (int)themeComment.ThemeId;
@@ -58,10 +58,10 @@ namespace PhotographyAddicted.Services.DataServices
             return tempId;
         }
 
-        public DeleteThemeComment FindThemeCommentById(int Id)
+        public DeleteThemeCommentViewModel FindThemeCommentById(int Id)
         {
             var themeComment = themeCommentDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteThemeComment
+                .Select(d => new DeleteThemeCommentViewModel
                 {
                     Id = d.Id,
                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,

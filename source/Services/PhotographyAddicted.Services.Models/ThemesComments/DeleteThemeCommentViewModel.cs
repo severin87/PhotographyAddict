@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PhotographyAddicted.Services.Models.ThemesComments
 {
-    public class DeleteThemeComment
+    public class DeleteThemeCommentViewModel
     {
         public int Id { get; set; }
 

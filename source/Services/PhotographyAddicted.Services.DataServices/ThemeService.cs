@@ -38,6 +38,30 @@ namespace PhotographyAddicted.Services.DataServices
             return theme.Id;
         }
 
+
+        public async Task DeleteTheme(DeleteThemeViewModel input)
+        {
+            var themeComment = themeDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
+
+            themeDbSet.Delete(themeComment);
+            await themeDbSet.SaveChangesAsync();
+
+        }
+
+
+        public DeleteThemeViewModel FindDeletingThemeById(int Id)
+        {
+            var theme = themeDbSet.All().Where(x => x.Id == Id)
+                .Select(d => new DeleteThemeViewModel
+                {
+                    Id = d.Id,
+                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                    Title = d.Title,
+                }).FirstOrDefault();
+
+            return theme;
+        }
+
         public IEnumerable<ThemeDetailsViewModel> GetAllThemes()
         {
             var allThemes = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Select(m => new ThemeDetailsViewModel

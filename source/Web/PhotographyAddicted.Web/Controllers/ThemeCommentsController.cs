@@ -60,7 +60,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteThemeComment(DeleteThemeComment input)
+        public async Task<IActionResult> DeleteThemeComment(DeleteThemeCommentViewModel input)
         {
             if (!ModelState.IsValid)
             {
