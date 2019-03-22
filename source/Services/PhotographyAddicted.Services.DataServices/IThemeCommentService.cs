@@ -11,5 +11,9 @@ namespace PhotographyAddicted.Services.DataServices
         Task DeleteUserThemesComments(string id);
 
         Task AddThemeComment(AddThemeCommentViewModel input);
+
+        DeleteThemeComment FindThemeCommentById(int Id);
+
+        Task<int> DeleteThemeComment(DeleteThemeComment input);
     }
 }

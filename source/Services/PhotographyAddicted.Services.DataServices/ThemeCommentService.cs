@@ -48,5 +48,28 @@ namespace PhotographyAddicted.Services.DataServices
             await themeCommentDbSet.SaveChangesAsync();
         }
 
+        public async Task<int> DeleteThemeComment(DeleteThemeComment input)
+        {
+            var themeComment = themeCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
+            var tempId = (int)themeComment.ThemeId;
+            themeCommentDbSet.Delete(themeComment);
+            await themeCommentDbSet.SaveChangesAsync();
+
+            return tempId;
+        }
+
+        public DeleteThemeComment FindThemeCommentById(int Id)
+        {
+            var themeComment = themeCommentDbSet.All().Where(x => x.Id == Id)
+                .Select(d => new DeleteThemeComment
+                {
+                    Id = d.Id,
+                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                    ThemeId = d.ThemeId,
+                    UserOpinion = d.UserOpinion,
+                }).FirstOrDefault();
+
+            return themeComment;
+        }
     }
 }

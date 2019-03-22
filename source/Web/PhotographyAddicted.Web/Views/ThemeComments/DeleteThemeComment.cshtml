@@ -1,0 +1,44 @@
+﻿@model PhotographyAddicted.Services.Models.ThemesComments.DeleteThemeComment
+
+@{
+    ViewData["Title"] = "DeleteThemeComment";
+}
+
+<h2>DeleteThemeComment</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DeleteThemeComment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.UserOpinion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserOpinion)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.ThemeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ThemeId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyAddictedUserId)
+        </dt>*@
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyAddictedUserId)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteThemeComment">
+        <input type="submit" value="Delete" class="btn btn-default" /> |        
+        <a asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@Model.ThemeId">Cancel </a>
+    </form>
+</div>

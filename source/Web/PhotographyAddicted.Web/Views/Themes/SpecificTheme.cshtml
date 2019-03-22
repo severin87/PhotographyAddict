@@ -15,17 +15,22 @@
     @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
     {
         <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
+        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@Model.Id">Delete</a>
     }
 
     @if (this.User.Identity.IsAuthenticated)
     {
-        <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="AddThemeComment" asp-route-id="@Model.Id" >Add coment! </a>
+        <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="AddThemeComment" asp-route-id="@Model.Id">Add coment! </a>
     }
 </h1>
 <h3>@Model.UserName : @Model.AuthorOpinion</h3>
 
 @foreach (var comment in Model.ThemeComments)
 {
-<li>@comment.PhotographyAddictedUser.UserName : @comment.UserOpinion</li>
+    <li>@comment.PhotographyAddictedUser.UserName : @comment.UserOpinion</li>
+    @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
+    }
 }
 

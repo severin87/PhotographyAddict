@@ -44,5 +44,32 @@ namespace PhotographyAddicted.Web.Controllers
 
             return this.RedirectToAction("SpecificTheme", "Themes", new { id = input.ThemeId });
         }
+
+        [Authorize]
+        public IActionResult DeleteThemeComment(int Id)
+        {
+            var deletedTheme = themeCommentService.FindThemeCommentById(Id);
+
+            if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("PreviewAllThemes", "Themes");
+            }
+
+            return View(deletedTheme);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteThemeComment(DeleteThemeComment input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            int themeId = await themeCommentService.DeleteThemeComment(input);
+
+            return this.RedirectToAction("SpecificTheme", "Themes", new { id = themeId });
+        }
     }
 }
