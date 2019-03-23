@@ -21,6 +21,8 @@ namespace PhotographyAddicted.Web.Models
         {}
 
         public DbSet<PhotographyAddictedUser> PhotographyAddictedUsers { get; set;}
+        public DbSet<New> News { get; set; }
+        public DbSet<NewComment> NewComments { get; set; }
         public DbSet<Theme> Themes { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<ImageComment> ImageComments { get; set; }

@@ -1,18 +1,12 @@
-﻿using PhotographyAddicted.Web.Areas.Identity.Data;
+﻿using PhotographyAddicted.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotographyAddicted.Data.Models
+namespace PhotographyAddicted.Services.Models.News
 {
-    public class New
+    public class PreviewNewViewModel
     {
-
-        public New()
-        {
-            NewComments = new HashSet<NewComment>();
-        }
-
         public int Id { get; set; }
 
         public string Title { get; set; }
@@ -21,12 +15,11 @@ namespace PhotographyAddicted.Data.Models
 
         public string TextContent { get; set; }
 
-        public DateTime CreationDate { get; set; }
-
         public string PhotographyAddictedUserId { get; set; }
-        public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
 
         public int ComentsCount { get; set; }
+
+        public DateTime CreationDate { get; set; }
 
         public virtual ICollection<NewComment> NewComments { get; set; }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190323213320_AddNew_NewComment")]
+    partial class AddNew_NewComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,54 +181,6 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasIndex("PhotographyAddictedUserId");
 
                     b.ToTable("ImageComments");
-                });
-
-            modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ComentsCount");
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<byte[]>("NewImage");
-
-                    b.Property<string>("PhotographyAddictedUserId");
-
-                    b.Property<string>("TextContent");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PhotographyAddictedUserId");
-
-                    b.ToTable("News");
-                });
-
-            modelBuilder.Entity("PhotographyAddicted.Data.Models.NewComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate");
-
-                    b.Property<int?>("NewId");
-
-                    b.Property<string>("PhotographyAddictedUserId");
-
-                    b.Property<string>("UserOpinion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NewId");
-
-                    b.HasIndex("PhotographyAddictedUserId");
-
-                    b.ToTable("NewComments");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>
@@ -408,24 +362,6 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("ImageComments")
-                        .HasForeignKey("PhotographyAddictedUserId");
-                });
-
-            modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
-                {
-                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
-                        .WithMany()
-                        .HasForeignKey("PhotographyAddictedUserId");
-                });
-
-            modelBuilder.Entity("PhotographyAddicted.Data.Models.NewComment", b =>
-                {
-                    b.HasOne("PhotographyAddicted.Data.Models.New", "New")
-                        .WithMany("NewComments")
-                        .HasForeignKey("NewId");
-
-                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
-                        .WithMany()
                         .HasForeignKey("PhotographyAddictedUserId");
                 });
 

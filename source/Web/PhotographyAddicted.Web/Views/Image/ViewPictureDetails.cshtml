@@ -14,20 +14,18 @@
 <p>
     @Model.Title
 </p>
-<p>
-    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)" style="max-height: 900px; height: 70%; width: auto;" />
-</p>
-
+@*<p>
+    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)" style="max-height: 635px; height: 100%; width: auto;" />
+</p>*@
+<div class="modal-body" id="modal-body" style="cursor: zoom-out; width: 722px; height: 635px;">
+    <img class="img-responsive" style="max-height:100%; position: relative;
+    top: 50%; transform: translateY(-50%);" src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)" >
+</div>
 <div>
     <h4>ImagePreviewViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Picture)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Picture)
-        </dd>
+       
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>

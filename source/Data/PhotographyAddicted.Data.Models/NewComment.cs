@@ -11,6 +11,8 @@ namespace PhotographyAddicted.Data.Models
 
         public string UserOpinion { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public int? NewId { get; set; }
         public virtual New New { get; set; }
 
