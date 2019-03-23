@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PhotographyAddicted.Services.Models\PhotographyAddicted.Services.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserService\" />
+  </ItemGroup>
+
 </Project>

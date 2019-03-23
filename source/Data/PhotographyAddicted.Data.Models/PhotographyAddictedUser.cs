@@ -60,7 +60,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: View na snimkite raboti stranno bavno.
-
-
+        //TODO: Dobavqne na Author and Theme search.
+        //TODO: Da probvam da napravq Generic za proverka na Rolq.
+        
     }
 }

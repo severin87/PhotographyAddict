@@ -75,6 +75,8 @@ namespace PhotographyAddicted.Web
             services.AddScoped<IThemeService, ThemeService>();
             services.AddScoped<IImageCommentService, ImageCommentService>();
             services.AddScoped<IThemeCommentService, ThemeCommentService>();
+            services.AddScoped<INewService, NewService>();
+            services.AddScoped<INewCommentService, NewCommentService>();
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {
                 facebookOptions.AppId = Configuration["AppId"];
