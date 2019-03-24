@@ -24,6 +24,13 @@ namespace PhotographyAddicted.Web.Controllers
             return View();
         }
 
+        public IActionResult ViewSpecificNew(int Id)
+        {
+            var specificNew = newService.ViewSpecificNew(Id);
+
+            return this.View(specificNew);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNew(AddNewViewModel input, IFormFile NewImage)
         {

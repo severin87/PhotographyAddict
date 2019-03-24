@@ -1,0 +1,33 @@
+﻿@model PhotographyAddicted.Services.Models.News.PreviewNewViewModel
+
+@{
+    ViewData["Title"] = "ViewSpecificNew";
+}
+
+<h2>ViewSpecificNew</h2>
+
+<div>
+    <h4>PreviewNewViewModel</h4>
+    <hr />
+    <h4>
+        <img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
+        @Model.Title - @Model.ComentsCount - @Model.CreationDate
+    </h4>
+    <br>
+    <h4>
+        @Model.TextContent
+    </h4>
+</div>
+<br>
+<div>
+    @foreach (var comment in Model.NewComments)
+    {
+        <h4>
+            @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion
+        </h4>
+    }
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

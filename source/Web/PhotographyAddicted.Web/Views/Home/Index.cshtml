@@ -12,6 +12,8 @@
         <h4>
             <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
             @comment.Title - @comment.ComentsCount
+
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="ViewSpecificNew" asp-route-id="@comment.Id">Check new!</a>
         </h4>
     }
 </div>

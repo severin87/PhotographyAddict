@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
 using PhotographyAddicted.Services.Models.News;
+using PhotographyAddicted.Services.Models.NewsComments;
 
 namespace PhotographyAddicted.Services.DataServices
 {
@@ -51,7 +52,7 @@ namespace PhotographyAddicted.Services.DataServices
              new PreviewNewViewModel
              {
                  CreationDate = u.CreationDate,
-                 ComentsCount = u.ComentsCount,
+                 ComentsCount = u.NewComments.Count(),
                  NewImage = u.NewImage,
                  Title = u.Title,
                  Id = u.Id,
@@ -59,6 +60,25 @@ namespace PhotographyAddicted.Services.DataServices
              });
 
             return news;
+        }
+
+        public PreviewNewViewModel ViewSpecificNew(int id)
+        {
+            var specificNew = newDbSet.All()
+               .Where(x => x.Id == id).Select(m => new PreviewNewViewModel
+               {
+                   Id = m.Id,
+                   Title = m.Title,
+                   PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                   ComentsCount = m.NewComments.Count(),
+                   CreationDate = m.CreationDate,
+                   NewImage = m.NewImage,
+                   NewComments = m.NewComments,
+                   TextContent = m.TextContent,
+
+               }).FirstOrDefault();
+
+            return specificNew;
         }
     }
 }
