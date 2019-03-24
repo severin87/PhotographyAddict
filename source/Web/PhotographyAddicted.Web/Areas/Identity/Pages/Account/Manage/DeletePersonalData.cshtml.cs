@@ -17,18 +17,20 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
         private readonly ILogger<DeletePersonalDataModel> _logger;
         private IImageCommentService imageComments;
         private IThemeCommentService themeComments;
+        private INewCommentService newComments;
 
         public DeletePersonalDataModel(
             UserManager<PhotographyAddictedUser> userManager,
             SignInManager<PhotographyAddictedUser> signInManager,
             ILogger<DeletePersonalDataModel> logger, IImageCommentService imageComments,
-            IThemeCommentService themeComments)
+            IThemeCommentService themeComments, INewCommentService newComments)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             this.imageComments =imageComments;
             this.themeComments = themeComments;
+            this.newComments = newComments;
         }
 
         [BindProperty]
@@ -74,7 +76,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
             }
             
             await imageComments.DeleteUserImagesComments(user.Id);
-            await themeComments.DeleteUserThemesComments(user.Id);           
+            await themeComments.DeleteUserThemesComments(user.Id);
+            await newComments.DeleteUserNewComments(user.Id);
             
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);

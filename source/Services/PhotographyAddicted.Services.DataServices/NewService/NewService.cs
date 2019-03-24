@@ -46,6 +46,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         }
 
+
         public IEnumerable<PreviewNewViewModel> PreviewAllNews()
         {
             var news = newDbSet.All().Select(u => 

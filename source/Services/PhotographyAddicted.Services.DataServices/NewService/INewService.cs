@@ -15,5 +15,7 @@ namespace PhotographyAddicted.Services.DataServices
         IEnumerable<PreviewNewViewModel> PreviewAllNews();
 
         PreviewNewViewModel ViewSpecificNew(int id);
+
+        
     }
 }
