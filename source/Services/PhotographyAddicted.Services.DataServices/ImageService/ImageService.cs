@@ -48,6 +48,7 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = p.Picture,
                     Scores = p.Scores,
                     ImageCategory = p.ImageCategory,
+                    PhotographyAddictedUser = p.PhotographyAddictedUser,
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,     
                     Description =p.Description,
                     ImageComments =p.ImageComments,

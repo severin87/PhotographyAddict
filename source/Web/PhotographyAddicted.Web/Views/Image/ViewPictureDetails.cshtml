@@ -1,4 +1,5 @@
 ﻿@model PhotographyAddicted.Services.Models.Images.ImagePreviewViewModel
+
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
 
@@ -12,7 +13,7 @@
     @Model.ImageCategory
 </p>
 <p>
-    @Model.Title
+    @Model.Title - @Model.PhotographyAddictedUser.UserName
 </p>
 
 <div class="modal-body" id="modal-body" style="cursor: zoom-out; width: 722px; height: 635px;">
@@ -57,10 +58,10 @@
     </dl>
 </div>
 <div>
-  @if (this.User.Identity.IsAuthenticated)
-   {
-     <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="AddImageComment" asp-route-id="@Model.Id">Add coment! </a>
-   }
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="AddImageComment" asp-route-id="@Model.Id">Add coment! </a>
+    }
 </div>
 <hr />
 
