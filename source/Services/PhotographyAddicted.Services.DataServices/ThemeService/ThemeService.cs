@@ -70,7 +70,9 @@ namespace PhotographyAddicted.Services.DataServices
                 AuthorOpinion = m.AuthorOpinion,
                 Title = m.Title,
                 UserName = m.PhotographyAddictedUser.UserName,
-                ThemeCategory = m.ThemeCategory
+                ThemeCategory = m.ThemeCategory,
+                ThemeComments = m.ThemeComments,
+
 
             }).ToList();
 

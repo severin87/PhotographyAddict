@@ -21,13 +21,12 @@
     </h4>
 
     <h1>
-        @*@Model.Title - @Model.PhotographyAddictedUser.UserName - @Model.ThemeCategory
 
         @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
-            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@Model.Id">Delete</a>
-        }*@
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@Model.Id">Update </a>
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@Model.Id">Delete</a>
+        }
 
         @if (this.User.Identity.IsAuthenticated)
         {

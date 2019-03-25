@@ -418,18 +418,20 @@ namespace PhotographyAddicted.Data.Migrations
             modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
                 {
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
-                        .WithMany()
-                        .HasForeignKey("PhotographyAddictedUserId");
+                        .WithMany("News")
+                        .HasForeignKey("PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.NewComment", b =>
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.New", "New")
                         .WithMany("NewComments")
-                        .HasForeignKey("NewId");
+                        .HasForeignKey("NewId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
-                        .WithMany()
+                        .WithMany("NewComments")
                         .HasForeignKey("PhotographyAddictedUserId");
                 });
 

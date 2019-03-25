@@ -16,6 +16,12 @@ namespace PhotographyAddicted.Services.DataServices
 
         PreviewNewViewModel ViewSpecificNew(int id);
 
-        
+        DeleteNewViewModel FindNewById(int Id);
+
+        Task DeleteUserNew(DeleteNewViewModel input);
+
+        UpdateNewViewModel FindUpdateNewById(int Id);
+
+        Task<int> UpdateNew(UpdateNewViewModel input);
     }
 }

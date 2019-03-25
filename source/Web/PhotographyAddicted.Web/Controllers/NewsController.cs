@@ -20,6 +20,59 @@ namespace PhotographyAddicted.Web.Controllers
             this.newService = newService;
         }
 
+        public IActionResult UpdateNew(int id)
+        {
+
+            var updatedNew = this.newService.FindUpdateNewById(id);
+
+            if (updatedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("ViewSpecificNew", new { id = updatedNew.Id });
+            }
+
+            return this.View(updatedNew);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateNew(UpdateNewViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            int newId = await newService.UpdateNew(input);
+
+            return this.RedirectToAction("ViewSpecificNew", new { Id = newId });
+        }
+
+        [Authorize]
+        public IActionResult DeleteNew(int Id)
+        {
+            var deletedNew = newService.FindNewById(Id);
+
+            if (deletedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("PreviewAllNews", "News");
+            }
+
+            return View(deletedNew);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteNew(DeleteNewViewModel input)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            await newService.DeleteUserNew(input);
+
+            return this.RedirectToAction("PreviewAllNews", "News");
+        }
+
         public IActionResult PreviewAllNews()
         {
             PreviewAllNewsViewModel allNews = new PreviewAllNewsViewModel()

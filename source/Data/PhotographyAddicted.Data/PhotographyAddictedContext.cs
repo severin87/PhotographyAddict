@@ -38,6 +38,17 @@ namespace PhotographyAddicted.Web.Models
             
             base.OnModelCreating(builder);
 
+            builder.Entity<New>()
+           .HasOne(p => p.PhotographyAddictedUser)
+           .WithMany(b => b.News)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<NewComment>()
+           .HasOne(p => p.New)
+           .WithMany(b => b.NewComments)
+           .OnDelete(DeleteBehavior.Cascade);
+
+
             builder.Entity<Image>()
             .HasOne(p => p.PhotographyAddictedUser)
             .WithMany(b => b.Images)

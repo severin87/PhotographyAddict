@@ -34,6 +34,7 @@ namespace PhotographyAddicted.Services.DataServices
             
             var currentNew = new New
             {
+                Id =input.Id,
                 PhotographyAddictedUserId = input.PhotographyAddictedUserId,
                 NewImage = input.NewImage,
                 Title = input.Title,
@@ -45,7 +46,44 @@ namespace PhotographyAddicted.Services.DataServices
             await newDbSet.SaveChangesAsync();
 
         }
+        
+        public async Task DeleteUserNew(DeleteNewViewModel input)
+        {
+            var userNew = newDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
+            newDbSet.Delete(userNew);
+            await newDbSet.SaveChangesAsync();
+                        
+        }
+        public DeleteNewViewModel FindNewById(int Id)
+    {
+            var userNew = newDbSet.All().Where(x => x.Id == Id)
+                .Select(d => new DeleteNewViewModel
+                {
+                    Id = d.Id,
+                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,                    
+                    NewImage = d.NewImage,
+                    Title = d.Title,
+                    TextContent = d.TextContent,
+                    
+                }).FirstOrDefault();
 
+            return userNew;
+        }
+
+        public UpdateNewViewModel FindUpdateNewById(int Id)
+        {
+            var userNew = newDbSet.All().Where(x => x.Id == Id)
+                 .Select(d => new UpdateNewViewModel
+                 {
+                     Id = d.Id,
+                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                     Title = d.Title,
+                     TextContent = d.TextContent,
+
+                 }).FirstOrDefault();
+
+            return userNew;
+        }
 
         public IEnumerable<PreviewNewViewModel> PreviewAllNews()
         {
@@ -61,6 +99,18 @@ namespace PhotographyAddicted.Services.DataServices
              });
 
             return news;
+        }
+
+        public async Task<int> UpdateNew(UpdateNewViewModel input)
+        {
+            var updateNew = newDbSet.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updateNew.TextContent = input.TextContent;
+            updateNew.Title = input.Title;
+            
+            await newDbSet.SaveChangesAsync();
+
+            return updateNew.Id;
         }
 
         public PreviewNewViewModel ViewSpecificNew(int id)

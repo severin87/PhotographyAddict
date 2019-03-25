@@ -1,5 +1,6 @@
 ﻿@using PhotographyAddicted.Services.DataServices
 @inject INewService  newService
+@inject IThemeService themeService
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,6 +8,10 @@
 
 
 <div>
+    <h1>
+        <a asp-controller="News" asp-action="PreviewAllNews">Preview all News</a>
+        <br>
+    </h1>
     @foreach (var comment in newService.PreviewAllNews().OrderByDescending(x => x.CreationDate).Take(3))
     {
         <h4>
@@ -17,8 +22,22 @@
         </h4>
     }
 </div>
+<hr />
 
-
+<div>
+    <h1>
+        <a asp-controller="Themes" asp-action="PreviewAllThemes">Preview all Themes</a>
+        <br>
+    </h1>
+    @foreach (var comment in themeService.GetAllThemes().OrderByDescending(x => x.Title).Take(3))
+    {
+        <h4>
+            @comment.Title - @comment.ThemeComments.Count()
+            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@comment.Id">Check new!</a>
+        </h4>
+    }
+</div>
+<hr />
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>

@@ -11,6 +11,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
     {
         public PhotographyAddictedUser()
         {
+            News = new HashSet<New>();
+            NewComments = new HashSet<NewComment>();
             Images = new HashSet<Image>();
             ImageComments = new HashSet<ImageComment>();
             Themes = new HashSet<Theme>();
@@ -42,6 +44,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public string Rang { get; set; }
 
+        public virtual ICollection<New> News { get; set; }
+
+        public virtual ICollection<NewComment> NewComments { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
 

@@ -7,7 +7,7 @@ namespace PhotographyAddicted.Services.Models.News
 {
     public class AddNewViewModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
