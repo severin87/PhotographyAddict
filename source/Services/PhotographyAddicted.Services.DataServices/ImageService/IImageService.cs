@@ -14,7 +14,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task<int> AddImage (AddImageViewModel input);
 
-        Task<int> UpdateTheme(ImagePreviewViewModel input);
+        Task<int> UpdateImage(ImagePreviewViewModel input);
 
         DeleteImageViewModel FindDeletingImageById(int Id);
 

@@ -9,7 +9,7 @@ namespace PhotographyAddicted.Data.Models
     {
         public Image()
         {
-            ImageCommnets = new HashSet<ImageComment>();
+            ImageComments = new HashSet<ImageComment>();
         }
 
         public int Id { get; set; }
@@ -29,6 +29,6 @@ namespace PhotographyAddicted.Data.Models
         public string PhotographyAddictedUserId { get; set; }
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
 
-        public virtual ICollection<ImageComment> ImageCommnets { get; set; }
+        public virtual ICollection<ImageComment> ImageComments { get; set; }
     }
 }

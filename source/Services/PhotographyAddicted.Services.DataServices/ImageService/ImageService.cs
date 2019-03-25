@@ -30,6 +30,7 @@ namespace PhotographyAddicted.Services.DataServices
                 Description = input.Description,
                 PhotographyAddictedUserId = input.PhotographyAddictedUserId,
                 UploadedDate = DateTime.UtcNow,
+                
             };
             await imageInfo.AddAsync(newImage);
             await imageInfo.SaveChangesAsync();
@@ -49,12 +50,13 @@ namespace PhotographyAddicted.Services.DataServices
                     ImageCategory = p.ImageCategory,
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,     
                     Description =p.Description,
+                    ImageComments =p.ImageComments,
                 }).FirstOrDefault();
 
             return currentImage;
         }
 
-        public async Task<int> UpdateTheme(ImagePreviewViewModel input)
+        public async Task<int> UpdateImage(ImagePreviewViewModel input)
         {
             var updateImageInfo = imageInfo.All().SingleOrDefault(t => t.Id == input.Id);
 

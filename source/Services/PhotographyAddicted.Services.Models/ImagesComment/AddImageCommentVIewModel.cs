@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotographyAddicted.Data.Models
+namespace PhotographyAddicted.Services.Models.ImagesComment
 {
-    public class ImageComment
+    public class AddImageCommentViewModel
     {
         public int Id { get; set; }
 
@@ -14,9 +14,9 @@ namespace PhotographyAddicted.Data.Models
         public DateTime CreationDate { get; set; }
 
         public int? ImageId { get; set; }
-        public virtual Image Image { get; set; }
+        //public virtual Image Image { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
-        public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
+        //public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
     }
 }

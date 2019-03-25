@@ -95,7 +95,7 @@ namespace PhotographyAddicted.Web.Controllers
                 return View(input);
             }
 
-            int imageId = await imageService.UpdateTheme(input);
+            int imageId = await imageService.UpdateImage(input);
 
             return this.RedirectToAction("ViewPictureDetails", new { id = imageId });
         }

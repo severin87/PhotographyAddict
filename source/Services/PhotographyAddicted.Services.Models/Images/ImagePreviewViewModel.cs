@@ -21,5 +21,7 @@ namespace PhotographyAddicted.Services.Models.Images
 
         public string PhotographyAddictedUserId { get; set; }
 
+        public virtual ICollection<ImageComment> ImageComments { get; set; }
+
     }
 }

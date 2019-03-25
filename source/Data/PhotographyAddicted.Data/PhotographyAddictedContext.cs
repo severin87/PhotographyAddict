@@ -62,7 +62,7 @@ namespace PhotographyAddicted.Web.Models
 
             builder.Entity<ImageComment>()
             .HasOne(p => p.Image)
-            .WithMany(b => b.ImageCommnets)
+            .WithMany(b => b.ImageComments)
             .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Theme>()

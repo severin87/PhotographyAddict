@@ -1,5 +1,6 @@
 ﻿using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
+using PhotographyAddicted.Services.Models.ImagesComment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,21 @@ namespace PhotographyAddicted.Services.DataServices
         public ImageCommentService(IRepository<ImageComment> imageCommentDbSet)
         {
             this.imageCommentDbSet = imageCommentDbSet;
+        }
+
+        public async Task AddImageComment(AddImageCommentViewModel input)
+        {
+            var imageComment = new ImageComment
+            {
+                PhotographyAddictedUserId = input.PhotographyAddictedUserId,
+                ImageId = input.ImageId,
+                UserOpinion = input.UserOpinion,
+                CreationDate = DateTime.UtcNow,
+            };
+
+            await imageCommentDbSet.AddAsync(imageComment);
+            await imageCommentDbSet.SaveChangesAsync();
+
         }
 
         public async Task DeleteUserImagesComments(string id)
