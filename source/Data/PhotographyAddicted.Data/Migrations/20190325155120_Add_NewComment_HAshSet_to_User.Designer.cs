@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190325155120_Add_NewComment_HAshSet_to_User")]
+    partial class Add_NewComment_HAshSet_to_User
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -241,8 +243,6 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<int>("ComentsCount");
 
-                    b.Property<DateTime>("CreationDate");
-
                     b.Property<string>("PhotographyAddictedUserId");
 
                     b.Property<int>("ThemeCategory");
@@ -429,12 +429,12 @@ namespace PhotographyAddicted.Data.Migrations
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.New", "New")
                         .WithMany("NewComments")
-                        .HasForeignKey("NewId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("NewId");
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("NewComments")
-                        .HasForeignKey("PhotographyAddictedUserId");
+                        .HasForeignKey("PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>

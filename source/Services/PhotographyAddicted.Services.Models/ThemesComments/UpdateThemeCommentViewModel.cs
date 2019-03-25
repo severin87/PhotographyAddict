@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotographyAddicted.Services.Models.NewsComments
+namespace PhotographyAddicted.Services.Models.ThemesComments
 {
-    public class UpdateNewComment
+    public class UpdateThemeCommentViewModel
     {
         public int Id { get; set; }
 

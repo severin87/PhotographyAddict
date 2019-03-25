@@ -1,0 +1,45 @@
+﻿@model PhotographyAddicted.Services.Models.News.PreviewAllNewsViewModel
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "PreviewAllNews";
+}
+
+<h2>PreviewAllNews</h2>
+
+<div>
+
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <h4>
+            PreviewAllNewsViewModel -
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="AddNew">AddNew</a>
+        </h4>
+    }
+
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+<div>
+    @foreach (var userNew in Model.PreviewAllNews)
+    {
+    <h4>
+        <img src="data:image;base64,@System.Convert.ToBase64String(userNew.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
+        @userNew.Title- @userNew.CreationDate - @userNew.ComentsCount
+        <p>
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="ViewSpecificNew" asp-route-id="@userNew.Id">Check new!</a>
+
+            @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
+            }
+        </p>
+    </h4>
+    }
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

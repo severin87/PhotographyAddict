@@ -1,4 +1,6 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.ThemesViewModel
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 
 @{
     ViewData["Title"] = "PreviewAllThemes";
@@ -14,8 +16,16 @@
 </h2>
 
 @foreach (var theme in Model.ThemeInfos)
-{
-<h1>@theme.Title - @theme.UserName - @theme.ThemeCategory</h1>
-    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@theme.Id">View </a>
-}
+ {
+<h1>@theme.Title - @theme.UserName - @theme.ThemeCategory - @theme.CreationDate</h1>
+    <p>
+        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="SpecificTheme" asp-route-id="@theme.Id">View </a>
+
+        @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id">Update </a>
+            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id">Delete</a>
+        }
+    </p>
+ }
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190325174349_Removed_New_problems")]
+    partial class Removed_New_problems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,8 +242,6 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<string>("AuthorOpinion");
 
                     b.Property<int>("ComentsCount");
-
-                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("PhotographyAddictedUserId");
 

@@ -16,9 +16,9 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task AddNewComment(AddNewCommentViewModel input);
 
-        Task<int> UpdateNewComment(UpdateNewComment input);
+        Task<int> UpdateNewComment(UpdateNewCommentViewModel input);
 
-        UpdateNewComment ViewUpdateNewById(int id);
+        UpdateNewCommentViewModel ViewUpdateNewById(int id);
 
     }
 }

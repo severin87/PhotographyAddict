@@ -16,6 +16,8 @@ namespace PhotographyAddicted.Services.Models.Themes
 
         public string AuthorOpinion { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public string UserName { get; set; }
 
         public ThemeCategory ThemeCategory { get; set; }

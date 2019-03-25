@@ -1,0 +1,22 @@
+﻿@model PhotographyAddicted.Services.Models.News.DeleteNewViewModel
+
+@{
+    ViewData["Title"] = "DeleteNew";
+}
+
+<h2>DeleteNew</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>DeleteNewViewModel</h4>
+    <hr />
+    <h4>
+        <img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
+        @Model.Title - @Model.TextContent
+    </h4>
+    
+    <form asp-action="DeleteNew">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

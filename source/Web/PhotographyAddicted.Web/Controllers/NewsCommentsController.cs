@@ -33,7 +33,7 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateNewComment(UpdateNewComment input)
+        public async Task<IActionResult> UpdateNewComment(UpdateNewCommentViewModel input)
         {
             if (!this.ModelState.IsValid)
             {

@@ -96,6 +96,8 @@ namespace PhotographyAddicted.Services.DataServices
                  Title = u.Title,
                  Id = u.Id,
                  TextContent = u.TextContent,
+                 PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+
              });
 
             return news;

@@ -18,6 +18,8 @@ namespace PhotographyAddicted.Data.Models
 
         public string Title { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public ThemeCategory ThemeCategory { get; set; }
 
         public string AuthorOpinion { get; set; }

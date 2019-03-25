@@ -28,7 +28,8 @@ namespace PhotographyAddicted.Services.DataServices
                 PhotographyAddictedUserId=input.PhotographyAddictedUserId,
                 AuthorOpinion = input.AuthorOpinion,
                 Title = input.Title,
-                ThemeCategory = input.ThemeCategory
+                ThemeCategory = input.ThemeCategory,
+                CreationDate = DateTime.UtcNow,
                 
             };
 
@@ -72,7 +73,8 @@ namespace PhotographyAddicted.Services.DataServices
                 UserName = m.PhotographyAddictedUser.UserName,
                 ThemeCategory = m.ThemeCategory,
                 ThemeComments = m.ThemeComments,
-
+                PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                CreationDate = m.CreationDate,
 
             }).ToList();
 
@@ -105,7 +107,7 @@ namespace PhotographyAddicted.Services.DataServices
                   PhotographyAddictedUserId = m.PhotographyAddictedUserId,
                   ThemeComments = m.ThemeComments,
                   PhotographyAddictedUser = m.PhotographyAddictedUser,
-
+                  CreationDate = m.CreationDate,
                 }).FirstOrDefault();
                     
             return specificTheme;

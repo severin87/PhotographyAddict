@@ -72,7 +72,7 @@ namespace PhotographyAddicted.Services.DataServices
         }
 
 
-        public async Task<int> UpdateNewComment(UpdateNewComment input)
+        public async Task<int> UpdateNewComment(UpdateNewCommentViewModel input)
         {
             var updateNew = newCommentDbSet.All().SingleOrDefault(t => t.Id == input.Id);
 
@@ -84,10 +84,10 @@ namespace PhotographyAddicted.Services.DataServices
         }
 
 
-        public UpdateNewComment ViewUpdateNewById(int id)
+        public UpdateNewCommentViewModel ViewUpdateNewById(int id)
         {
             var specificTheme = newCommentDbSet.All()
-                .Where(x => x.Id == id).Select(m => new UpdateNewComment
+                .Where(x => x.Id == id).Select(m => new UpdateNewCommentViewModel
                 {
                     Id = m.Id,
                     UserOpinion = m.UserOpinion,
