@@ -35,6 +35,8 @@ namespace PhotographyAddicted.Services.DataServices
 
         }
 
+
+
         public async Task<int> DeleteUserNewComment(DeleteUserNewCommentsViewModel input)
         {
             var newComment = newCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();

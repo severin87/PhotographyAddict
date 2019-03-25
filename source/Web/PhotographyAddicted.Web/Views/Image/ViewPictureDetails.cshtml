@@ -71,8 +71,8 @@
             @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
             @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>
-                <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id">Edit</a>
+                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="DeleteImageComment" asp-route-id="@comment.Id">Delete</a>
+                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="UpdateImageComment" asp-route-id="@comment.Id">Edit</a>
             }
         </h4>
     }
