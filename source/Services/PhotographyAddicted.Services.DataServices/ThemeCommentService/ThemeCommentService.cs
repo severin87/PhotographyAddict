@@ -70,5 +70,31 @@ namespace PhotographyAddicted.Services.DataServices
 
             return themeComment;
         }
+               
+        public async Task<int> UpdateThemeComment(UpdateThemeCommentViewModel input)
+        {
+            var updateThemeComment = themeCommentDbSet.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updateThemeComment.UserOpinion = input.UserOpinion;
+
+            await themeCommentDbSet.SaveChangesAsync();
+
+            return (int)updateThemeComment.ThemeId;
+        }
+
+        public UpdateThemeCommentViewModel ViewUpdateThemeById(int id)
+        {
+            var specificThemeComment = themeCommentDbSet.All()
+                .Where(x => x.Id == id).Select(m => new UpdateThemeCommentViewModel
+                {
+                    Id = m.Id,
+                    UserOpinion = m.UserOpinion,                   
+                    PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                    ThemeId = m.ThemeId,
+                    
+                }).FirstOrDefault();
+
+            return specificThemeComment;
+        }
     }
 }

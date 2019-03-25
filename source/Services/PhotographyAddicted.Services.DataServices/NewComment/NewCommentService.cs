@@ -86,7 +86,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         public UpdateNewCommentViewModel ViewUpdateNewById(int id)
         {
-            var specificTheme = newCommentDbSet.All()
+            var specificNewComment = newCommentDbSet.All()
                 .Where(x => x.Id == id).Select(m => new UpdateNewCommentViewModel
                 {
                     Id = m.Id,
@@ -96,7 +96,7 @@ namespace PhotographyAddicted.Services.DataServices
                     
                 }).FirstOrDefault();
 
-            return specificTheme;
+            return specificNewComment;
         }
     }
 }

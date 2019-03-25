@@ -10,7 +10,7 @@ namespace PhotographyAddicted.Services.Models.ThemesComments
 
         public string UserOpinion { get; set; }
 
-        public int? NewId { get; set; }
+        public int? ThemeId { get; set; }
         //public virtual Theme Theme { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }

@@ -19,6 +19,32 @@ namespace PhotographyAddicted.Web.Controllers
             this.themeCommentService = themeCommentService;
         }
 
+        public IActionResult UpdateThemeComment(int id)
+        {
+
+            var updatedThemeComment = this.themeCommentService.ViewUpdateThemeById(id);
+
+            if (updatedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                return this.RedirectToAction("SpecificTheme", "Themes", new { id = updatedThemeComment.ThemeId });
+            }
+
+            return this.View(updatedThemeComment);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateThemeComment(UpdateThemeCommentViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            int themeId = await themeCommentService.UpdateThemeComment(input);
+
+            return this.RedirectToAction("SpecificTheme", "Themes", new { Id = themeId });
+        }
+
         [Authorize]
         public IActionResult AddThemeComment(int Id)
         {

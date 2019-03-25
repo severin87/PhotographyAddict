@@ -32,6 +32,7 @@
     @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
     {
         <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
+        <a class="btn btn-default btn-sm" asp-controller="ThemeComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id">Update</a>
     }
 </li>
 }
