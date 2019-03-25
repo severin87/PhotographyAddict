@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PhotographyAddicted.Services.Models.NewsComments
 {
-    public class AddNewCommentViewModel
+    public class UpdateNewComment
     {
         public int Id { get; set; }
 

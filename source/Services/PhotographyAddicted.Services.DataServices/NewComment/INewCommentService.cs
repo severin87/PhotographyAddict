@@ -13,5 +13,12 @@ namespace PhotographyAddicted.Services.DataServices
         Task<int> DeleteUserNewComment(DeleteUserNewCommentsViewModel input);
 
         Task DeleteUserNewComments(string id);
+
+        Task AddNewComment(AddNewCommentViewModel input);
+
+        Task<int> UpdateNewComment(UpdateNewComment input);
+
+        UpdateNewComment ViewUpdateNewById(int id);
+
     }
 }

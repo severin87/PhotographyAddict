@@ -17,15 +17,31 @@ namespace PhotographyAddicted.Services.DataServices
         {
             this.newCommentDbSet = newCommentDbSet;
         }
+        
+        public async Task AddNewComment(AddNewCommentViewModel input)
+        {
+            var newComment = new NewComment
+            {
+                PhotographyAddictedUserId = input.PhotographyAddictedUserId,
+               // PhotographyAddictedUser = input.PhotographyAddictedUser,
+                NewId = input.NewId,
+                //Theme = input.Theme,
+                UserOpinion = input.UserOpinion,
+
+            };
+
+            await newCommentDbSet.AddAsync(newComment);
+            await newCommentDbSet.SaveChangesAsync();
+
+        }
 
         public async Task<int> DeleteUserNewComment(DeleteUserNewCommentsViewModel input)
         {
             var newComment = newCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
-            var tempId = (int)newComment.NewId;
             newCommentDbSet.Delete(newComment);
             await newCommentDbSet.SaveChangesAsync();
 
-            return tempId;
+            return (int)newComment.NewId;
         }
 
         public async Task DeleteUserNewComments(string id)
@@ -53,6 +69,34 @@ namespace PhotographyAddicted.Services.DataServices
                 }).FirstOrDefault();
 
             return newComment;
+        }
+
+
+        public async Task<int> UpdateNewComment(UpdateNewComment input)
+        {
+            var updateNew = newCommentDbSet.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updateNew.UserOpinion = input.UserOpinion;
+            
+            await newCommentDbSet.SaveChangesAsync();
+
+            return (int)updateNew.NewId;
+        }
+
+
+        public UpdateNewComment ViewUpdateNewById(int id)
+        {
+            var specificTheme = newCommentDbSet.All()
+                .Where(x => x.Id == id).Select(m => new UpdateNewComment
+                {
+                    Id = m.Id,
+                    UserOpinion = m.UserOpinion,
+                    NewId = m.NewId,
+                    PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                    
+                }).FirstOrDefault();
+
+            return specificTheme;
         }
     }
 }

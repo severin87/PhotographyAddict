@@ -48,14 +48,14 @@ namespace PhotographyAddicted.Web.Controllers
         [Authorize]
         public IActionResult DeleteThemeComment(int Id)
         {
-            var deletedTheme = themeCommentService.FindThemeCommentById(Id);
+            var deletedThemeComment = themeCommentService.FindThemeCommentById(Id);
 
-            if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (deletedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("PreviewAllThemes", "Themes");
             }
 
-            return View(deletedTheme);
+            return View(deletedThemeComment);
         }
 
         [Authorize]

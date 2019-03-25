@@ -1,0 +1,40 @@
+﻿@model PhotographyAddicted.Services.Models.NewsComments.AddNewCommentViewModel
+
+@{
+    ViewData["Title"] = "AddNewComment";
+}
+
+<h2>AddNewComment</h2>
+
+<h4>AddNewCommentViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddNewComment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>            
+            <div class="form-group">
+                <label asp-for="UserOpinion" class="control-label"></label>
+                <input asp-for="UserOpinion" class="form-control" />
+                <span asp-validation-for="UserOpinion" class="text-danger"></span>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="NewId" class="control-label"></label>
+                <input asp-for="NewId" class="form-control" />
+                <span asp-validation-for="NewId" class="text-danger"></span>
+            </div>
+            <div hidden class="form-group">
+                <label asp-for="PhotographyAddictedUserId" class="control-label"></label>
+                <input asp-for="PhotographyAddictedUserId" class="form-control" />
+                <span asp-validation-for="PhotographyAddictedUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
