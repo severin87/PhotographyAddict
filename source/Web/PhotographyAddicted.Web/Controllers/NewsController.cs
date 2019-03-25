@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices;
@@ -19,10 +20,16 @@ namespace PhotographyAddicted.Web.Controllers
             this.newService = newService;
         }
 
-        public IActionResult AddNew()
+        public IActionResult PreviewAllNews()
         {
-            return View();
+            PreviewAllNewsViewModel allNews = new PreviewAllNewsViewModel()
+            {
+                PreviewAllNews = newService.PreviewAllNews(),
+            };
+
+            return View(allNews);
         }
+               
 
         public IActionResult ViewSpecificNew(int Id)
         {
@@ -31,6 +38,12 @@ namespace PhotographyAddicted.Web.Controllers
             return this.View(specificNew);
         }
 
+        [Authorize]
+        public IActionResult AddNew()
+        {
+            return View();
+        }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddNew(AddNewViewModel input, IFormFile NewImage)
         {

@@ -12,6 +12,8 @@ namespace PhotographyAddicted.Services.Models.ThemesComments
 
         public string UserOpinion { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public int? ThemeId { get; set; }
         public virtual Theme Theme { get; set; }
 

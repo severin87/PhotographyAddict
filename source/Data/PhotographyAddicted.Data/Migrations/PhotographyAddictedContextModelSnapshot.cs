@@ -168,6 +168,8 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<string>("Comment");
 
+                    b.Property<DateTime>("CreationDate");
+
                     b.Property<int?>("ImageId");
 
                     b.Property<string>("PhotographyAddictedUserId");
@@ -257,6 +259,8 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("PhotographyAddictedUserId");
 

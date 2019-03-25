@@ -41,7 +41,7 @@
     @foreach (var comment in Model.NewComments)
     {
     <h4>
-        @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion
+        @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
         @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
             <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>

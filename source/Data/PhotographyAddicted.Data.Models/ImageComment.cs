@@ -11,6 +11,8 @@ namespace PhotographyAddicted.Data.Models
 
         public string Comment { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public int? ImageId { get; set; }
         public virtual Image Image { get; set; }
 

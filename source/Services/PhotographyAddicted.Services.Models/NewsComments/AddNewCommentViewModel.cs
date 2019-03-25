@@ -10,6 +10,8 @@ namespace PhotographyAddicted.Services.Models.NewsComments
 
         public string UserOpinion { get; set; }
 
+        public DateTime CreationDate { get; set; }
+
         public int? NewId { get; set; }
         //public virtual Theme Theme { get; set; }
 

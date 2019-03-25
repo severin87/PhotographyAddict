@@ -27,7 +27,7 @@ namespace PhotographyAddicted.Services.DataServices
                 NewId = input.NewId,
                 //Theme = input.Theme,
                 UserOpinion = input.UserOpinion,
-
+                CreationDate = DateTime.UtcNow,
             };
 
             await newCommentDbSet.AddAsync(newComment);
