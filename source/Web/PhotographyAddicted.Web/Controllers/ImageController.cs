@@ -35,7 +35,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (deletedImage.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier) || deletedImage.PhotographyAddictedUserId == null)
             {
-                return this.RedirectToAction("ViewUsersPictures", "Image", new { id = deletedImage.PhotographyAddictedUserId });
+                return this.RedirectToAction("PreviewImages", "Image", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
             }
 
             return View(deletedImage);
@@ -51,11 +51,11 @@ namespace PhotographyAddicted.Web.Controllers
 
             await imageService.DeleteImage(input);
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return this.RedirectToAction("ViewUsersPictures", "Image", new { id = input.PhotographyAddictedUserId });
+            return this.RedirectToAction("PreviewImages", "Image", new { id = input.PhotographyAddictedUserId });
         }
 
         [AllowAnonymous]
-        public IActionResult ViewUsersPictures(string Id)
+        public IActionResult PreviewUserImages(string Id)
         {
             PreviewImagesViewModel userPictures = new PreviewImagesViewModel
             {
@@ -66,7 +66,7 @@ namespace PhotographyAddicted.Web.Controllers
         }
         
         [AllowAnonymous]
-        public IActionResult ViewPictureDetails(int id)
+        public IActionResult PreviewImage(int id)
         {
             var userPictures = imageService.PreviewImage(id);
 
@@ -74,13 +74,13 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [Authorize]
-        public IActionResult EditPictureInfo(int id)
+        public IActionResult UpdateImage(int id)
         {
             var userPictures = imageService.FindImageById(id);
 
             if (userPictures.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("ViewPictureDetails", new { id = userPictures.Id });
+                return this.RedirectToAction("PreviewImage", new { id = userPictures.Id });
             }            
 
             return this.View(userPictures);
@@ -88,7 +88,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> EditPictureInfo(PreviewImageViewModel input)
+        public async Task<IActionResult> UpdateImage(PreviewImageViewModel input)
         {
             if (!this.ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int imageId = await imageService.UpdateImage(input);
 
-            return this.RedirectToAction("ViewPictureDetails", new { id = imageId });
+            return this.RedirectToAction("PreviewImage", new { id = imageId });
         }
 
         [Authorize]
@@ -125,9 +125,9 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewImages(string id)
+        public IActionResult PreviewImages(string input)
         {
-            var images = imageService.PreviewImages(id);
+            var images = imageService.PreviewImages(input);
 
             return this.View(images);
         }

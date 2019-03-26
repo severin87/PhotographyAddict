@@ -26,7 +26,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (updatedImageComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("ViewPictureDetails", "Image", new { id = updatedImageComment.ImageId });
+                return this.RedirectToAction("PreviewImage", "Image", new { id = updatedImageComment.ImageId });
             }
 
             return this.View(updatedImageComment);
@@ -42,7 +42,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int imageId = await imageCommentService.UpdateImageComment(input);
 
-            return this.RedirectToAction("ViewPictureDetails", "Image", new { id = imageId });
+            return this.RedirectToAction("PreviewImage", "Image", new { id = imageId });
         }
 
         [Authorize]
@@ -57,7 +57,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (deletedImageComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("ViewPictureDetails", "Image", new { id = deletedImageComment.ImageId });
+                return this.RedirectToAction("PreviewImage", "Image", new { id = deletedImageComment.ImageId });
             }
 
             return View(deletedImageComment);
@@ -74,7 +74,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int imageId = await imageCommentService.DeleteUserImageComment(input);
 
-            return this.RedirectToAction("ViewPictureDetails", "Image", new { id = imageId });
+            return this.RedirectToAction("PreviewImage", "Image", new { id = imageId });
         }
 
         [Authorize]
@@ -99,7 +99,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await imageCommentService.AddImageComment(input);
-            return this.RedirectToAction("ViewPictureDetails", "Image", new { id = input.ImageId });
+            return this.RedirectToAction("PreviewImage", "Image", new { id = input.ImageId });
         }
     }
 }
