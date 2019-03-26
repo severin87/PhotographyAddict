@@ -102,41 +102,60 @@ namespace PhotographyAddicted.Services.DataServices
 
             return news;
         }
+        public IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input)
+        {
+            var news = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
+              new PreviewNewViewModel
+              {
+                  CreationDate = u.CreationDate,
+                  ComentsCount = u.NewComments.Count(),
+                  NewImage = u.NewImage,
+                  Title = u.Title,
+                  Id = u.Id,
+                  TextContent = u.TextContent,
+                  PhotographyAddictedUserId = u.PhotographyAddictedUserId,
 
-        public PreviewAllNewsViewModel PreviewNews(string input)
+              });
+
+            return news;
+        }
+
+        public PreviewNewsViewModel PreviewNews(string input)
         {
 
-            PreviewAllNewsViewModel allNews = new PreviewAllNewsViewModel();
-            
+            PreviewNewsViewModel allNews = new PreviewNewsViewModel();          
           
             if (input == null)
             {
-              allNews.PreviewAllNews = PreviewAllNews();
+                allNews.PreviewAllNews = newDbSet.All().Select(u =>
+                new PreviewNewViewModel
+                {
+                    CreationDate = u.CreationDate,
+                    ComentsCount = u.NewComments.Count(),
+                    NewImage = u.NewImage,
+                    Title = u.Title,
+                    Id = u.Id,
+                    TextContent = u.TextContent,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+
+                });
             }
             else
             {
-                allNews.PreviewAllNews = PreviewSearchedNews(input);
+                allNews.PreviewAllNews = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
+                new PreviewNewViewModel
+                {
+                    CreationDate = u.CreationDate,
+                    ComentsCount = u.NewComments.Count(),
+                    NewImage = u.NewImage,
+                    Title = u.Title,
+                    Id = u.Id,
+                    TextContent = u.TextContent,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                });
             }
 
             return allNews;
-        }
-
-        public IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input)
-        {
-           var news = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u => 
-             new PreviewNewViewModel
-             {
-                 CreationDate = u.CreationDate,
-                 ComentsCount = u.NewComments.Count(),
-                 NewImage = u.NewImage,
-                 Title = u.Title,
-                 Id = u.Id,
-                 TextContent = u.TextContent,
-                 PhotographyAddictedUserId = u.PhotographyAddictedUserId,
-
-             });
-
-            return news;
         }
 
         public async Task<int> UpdateNew(UpdateNewViewModel input)

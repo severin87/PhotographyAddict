@@ -106,7 +106,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var themes = themeService.GetAllThemes();
 
-            var allThemes = new ThemesViewModel()
+            var allThemes = new PreviewThemesViewModel()
             {
                 ThemeInfos = themes
             };

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PhotographyAddicted.Services.Models.Users
 {
-    public class PreviewUsersViewModel
+    public class PrevikewUsersViewModel
     {
         public string Id { get; set; }
 

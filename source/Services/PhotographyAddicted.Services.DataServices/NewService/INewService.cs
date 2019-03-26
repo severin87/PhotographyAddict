@@ -16,7 +16,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input);
 
-        PreviewAllNewsViewModel PreviewNews(string input);
+        PreviewNewsViewModel PreviewNews(string input);
 
         PreviewNewViewModel ViewSpecificNew(int id);
 
