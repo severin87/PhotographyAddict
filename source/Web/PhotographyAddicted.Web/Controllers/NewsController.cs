@@ -73,13 +73,9 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewAllNews", "News");
         }
 
-        public IActionResult PreviewAllNews()
+        public IActionResult PreviewAllNews(string input)
         {
-            PreviewAllNewsViewModel allNews = new PreviewAllNewsViewModel()
-            {
-                PreviewAllNews = newService.PreviewAllNews(),
-            };
-
+            var allNews = newService.PreviewNews(input);
             return View(allNews);
         }
                

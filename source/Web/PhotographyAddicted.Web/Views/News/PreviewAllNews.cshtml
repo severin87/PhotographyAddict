@@ -1,12 +1,23 @@
 ﻿@model PhotographyAddicted.Services.Models.News.PreviewAllNewsViewModel
+@using PhotographyAddicted.Services.DataServices
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+@inject INewService  newService
 
 @{
     ViewData["Title"] = "PreviewAllNews";
 }
 
 <h2>PreviewAllNews</h2>
+
+<div class="search-container">
+    <form asp-controller="News" asp-action="PreviewAllNews">
+        <p>
+            Title: <input placeholder="Search.." type="text" name="input">
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+</div>
 
 <div>
 
@@ -24,19 +35,19 @@
 <div>
     @foreach (var userNew in Model.PreviewAllNews)
     {
-    <h4>
-        <img src="data:image;base64,@System.Convert.ToBase64String(userNew.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
-        @userNew.Title- @userNew.CreationDate - @userNew.ComentsCount
-        <p>
-            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="ViewSpecificNew" asp-route-id="@userNew.Id">Check new!</a>
+        <h4>
+            <img src="data:image;base64,@System.Convert.ToBase64String(userNew.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
+            @userNew.Title- @userNew.CreationDate - @userNew.ComentsCount
+            <p>
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="ViewSpecificNew" asp-route-id="@userNew.Id">Check new!</a>
 
-            @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
-                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
-            }
-        </p>
-    </h4>
+                @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
+                    <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
+                }
+            </p>
+        </h4>
     }
 </div>
 <div>

@@ -14,6 +14,10 @@ namespace PhotographyAddicted.Services.DataServices
 
         IEnumerable<PreviewNewViewModel> PreviewAllNews();
 
+        IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input);
+
+        PreviewAllNewsViewModel PreviewNews(string input);
+
         PreviewNewViewModel ViewSpecificNew(int id);
 
         DeleteNewViewModel FindNewById(int Id);

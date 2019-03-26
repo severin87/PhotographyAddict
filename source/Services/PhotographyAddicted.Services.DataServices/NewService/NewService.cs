@@ -103,6 +103,42 @@ namespace PhotographyAddicted.Services.DataServices
             return news;
         }
 
+        public PreviewAllNewsViewModel PreviewNews(string input)
+        {
+
+            PreviewAllNewsViewModel allNews = new PreviewAllNewsViewModel();
+            
+          
+            if (input == null)
+            {
+              allNews.PreviewAllNews = PreviewAllNews();
+            }
+            else
+            {
+                allNews.PreviewAllNews = PreviewSearchedNews(input);
+            }
+
+            return allNews;
+        }
+
+        public IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input)
+        {
+           var news = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u => 
+             new PreviewNewViewModel
+             {
+                 CreationDate = u.CreationDate,
+                 ComentsCount = u.NewComments.Count(),
+                 NewImage = u.NewImage,
+                 Title = u.Title,
+                 Id = u.Id,
+                 TextContent = u.TextContent,
+                 PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+
+             });
+
+            return news;
+        }
+
         public async Task<int> UpdateNew(UpdateNewViewModel input)
         {
             var updateNew = newDbSet.All().SingleOrDefault(t => t.Id == input.Id);
