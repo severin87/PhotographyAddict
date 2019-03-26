@@ -125,7 +125,7 @@ namespace PhotographyAddicted.Web.Controllers
                 input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var imageId = await imageService.AddImage(input);
 
-                return RedirectToAction("ViewUserProfile", "User", new { Id = input.PhotographyAddictedUserId }); //, new { area = "" }
+                return RedirectToAction("PreviewUser", "User", new { Id = input.PhotographyAddictedUserId }); //, new { area = "" }
             }
             else
             {

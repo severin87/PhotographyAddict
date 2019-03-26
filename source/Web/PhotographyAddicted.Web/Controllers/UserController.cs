@@ -14,7 +14,6 @@ namespace PhotographyAddicted.Web.Controllers
     [Authorize]
     public class UserController : BaseController
     {
-
         private readonly IUserService userService;
 
         public UserController(IUserService userService)
@@ -25,40 +24,40 @@ namespace PhotographyAddicted.Web.Controllers
         [AllowAnonymous]
         public IActionResult PreviewUsers()
         {
-            IndexUserProfileViewModel usersProfiles = new IndexUserProfileViewModel
+            PreviewUsersViewModel usersProfiles = new PreviewUsersViewModel
             {
-                UserInfos = userService.GetUsersInfos(),
+                UserInfos = userService.PreviewUsers(),
             };
 
             return View(usersProfiles);
         }
 
         [AllowAnonymous]
-        public IActionResult ViewUserProfile(string Id)
+        public IActionResult PreviewUser(string Id)
         {
-            var userProfile = userService.GetCurrentUserProfile(Id);
+            var userProfile = userService.PreviewUser(Id);
            
             return View(userProfile);
         }
         
-        public IActionResult ChangeProfilePicture()
+        public IActionResult UpdateProfilePicture()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeProfilePicture( EditUserViewModel input, IFormFile ProfilePicture)
+        public async Task<IActionResult> UpdateProfilePicture(PreviewUserViewModel input, IFormFile ProfilePicture)
         {
             if (ModelState.IsValid)
             {
                 input.Id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await userService.AddProfilePicture(input, ProfilePicture);
+                await userService.UpdateProfilePicture(input, ProfilePicture);
 
-                return RedirectToAction("ViewUserProfile", "User"); //, new { area = "" }
+                return RedirectToAction("PreviewUser", "User", new { Id = input.Id  }); 
             }
             else
             {
-                return this.View(input); // this.View(sev);
+                return this.View(input); 
             }
 
         }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PhotographyAddicted.Data.Common;
-using PhotographyAddicted.Services.Models.Images;
 using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
@@ -15,7 +14,6 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public class UserService : IUserService
     {
-
         private IRepository<PhotographyAddictedUser> userDbset;
 
         public UserService(IRepository<PhotographyAddictedUser> userDbset)
@@ -23,7 +21,7 @@ namespace PhotographyAddicted.Services.DataServices
             this.userDbset = userDbset;
         }
         
-        public async Task<string> AddProfilePicture( EditUserViewModel input, IFormFile ProfilePicture)
+        public async Task<string> UpdateProfilePicture(PreviewUserViewModel input, IFormFile ProfilePicture)
         {
             if (ProfilePicture.Length > 0)
             {
@@ -40,10 +38,10 @@ namespace PhotographyAddicted.Services.DataServices
             return user.Id;
         }
                 
-        public UserProfileViewModel GetCurrentUserProfile(string id)
+        public PreviewUserViewModel PreviewUser(string id)
         {
             var user = userDbset.All().Include(i => i.Images).Where(i => i.Id == id).Select(u =>
-            new UserProfileViewModel
+            new PreviewUserViewModel
             {
                 Id = u.Id,
                 UserName = u.UserName,
@@ -52,7 +50,7 @@ namespace PhotographyAddicted.Services.DataServices
                 SelfDescription = u.SelfDescription,
                 ImageCount = u.Images.Count(),
                 Rang = u.Rang,
-                AverageScore = UsersScores(id),
+                AverageScore = UserScores(id),
                 CreationDate = u.CreationDate,
                 LastLogin = u.LastLogin,
                 Blocked = u.Blocked,
@@ -70,10 +68,10 @@ namespace PhotographyAddicted.Services.DataServices
             return count;
         }
 
-        public IEnumerable<PreviewUsersViewModel> GetUsersInfos()
+        public IEnumerable<PreviewUserViewModel> PreviewUsers()
         {
-            var usersInfos = userDbset.All().Select(u =>
-            new PreviewUsersViewModel
+            var userInfos = userDbset.All().Select(u =>
+            new PreviewUserViewModel
             {
                 CreationDate = u.CreationDate,
                 Id = u.Id,
@@ -84,25 +82,10 @@ namespace PhotographyAddicted.Services.DataServices
                 UserName = u.UserName,                
             });
 
-            return usersInfos;
+            return userInfos;
         }
-
-        public IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id)
-        {
-            var photos = userDbset.All().Include(i => i.Images)
-                 .Where(i => i.Id == id).SelectMany(l => l.Images)
-                 .Select(
-                 x => new ImagePreviewViewModel
-                 {
-                     Title = x.Title,
-                     Scores = x.Scores,
-                     Picture = x.Picture,
-                 }).Take(20).ToList();
-
-            return photos;
-        }
-
-        public int UsersScores(string id)
+        
+        public int UserScores(string id)
         {
             int userImagesCount = userDbset.All()
                    .Where(i => i.Id == id).FirstOrDefault().Images.Count();

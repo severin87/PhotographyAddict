@@ -27,5 +27,7 @@ namespace PhotographyAddicted.Services.DataServices
         UpdateNewViewModel FindUpdateNewById(int Id);
 
         Task<int> UpdateNew(UpdateNewViewModel input);
+
+        int GetNewsCount();
     }
 }

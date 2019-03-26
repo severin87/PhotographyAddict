@@ -188,5 +188,12 @@ namespace PhotographyAddicted.Services.DataServices
 
             return specificNew;
         }
+
+        public int GetNewsCount()
+        {
+            int count = this.newDbSet.All().Count();
+
+            return count;
+        }
     }
 }

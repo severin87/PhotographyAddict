@@ -130,5 +130,11 @@ namespace PhotographyAddicted.Services.DataServices
             return specificTheme;
         }
 
+        public int GetThemesCount()
+        {
+            int count = this.themeDbSet.All().Count();
+
+            return count;
+        }
     }
 }

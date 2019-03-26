@@ -22,5 +22,6 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task DeleteTheme(DeleteThemeViewModel input);
 
+        int GetThemesCount();
     }
 }

@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 @*<a class="btn btn-default btn-sm" asp-controller="User" asp-action="ViewUserProfile">View </a>*@
-                <a asp-controller="User" asp-action="ViewUserProfile" asp-route-id="@UserManager.GetUserId(User)">Hello @UserManager.GetUserName(User)!</a>
+                <a asp-controller="User" asp-action="PreviewUser" asp-route-id="@UserManager.GetUserId(User)">Hello @UserManager.GetUserName(User)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>

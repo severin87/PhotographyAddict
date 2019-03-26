@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PhotographyAddicted.Services.Models.Users
 {
-    public class UserProfileViewModel
+    public class PreviewUserViewModel
     {
         public string Id { get; set; }
 
@@ -35,6 +35,7 @@ namespace PhotographyAddicted.Services.Models.Users
         public string Rang { get; set; }
                
         public virtual ICollection<Image> Images { get; set; }
+
 
     }
 }

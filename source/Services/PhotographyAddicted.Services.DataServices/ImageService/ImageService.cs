@@ -109,5 +109,12 @@ namespace PhotographyAddicted.Services.DataServices
             imageInfo.Delete(image);
             await imageInfo.SaveChangesAsync();
         }
+
+        public int GetImagesCount()
+        {
+            int count = this.imageInfo.All().Count();
+
+            return count;
+        }
     }
 }

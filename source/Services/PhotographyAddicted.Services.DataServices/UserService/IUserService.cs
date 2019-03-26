@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using PhotographyAddicted.Services.Models.Images;
 using PhotographyAddicted.Services.Models.Users;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
@@ -10,19 +9,16 @@ using System.Threading.Tasks;
 namespace PhotographyAddicted.Services.DataServices
 {
     public interface IUserService
-    {
-        
-        UserProfileViewModel GetCurrentUserProfile(string id);
-        
-        Task<string> AddProfilePicture(EditUserViewModel input, IFormFile ProfilePicture);
+    {        
+        PreviewUserViewModel PreviewUser(string id);
 
-        IEnumerable<ImagePreviewViewModel> GetUsersPictures(string id);
+        IEnumerable<PreviewUserViewModel> PreviewUsers();
 
-        int UsersScores(string id);
+        Task<string> UpdateProfilePicture(PreviewUserViewModel input, IFormFile ProfilePicture);
+
+        int UserScores(string id);
 
         int GetUsersCount();
-
-        IEnumerable<PreviewUsersViewModel> GetUsersInfos();
 
     }
 }

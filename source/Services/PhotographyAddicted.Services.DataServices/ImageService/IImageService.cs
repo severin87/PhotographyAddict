@@ -19,5 +19,7 @@ namespace PhotographyAddicted.Services.DataServices
         DeleteImageViewModel FindDeletingImageById(int Id);
 
         Task DeleteImage(DeleteImageViewModel input);
+
+        int GetImagesCount();
     }
 }

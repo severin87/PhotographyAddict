@@ -53,7 +53,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (deletedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("PreviewAllNews", "News");
+                return this.RedirectToAction("PreviewNews", "News");
             }
 
             return View(deletedNew);
@@ -70,10 +70,10 @@ namespace PhotographyAddicted.Web.Controllers
 
             await newService.DeleteUserNew(input);
 
-            return this.RedirectToAction("PreviewAllNews", "News");
+            return this.RedirectToAction("PreviewNews", "News");
         }
 
-        public IActionResult PreviewAllNews(string input)
+        public IActionResult PreviewNews(string input)
         {
             var allNews = newService.PreviewNews(input);
             return View(allNews);
@@ -101,7 +101,7 @@ namespace PhotographyAddicted.Web.Controllers
                 input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await newService.AddNew(input, NewImage);
 
-                return RedirectToAction("Index", "Home"); //, new { area = "" }
+                return this.RedirectToAction("PreviewNews", "News");
             }
             else
             {
