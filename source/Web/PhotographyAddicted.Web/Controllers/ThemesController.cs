@@ -13,30 +13,27 @@ namespace PhotographyAddicted.Web.Controllers
     [Authorize]
     public class ThemesController : BaseController
     {
-
         private IThemeService themeService;
 
         public ThemesController(IThemeService themeService)
         {
             this.themeService = themeService;
         }
-
-        [Authorize]
+       
         public IActionResult DeleteTheme(int Id)
         {
-            var deletedTheme = themeService.FindDeletingThemeById(Id);
+            var deletedTheme = themeService.FindThemeBy(Id);
 
             if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("PreviewAllThemes", "Themes");
+                return this.RedirectToAction("PreviewThemes", "Themes");
             }
 
             return View(deletedTheme);
         }
 
-        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteTheme(DeleteThemeViewModel input)
+        public async Task<IActionResult> DeleteTheme(PreviewThemeViewModel input)
         {
             if (!ModelState.IsValid)
             {
@@ -45,42 +42,41 @@ namespace PhotographyAddicted.Web.Controllers
 
             await themeService.DeleteTheme(input);
 
-            return this.RedirectToAction("PreviewAllThemes", "Themes");
+            return this.RedirectToAction("PreviewThemes", "Themes");
         }
 
         public IActionResult UpdateTheme(int id)
         {
-
-            var updatedTheme = this.themeService.ViewUpdateThemeById(id);
+            var updatedTheme = this.themeService.FindThemeBy(id);
 
             if (updatedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("SpecificTheme", new { id = updatedTheme.Id });
+                return this.RedirectToAction("PreviewTheme", new { id = updatedTheme.Id });
             }
 
             return this.View(updatedTheme);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateTheme(UpdateTheme input)
+        public async Task<IActionResult> UpdateTheme(PreviewThemeViewModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return View(input);
             }
             
-            int themeId = await themeService.UpdateTheme(input);
+            await themeService.UpdateTheme(input);
 
-            return this.RedirectToAction("SpecificTheme", new { id = themeId });           
+            return this.RedirectToAction("PreviewThemes", "Themes");
         }
 
-        public IActionResult CreateTheme()
+        public IActionResult AddTheme()
         {
             return this.View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTheme(CreateThemeInputViewModel input) 
+        public async Task<IActionResult> AddTheme(AddThemeViewModel input) 
         {
             if (!this.ModelState.IsValid)
             {
@@ -88,23 +84,23 @@ namespace PhotographyAddicted.Web.Controllers
             }
 
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            int themeId = await themeService.CreateTheme(input);
+            await themeService.AddTheme(input);
 
-            return this.RedirectToAction("SpecificTheme", new { id = themeId });
+            return this.RedirectToAction("PreviewThemes", "Themes");
         }
 
         [AllowAnonymous]
-        public IActionResult SpecificTheme(int id)
+        public IActionResult PreviewTheme(int id)
         {
-            var specificTheme = themeService.ViewSpecificTheme(id);
+            var specificTheme = themeService.PreviewTheme(id);
 
             return this.View(specificTheme);
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewAllThemes()
+        public IActionResult PreviewThemes()
         {
-            var themes = themeService.GetAllThemes();
+            var themes = themeService.PreviewThemes();
 
             var allThemes = new PreviewThemesViewModel()
             {
@@ -112,9 +108,6 @@ namespace PhotographyAddicted.Web.Controllers
             };
 
             return View(allThemes);
-        }
-
-        
-
+        }       
     }
 }

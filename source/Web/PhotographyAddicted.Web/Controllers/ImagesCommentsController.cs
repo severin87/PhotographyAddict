@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices;
-using PhotographyAddicted.Services.Models.ImagesComment;
+using PhotographyAddicted.Services.Models.ImagesComments;
 
 namespace PhotographyAddicted.Web.Controllers
 {
@@ -60,7 +60,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteImageComment(DeleteUserImageCommentViewModel input)
+        public async Task<IActionResult> DeleteImageComment(DeleteImageCommentViewModel input)
         {
             if (!ModelState.IsValid)
             {

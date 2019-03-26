@@ -22,7 +22,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         DeleteNewViewModel FindNewById(int Id);
 
-        Task DeleteUserNew(DeleteNewViewModel input);
+        Task DeleteNew(DeleteNewViewModel input);
 
         UpdateNewViewModel FindUpdateNewById(int Id);
 

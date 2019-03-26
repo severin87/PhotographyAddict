@@ -1,6 +1,6 @@
 ﻿using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
-using PhotographyAddicted.Services.Models.ImagesComment;
+using PhotographyAddicted.Services.Models.ImagesComments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,10 +46,10 @@ namespace PhotographyAddicted.Services.DataServices
             return specificImageComment;
         }
 
-        public DeleteUserImageCommentViewModel FindImageCommentById(int Id)
+        public DeleteImageCommentViewModel FindImageCommentById(int Id)
         {
             var imageComment = imageCommentDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteUserImageCommentViewModel
+                .Select(d => new DeleteImageCommentViewModel
                 {
                     Id = d.Id,
                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,
@@ -60,7 +60,7 @@ namespace PhotographyAddicted.Services.DataServices
             return imageComment;
         }
 
-        public async Task<int> DeleteUserImageComment(DeleteUserImageCommentViewModel input)
+        public async Task<int> DeleteUserImageComment(DeleteImageCommentViewModel input)
         {
             var imageComment = imageCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
             imageCommentDbSet.Delete(imageComment);

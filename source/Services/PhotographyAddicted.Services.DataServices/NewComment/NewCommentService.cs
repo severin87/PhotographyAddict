@@ -37,7 +37,7 @@ namespace PhotographyAddicted.Services.DataServices
 
 
 
-        public async Task<int> DeleteUserNewComment(DeleteUserNewCommentsViewModel input)
+        public async Task<int> DeleteUserNewComment(DeleteNewCommentsViewModel input)
         {
             var newComment = newCommentDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
             newCommentDbSet.Delete(newComment);
@@ -59,10 +59,10 @@ namespace PhotographyAddicted.Services.DataServices
             await newCommentDbSet.SaveChangesAsync();
         }
 
-        public  DeleteUserNewCommentsViewModel FindNewCommentById(int Id)
+        public  DeleteNewCommentsViewModel FindNewCommentById(int Id)
         {
             var newComment = newCommentDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteUserNewCommentsViewModel
+                .Select(d => new DeleteNewCommentsViewModel
                 {
                     Id = d.Id,
                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,

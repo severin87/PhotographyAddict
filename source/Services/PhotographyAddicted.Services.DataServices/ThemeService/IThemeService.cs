@@ -8,19 +8,17 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface IThemeService
     {
-        Task<int> CreateTheme(CreateThemeInputViewModel input);
+        PreviewThemeViewModel PreviewTheme(int id);
 
-        Task<int> UpdateTheme(UpdateTheme input);
+        IEnumerable<PreviewThemeViewModel> PreviewThemes();
 
-        UpdateTheme ViewUpdateThemeById(int id);
+        PreviewThemeViewModel FindThemeBy(int Id);
 
-        ThemeDetailsViewModel ViewSpecificTheme(int id);
-        
-        IEnumerable<ThemeDetailsViewModel> GetAllThemes();
+        Task DeleteTheme(PreviewThemeViewModel input);
 
-        DeleteThemeViewModel FindDeletingThemeById(int Id);
+        Task AddTheme(AddThemeViewModel input);
 
-        Task DeleteTheme(DeleteThemeViewModel input);
+        Task UpdateTheme(PreviewThemeViewModel input);
 
         int GetThemesCount();
     }

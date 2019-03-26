@@ -8,9 +8,9 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface INewCommentService
     {
-        DeleteUserNewCommentsViewModel FindNewCommentById(int Id);
+        DeleteNewCommentsViewModel FindNewCommentById(int Id);
 
-        Task<int> DeleteUserNewComment(DeleteUserNewCommentsViewModel input);
+        Task<int> DeleteUserNewComment(DeleteNewCommentsViewModel input);
 
         Task DeleteUserNewComments(string id);
 

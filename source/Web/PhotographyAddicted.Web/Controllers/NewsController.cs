@@ -68,7 +68,7 @@ namespace PhotographyAddicted.Web.Controllers
                 return View(input);
             }
 
-            await newService.DeleteUserNew(input);
+            await newService.DeleteNew(input);
 
             return this.RedirectToAction("PreviewNews", "News");
         }

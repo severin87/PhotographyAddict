@@ -86,7 +86,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteNewComment(DeleteUserNewCommentsViewModel input)
+        public async Task<IActionResult> DeleteNewComment(DeleteNewCommentsViewModel input)
         {
             if (!ModelState.IsValid)
             {

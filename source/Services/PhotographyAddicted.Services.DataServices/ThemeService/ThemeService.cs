@@ -13,7 +13,6 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public class ThemeService : IThemeService
     {
-
         private IRepository<Theme> themeDbSet;
 
         public ThemeService(IRepository<Theme> themeDbSet)
@@ -21,7 +20,7 @@ namespace PhotographyAddicted.Services.DataServices
             this.themeDbSet = themeDbSet;
         }
 
-        public async Task<int> CreateTheme(CreateThemeInputViewModel input)
+        public async Task AddTheme(AddThemeViewModel input)
         {
             var theme = new Theme
             {
@@ -35,12 +34,9 @@ namespace PhotographyAddicted.Services.DataServices
 
             await themeDbSet.AddAsync(theme);
             await themeDbSet.SaveChangesAsync();
-
-            return theme.Id;
         }
 
-
-        public async Task DeleteTheme(DeleteThemeViewModel input)
+        public async Task DeleteTheme(PreviewThemeViewModel input)
         {
             var themeComment = themeDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
 
@@ -48,24 +44,10 @@ namespace PhotographyAddicted.Services.DataServices
             await themeDbSet.SaveChangesAsync();
 
         }
-
-
-        public DeleteThemeViewModel FindDeletingThemeById(int Id)
+        
+        public IEnumerable<PreviewThemeViewModel> PreviewThemes()
         {
-            var theme = themeDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteThemeViewModel
-                {
-                    Id = d.Id,
-                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
-                    Title = d.Title,
-                }).FirstOrDefault();
-
-            return theme;
-        }
-
-        public IEnumerable<ThemeDetailsViewModel> GetAllThemes()
-        {
-            var allThemes = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Select(m => new ThemeDetailsViewModel
+            var allThemes = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Select(m => new PreviewThemeViewModel
             {
                 Id = m.Id,
                 AuthorOpinion = m.AuthorOpinion,
@@ -81,7 +63,7 @@ namespace PhotographyAddicted.Services.DataServices
             return allThemes;
         }
 
-        public async Task<int> UpdateTheme(UpdateTheme input)
+        public async Task UpdateTheme(PreviewThemeViewModel input)
         {
             var updateTheme = themeDbSet.All().SingleOrDefault(t => t.Id == input.Id);
 
@@ -90,14 +72,12 @@ namespace PhotographyAddicted.Services.DataServices
             updateTheme.ThemeCategory = input.ThemeCategory;
 
             await themeDbSet.SaveChangesAsync();
-
-            return updateTheme.Id;     
         }     
 
-        public ThemeDetailsViewModel ViewSpecificTheme(int id)
+        public PreviewThemeViewModel PreviewTheme(int id)
         {
             var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser)
-                .Where(x => x.Id == id).Select(m=> new ThemeDetailsViewModel
+                .Where(x => x.Id == id).Select(m=> new PreviewThemeViewModel
                 {
                   Id =m.Id,
                   AuthorOpinion = m.AuthorOpinion,
@@ -112,29 +92,26 @@ namespace PhotographyAddicted.Services.DataServices
                     
             return specificTheme;
         }
-
-        public UpdateTheme ViewUpdateThemeById(int id)
-        {
-            var specificTheme = themeDbSet.All().Include(g => g.PhotographyAddictedUser)
-                .Where(x => x.Id == id).Select(m => new UpdateTheme
-            {
-                Id = m.Id,
-                AuthorOpinion = m.AuthorOpinion,
-                Title = m.Title,
-                ThemeCategory = m.ThemeCategory,
-                PhotographyAddictedUserId = m.PhotographyAddictedUserId,
-
-                
-            }).FirstOrDefault();
-
-            return specificTheme;
-        }
-
+             
         public int GetThemesCount()
         {
             int count = this.themeDbSet.All().Count();
 
             return count;
+        }
+
+        public PreviewThemeViewModel FindThemeBy(int Id)
+        {
+            var theme = themeDbSet.All().Where(x => x.Id == Id)
+                .Select(d => new PreviewThemeViewModel
+                {
+                    Id = d.Id,
+                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                    Title = d.Title,
+                    AuthorOpinion = d.AuthorOpinion,
+                }).FirstOrDefault();
+
+            return theme;
         }
     }
 }

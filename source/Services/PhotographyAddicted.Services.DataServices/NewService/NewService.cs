@@ -47,7 +47,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         }
         
-        public async Task DeleteUserNew(DeleteNewViewModel input)
+        public async Task DeleteNew(DeleteNewViewModel input)
         {
             var userNew = newDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
             newDbSet.Delete(userNew);

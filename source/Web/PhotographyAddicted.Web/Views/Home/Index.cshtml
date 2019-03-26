@@ -26,10 +26,10 @@
 
 <div>
     <h1>
-        <a asp-controller="Themes" asp-action="PreviewAllThemes">Preview all Themes</a>
+        <a asp-controller="Themes" asp-action="PreviewThemes">Preview all Themes</a>
         <br>
     </h1>
-    @foreach (var comment in themeService.GetAllThemes().OrderByDescending(x => x.Title).Take(3))
+    @foreach (var comment in themeService.PreviewThemes().OrderByDescending(x => x.Title).Take(3))
     {
         <h4>
             @comment.Title - @comment.ThemeComments.Count()

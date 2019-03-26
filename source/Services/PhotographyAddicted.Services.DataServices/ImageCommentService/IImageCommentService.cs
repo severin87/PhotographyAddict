@@ -1,4 +1,4 @@
-﻿using PhotographyAddicted.Services.Models.ImagesComment;
+﻿using PhotographyAddicted.Services.Models.ImagesComments;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,9 +12,9 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task AddImageComment(AddImageCommentViewModel input);
 
-        DeleteUserImageCommentViewModel FindImageCommentById(int Id);
+        DeleteImageCommentViewModel FindImageCommentById(int Id);
 
-        Task<int> DeleteUserImageComment(DeleteUserImageCommentViewModel input);
+        Task<int> DeleteUserImageComment(DeleteImageCommentViewModel input);
 
         Task<int> UpdateImageComment(UpdateImageCommentViewModel input);
 
