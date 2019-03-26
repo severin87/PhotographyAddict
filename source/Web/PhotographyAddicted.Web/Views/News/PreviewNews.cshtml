@@ -11,7 +11,7 @@
 <h2>PreviewAllNews</h2>
 
 <div class="search-container">
-    <form asp-controller="News" asp-action="PreviewAllNews">
+    <form asp-controller="News" asp-action="PreviewNews">
         <p>
             Title: <input placeholder="Search.." type="text" name="input">
             <button type="submit">Submit</button>
@@ -33,13 +33,13 @@
     <dl class="dl-horizontal"></dl>
 </div>
 <div>
-    @foreach (var userNew in Model.PreviewAllNews)
+    @foreach (var userNew in Model.PreviewNews)
     {
         <h4>
             <img src="data:image;base64,@System.Convert.ToBase64String(userNew.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
             @userNew.Title- @userNew.CreationDate - @userNew.ComentsCount
             <p>
-                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="ViewSpecificNew" asp-route-id="@userNew.Id">Check new!</a>
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="PreviewNew" asp-route-id="@userNew.Id">Check new!</a>
 
                 @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {

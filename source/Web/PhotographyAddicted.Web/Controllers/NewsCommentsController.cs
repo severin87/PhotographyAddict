@@ -26,7 +26,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (updatedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("ViewSpecificNew", "News", new { id = updatedNew.NewId });
+                return this.RedirectToAction("PreviewNew", "News", new { id = updatedNew.NewId });
             }
 
             return this.View(updatedNew);
@@ -42,7 +42,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int themeId = await newCommentService.UpdateNewComment(input);
 
-            return this.RedirectToAction("ViewSpecificNew", "News", new { id = themeId });
+            return this.RedirectToAction("PreviewNew", "News", new { id = themeId });
         }
 
         [Authorize]
@@ -68,7 +68,7 @@ namespace PhotographyAddicted.Web.Controllers
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await newCommentService.AddNewComment(input);
 
-            return this.RedirectToAction("ViewSpecificNew", "News", new { id = input.NewId });
+            return this.RedirectToAction("PreviewNew", "News", new { id = input.NewId });
         }
 
         [Authorize]
@@ -78,7 +78,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (deletedNewComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return RedirectToAction("Index", "Home");
+                return this.RedirectToAction("PreviewNew", "News", new { id = deletedNewComment.NewId });
             }
 
             return View(deletedNewComment);
@@ -95,7 +95,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int newId = await newCommentService.DeleteUserNewComment(input);
 
-            return this.RedirectToAction("ViewSpecificNew", "News", new { id = newId });
+            return this.RedirectToAction("PreviewNew", "News", new { id = newId });
         }
     }
 }

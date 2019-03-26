@@ -10,9 +10,9 @@ namespace PhotographyAddicted.Services.DataServices
     {
         PreviewThemeViewModel PreviewTheme(int id);
 
-        IEnumerable<PreviewThemeViewModel> PreviewThemes();
-
         PreviewThemeViewModel FindThemeBy(int Id);
+
+        PreviewThemesViewModel PreviewThemes(string input);
 
         Task DeleteTheme(PreviewThemeViewModel input);
 

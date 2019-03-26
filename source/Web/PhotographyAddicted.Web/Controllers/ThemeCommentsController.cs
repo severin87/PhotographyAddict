@@ -26,7 +26,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (updatedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("SpecificTheme", "Themes", new { id = updatedThemeComment.ThemeId });
+                return this.RedirectToAction("PreviewTheme", "Themes", new { id = updatedThemeComment.ThemeId });
             }
 
             return this.View(updatedThemeComment);
@@ -42,7 +42,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int themeId = await themeCommentService.UpdateThemeComment(input);
 
-            return this.RedirectToAction("SpecificTheme", "Themes", new { Id = themeId });
+            return this.RedirectToAction("PreviewTheme", "Themes", new { Id = themeId });
         }
 
         [Authorize]
@@ -68,7 +68,7 @@ namespace PhotographyAddicted.Web.Controllers
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             await themeCommentService.AddThemeComment(input);
 
-            return this.RedirectToAction("SpecificTheme", "Themes", new { id = input.ThemeId });
+            return this.RedirectToAction("PreviewTheme", "Themes", new { id = input.ThemeId });
         }
 
         [Authorize]
@@ -78,7 +78,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             if (deletedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("PreviewAllThemes", "Themes");
+                return this.RedirectToAction("PreviewTheme", "Themes", new { id = deletedThemeComment.ThemeId });
             }
 
             return View(deletedThemeComment);
@@ -95,7 +95,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             int themeId = await themeCommentService.DeleteThemeComment(input);
 
-            return this.RedirectToAction("SpecificTheme", "Themes", new { id = themeId });
+            return this.RedirectToAction("PreviewTheme", "Themes", new { id = themeId });
         }
     }
 }

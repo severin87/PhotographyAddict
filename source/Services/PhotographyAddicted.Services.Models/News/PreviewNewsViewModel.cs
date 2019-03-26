@@ -6,6 +6,6 @@ namespace PhotographyAddicted.Services.Models.News
 {
     public class PreviewNewsViewModel
     {
-        public IEnumerable<PreviewNewViewModel> PreviewAllNews { get; set; }
+        public IEnumerable<PreviewNewViewModel> PreviewNews { get; set; }
     }
 }

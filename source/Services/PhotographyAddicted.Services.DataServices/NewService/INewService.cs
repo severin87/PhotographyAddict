@@ -9,24 +9,18 @@ using System.Threading.Tasks;
 namespace PhotographyAddicted.Services.DataServices
 {
     public interface INewService
-    {
-        Task AddNew(AddNewViewModel input, IFormFile NewImage);
-
-        IEnumerable<PreviewNewViewModel> PreviewAllNews();
-
-        IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input);
-
+    {     
         PreviewNewsViewModel PreviewNews(string input);
 
-        PreviewNewViewModel ViewSpecificNew(int id);
+        PreviewNewViewModel PreviewNew(int id);
 
-        DeleteNewViewModel FindNewById(int Id);
+        PreviewNewViewModel FindNewBy(int Id);
 
-        Task DeleteNew(DeleteNewViewModel input);
+        Task AddNew(AddNewViewModel input, IFormFile NewImage);
 
-        UpdateNewViewModel FindUpdateNewById(int Id);
+        Task UpdateNew(PreviewNewViewModel input);
 
-        Task<int> UpdateNew(UpdateNewViewModel input);
+        Task DeleteNew(PreviewNewViewModel input);
 
         int GetNewsCount();
     }

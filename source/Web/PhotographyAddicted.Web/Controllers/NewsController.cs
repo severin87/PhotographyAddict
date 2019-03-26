@@ -11,6 +11,7 @@ using PhotographyAddicted.Services.Models.News;
 
 namespace PhotographyAddicted.Web.Controllers
 {
+    [Authorize]
     public class NewsController : BaseController
     {
         private INewService newService;
@@ -22,34 +23,33 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult UpdateNew(int id)
         {
-
-            var updatedNew = this.newService.FindUpdateNewById(id);
+            var updatedNew = this.newService.FindNewBy(id);
 
             if (updatedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                return this.RedirectToAction("ViewSpecificNew", new { id = updatedNew.Id });
+                return this.RedirectToAction("PreviewNew", new { id = updatedNew.Id });
             }
 
             return this.View(updatedNew);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateNew(UpdateNewViewModel input)
+        public async Task<IActionResult> UpdateNew(PreviewNewViewModel input)
         {
             if (!this.ModelState.IsValid)
             {
                 return View(input);
             }
 
-            int newId = await newService.UpdateNew(input);
+            await newService.UpdateNew(input);
 
-            return this.RedirectToAction("ViewSpecificNew", new { Id = newId });
+            return this.RedirectToAction("PreviewNews", "News");
         }
 
         [Authorize]
         public IActionResult DeleteNew(int Id)
         {
-            var deletedNew = newService.FindNewById(Id);
+            var deletedNew = newService.FindNewBy(Id);
 
             if (deletedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
@@ -61,7 +61,7 @@ namespace PhotographyAddicted.Web.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteNew(DeleteNewViewModel input)
+        public async Task<IActionResult> DeleteNew(PreviewNewViewModel input)
         {
             if (!ModelState.IsValid)
             {
@@ -73,26 +73,26 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewNews", "News");
         }
 
+        [AllowAnonymous]
         public IActionResult PreviewNews(string input)
         {
             var allNews = newService.PreviewNews(input);
             return View(allNews);
         }
-               
 
-        public IActionResult ViewSpecificNew(int Id)
+        [AllowAnonymous]
+        public IActionResult PreviewNew(int Id)
         {
-            var specificNew = newService.ViewSpecificNew(Id);
+            var specificNew = newService.PreviewNew(Id);
 
             return this.View(specificNew);
         }
-
-        [Authorize]
+        
         public IActionResult AddNew()
         {
             return View();
         }
-        [Authorize]
+                
         [HttpPost]
         public async Task<IActionResult> AddNew(AddNewViewModel input, IFormFile NewImage)
         {
@@ -105,9 +105,8 @@ namespace PhotographyAddicted.Web.Controllers
             }
             else
             {
-                return this.View(input); // this.View(sev);
+                return this.View(input);
             }
-
         }
     }
 }

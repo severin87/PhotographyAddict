@@ -44,90 +44,22 @@ namespace PhotographyAddicted.Services.DataServices
 
             await newDbSet.AddAsync(currentNew);
             await newDbSet.SaveChangesAsync();
-
         }
         
-        public async Task DeleteNew(DeleteNewViewModel input)
+        public async Task DeleteNew(PreviewNewViewModel input)
         {
             var userNew = newDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
             newDbSet.Delete(userNew);
-            await newDbSet.SaveChangesAsync();
-                        
-        }
-        public DeleteNewViewModel FindNewById(int Id)
-    {
-            var userNew = newDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteNewViewModel
-                {
-                    Id = d.Id,
-                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,                    
-                    NewImage = d.NewImage,
-                    Title = d.Title,
-                    TextContent = d.TextContent,
-                    
-                }).FirstOrDefault();
-
-            return userNew;
-        }
-
-        public UpdateNewViewModel FindUpdateNewById(int Id)
-        {
-            var userNew = newDbSet.All().Where(x => x.Id == Id)
-                 .Select(d => new UpdateNewViewModel
-                 {
-                     Id = d.Id,
-                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,
-                     Title = d.Title,
-                     TextContent = d.TextContent,
-
-                 }).FirstOrDefault();
-
-            return userNew;
-        }
-
-        public IEnumerable<PreviewNewViewModel> PreviewAllNews()
-        {
-            var news = newDbSet.All().Select(u => 
-             new PreviewNewViewModel
-             {
-                 CreationDate = u.CreationDate,
-                 ComentsCount = u.NewComments.Count(),
-                 NewImage = u.NewImage,
-                 Title = u.Title,
-                 Id = u.Id,
-                 TextContent = u.TextContent,
-                 PhotographyAddictedUserId = u.PhotographyAddictedUserId,
-
-             });
-
-            return news;
-        }
-        public IEnumerable<PreviewNewViewModel> PreviewSearchedNews(string input)
-        {
-            var news = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
-              new PreviewNewViewModel
-              {
-                  CreationDate = u.CreationDate,
-                  ComentsCount = u.NewComments.Count(),
-                  NewImage = u.NewImage,
-                  Title = u.Title,
-                  Id = u.Id,
-                  TextContent = u.TextContent,
-                  PhotographyAddictedUserId = u.PhotographyAddictedUserId,
-
-              });
-
-            return news;
+            await newDbSet.SaveChangesAsync();                        
         }
 
         public PreviewNewsViewModel PreviewNews(string input)
         {
-
             PreviewNewsViewModel allNews = new PreviewNewsViewModel();          
           
             if (input == null)
             {
-                allNews.PreviewAllNews = newDbSet.All().Select(u =>
+                allNews.PreviewNews = newDbSet.All().Select(u =>
                 new PreviewNewViewModel
                 {
                     CreationDate = u.CreationDate,
@@ -142,7 +74,7 @@ namespace PhotographyAddicted.Services.DataServices
             }
             else
             {
-                allNews.PreviewAllNews = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
+                allNews.PreviewNews = newDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
                 new PreviewNewViewModel
                 {
                     CreationDate = u.CreationDate,
@@ -158,7 +90,7 @@ namespace PhotographyAddicted.Services.DataServices
             return allNews;
         }
 
-        public async Task<int> UpdateNew(UpdateNewViewModel input)
+        public async Task UpdateNew(PreviewNewViewModel input)
         {
             var updateNew = newDbSet.All().SingleOrDefault(t => t.Id == input.Id);
 
@@ -166,11 +98,9 @@ namespace PhotographyAddicted.Services.DataServices
             updateNew.Title = input.Title;
             
             await newDbSet.SaveChangesAsync();
-
-            return updateNew.Id;
         }
 
-        public PreviewNewViewModel ViewSpecificNew(int id)
+        public PreviewNewViewModel PreviewNew(int id)
         {
             var specificNew = newDbSet.All()
                .Where(x => x.Id == id).Select(m => new PreviewNewViewModel
@@ -194,6 +124,21 @@ namespace PhotographyAddicted.Services.DataServices
             int count = this.newDbSet.All().Count();
 
             return count;
+        }
+
+        public PreviewNewViewModel FindNewBy(int Id)
+        {
+            var userNew = newDbSet.All().Where(x => x.Id == Id)
+                  .Select(d => new PreviewNewViewModel
+                  {
+                      Id = d.Id,
+                      PhotographyAddictedUserId = d.PhotographyAddictedUserId,
+                      Title = d.Title,
+                      TextContent = d.TextContent,
+                      NewImage = d.NewImage,
+                  }).FirstOrDefault();
+
+            return userNew;
         }
     }
 }

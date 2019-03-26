@@ -3,7 +3,7 @@
 @using System.Security.Claims
 
 @{
-    ViewData["Title"] = "ViewSpecificNew";
+    ViewData["Title"] = "PreviewNew";
 }
 
 <h2>ViewSpecificNew</h2>
@@ -24,13 +24,13 @@
 
         @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@Model.Id">Update </a>
-            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@Model.Id">Delete</a>
+        <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@Model.Id">Update </a>
+        <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@Model.Id">Delete</a>
         }
 
         @if (this.User.Identity.IsAuthenticated)
         {
-            <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="AddNewComment" asp-route-id="@Model.Id">Add coment! </a>
+        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="AddNewComment" asp-route-id="@Model.Id">Add coment! </a>
         }
     </h1>
 
@@ -43,8 +43,8 @@
         @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
         @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
         {
-            <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>
-            <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id">Edit</a>
+        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>
+        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id">Edit</a>
         }
     </h4>
     }

@@ -98,16 +98,11 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewThemes()
+        public IActionResult PreviewThemes(string input)
         {
-            var themes = themeService.PreviewThemes();
-
-            var allThemes = new PreviewThemesViewModel()
-            {
-                ThemeInfos = themes
-            };
-
-            return View(allThemes);
+            var themes = themeService.PreviewThemes(input);
+            
+            return View(themes);
         }       
     }
 }

@@ -44,24 +44,6 @@ namespace PhotographyAddicted.Services.DataServices
             await themeDbSet.SaveChangesAsync();
 
         }
-        
-        public IEnumerable<PreviewThemeViewModel> PreviewThemes()
-        {
-            var allThemes = themeDbSet.All().Include(g => g.PhotographyAddictedUser).Select(m => new PreviewThemeViewModel
-            {
-                Id = m.Id,
-                AuthorOpinion = m.AuthorOpinion,
-                Title = m.Title,
-                UserName = m.PhotographyAddictedUser.UserName,
-                ThemeCategory = m.ThemeCategory,
-                ThemeComments = m.ThemeComments,
-                PhotographyAddictedUserId = m.PhotographyAddictedUserId,
-                CreationDate = m.CreationDate,
-
-            }).ToList();
-
-            return allThemes;
-        }
 
         public async Task UpdateTheme(PreviewThemeViewModel input)
         {
@@ -112,6 +94,46 @@ namespace PhotographyAddicted.Services.DataServices
                 }).FirstOrDefault();
 
             return theme;
+        }
+
+        public PreviewThemesViewModel PreviewThemes(string input)
+        {
+            PreviewThemesViewModel themes = new PreviewThemesViewModel();
+
+            if (input == null)
+            {
+                themes.PreviewThemes = themeDbSet.All().Select(u =>
+                new PreviewThemeViewModel
+                {
+                    CreationDate = u.CreationDate,
+                    AuthorOpinion = u.AuthorOpinion,
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    ThemeCategory = u.ThemeCategory,
+                    ThemeComments = u.ThemeComments,
+                    UserName = u.PhotographyAddictedUser.UserName, 
+                });
+            }
+            else
+            {
+                themes.PreviewThemes = themeDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
+                new PreviewThemeViewModel
+                {
+                    CreationDate = u.CreationDate,
+                    AuthorOpinion = u.AuthorOpinion,
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    ThemeCategory = u.ThemeCategory,
+                    ThemeComments = u.ThemeComments,
+                    UserName = u.PhotographyAddictedUser.UserName,
+                });
+            }
+
+            return themes;
         }
     }
 }

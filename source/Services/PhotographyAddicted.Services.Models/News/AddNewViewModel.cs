@@ -19,6 +19,5 @@ namespace PhotographyAddicted.Services.Models.News
         public DateTime CreationDate { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
-
     }
 }
