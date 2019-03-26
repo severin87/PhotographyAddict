@@ -1,4 +1,5 @@
-﻿using PhotographyAddicted.Services.Models.Images;
+﻿using Microsoft.AspNetCore.Http;
+using PhotographyAddicted.Services.Models.Images;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,18 +9,20 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public interface IImageService
     {
-        IEnumerable<ImagePreviewViewModel> GetImagesByUser(string userId);
+        PreviewImagesViewModel PreviewImages(string input);
 
-        ImagePreviewViewModel GetImageById(int imageId);
+        PreviewImageViewModel PreviewImage(int imageId);
 
-        Task<int> AddImage (AddImageViewModel input);
+        PreviewImageViewModel FindImageById(int Id);
 
-        Task<int> UpdateImage(ImagePreviewViewModel input);
+        Task<int> AddImage(AddImageViewModel input, IFormFile ProfilePicture);
 
-        DeleteImageViewModel FindDeletingImageById(int Id);
+        Task<int> UpdateImage(PreviewImageViewModel input);
 
-        Task DeleteImage(DeleteImageViewModel input);
+        Task DeleteImage(PreviewImageViewModel input);
 
         int GetImagesCount();
+
+        IEnumerable<PreviewImageViewModel> GetImagesByUser(string userId);       
     }
 }

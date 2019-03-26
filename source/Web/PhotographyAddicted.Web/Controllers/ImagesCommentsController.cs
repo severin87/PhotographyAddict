@@ -50,6 +50,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var deletedImageComment = imageCommentService.FindImageCommentById(Id);
 
+            if (deletedImageComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (deletedImageComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("ViewPictureDetails", "Image", new { id = deletedImageComment.ImageId });

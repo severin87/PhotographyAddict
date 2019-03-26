@@ -1,6 +1,7 @@
 ﻿@using PhotographyAddicted.Services.DataServices
 @inject INewService  newService
 @inject IThemeService themeService
+@inject IImageService imageService
 
 @{
     ViewData["Title"] = "Home Page";
@@ -26,10 +27,30 @@
 
 <div>
     <h1>
+        <a asp-controller="Image" asp-action="PreviewImages">Preview all Images</a>
+        <br>
+    </h1>
+    @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(3))
+     {
+       <h4>
+          @if(comment.Picture != null)
+          {
+          <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+          }
+
+          @comment.Title - @comment.ImageComments.Count()
+          <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="ViewPictureDetails" asp-route-id="@comment.Id">Check new!</a>
+       </h4>
+     }
+</div>
+<hr />
+
+<div>
+    <h1>
         <a asp-controller="Themes" asp-action="PreviewThemes">Preview all Themes</a>
         <br>
     </h1>
-    @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.Title).Take(3))
+    @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(3))
     {
         <h4>
             @comment.Title - @comment.ThemeComments.Count()

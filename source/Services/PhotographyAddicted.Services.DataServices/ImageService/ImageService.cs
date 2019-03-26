@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
 using PhotographyAddicted.Services.Models.Images;
@@ -12,16 +14,24 @@ namespace PhotographyAddicted.Services.DataServices
 {
     public class ImageService : IImageService
     {
-
-        private readonly IRepository<Image> imageInfo;
+        private readonly IRepository<Image> imageDbSet;
                
-        public ImageService(IRepository<Image> imageInfo )
+        public ImageService(IRepository<Image> imageDbSet )
         {
-            this.imageInfo = imageInfo;
+            this.imageDbSet = imageDbSet;
         }
 
-        public async Task<int> AddImage(AddImageViewModel input)
+        public async Task<int> AddImage(AddImageViewModel input, IFormFile Picture)
         {
+            if (Picture.Length > 0)
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await Picture.CopyToAsync(stream);
+                    input.Picture = stream.ToArray();
+                }
+            }
+
             var newImage = new Image()
             {
                 Title = input.Title,
@@ -32,16 +42,16 @@ namespace PhotographyAddicted.Services.DataServices
                 UploadedDate = DateTime.UtcNow,
                 
             };
-            await imageInfo.AddAsync(newImage);
-            await imageInfo.SaveChangesAsync();
+            await imageDbSet.AddAsync(newImage);
+            await imageDbSet.SaveChangesAsync();
 
             return newImage.Id; 
         }
 
-        public ImagePreviewViewModel GetImageById(int imageId)
+        public PreviewImageViewModel PreviewImage(int imageId)
         {
-            var currentImage = imageInfo.All().Where(i => i.Id == imageId)
-                .Select(p => new ImagePreviewViewModel
+            var currentImage = imageDbSet.All().Where(i => i.Id == imageId)
+                .Select(p => new PreviewImageViewModel
                 {
                     Id = imageId,
                     Title = p.Title,
@@ -52,28 +62,29 @@ namespace PhotographyAddicted.Services.DataServices
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,     
                     Description =p.Description,
                     ImageComments =p.ImageComments,
+                    UploadedDate = p.UploadedDate,
                 }).FirstOrDefault();
 
             return currentImage;
         }
 
-        public async Task<int> UpdateImage(ImagePreviewViewModel input)
+        public async Task<int> UpdateImage(PreviewImageViewModel input)
         {
-            var updateImageInfo = imageInfo.All().SingleOrDefault(t => t.Id == input.Id);
+            var updateImageDbSet = imageDbSet.All().SingleOrDefault(t => t.Id == input.Id);
 
-            updateImageInfo.ImageCategory = input.ImageCategory;
-            updateImageInfo.Title = input.Title;
-            updateImageInfo.Description = input.Description;
+            updateImageDbSet.ImageCategory = input.ImageCategory;
+            updateImageDbSet.Title = input.Title;
+            updateImageDbSet.Description = input.Description;
 
-            await imageInfo.SaveChangesAsync();
+            await imageDbSet.SaveChangesAsync();
 
-            return updateImageInfo.Id;
+            return updateImageDbSet.Id;
         }
 
-        public IEnumerable<ImagePreviewViewModel> GetImagesByUser(string userId)
+        public IEnumerable<PreviewImageViewModel> GetImagesByUser(string userId)
         {
-            var usersImages = imageInfo.All().Where(i => i.PhotographyAddictedUserId == userId)
-                .Select( p => new ImagePreviewViewModel
+            var userImages = imageDbSet.All().Where(i => i.PhotographyAddictedUserId == userId)
+                .Select( p => new PreviewImageViewModel
                 {
                     Id = p.Id,
                     Title = p.Title,
@@ -81,40 +92,83 @@ namespace PhotographyAddicted.Services.DataServices
                     Scores = p.Scores,
                     ImageCategory = p.ImageCategory,
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,
+                    UploadedDate = p.UploadedDate,
                 })
                 .ToList();
 
-            return usersImages;            
+            return userImages;            
         }
 
-        public DeleteImageViewModel FindDeletingImageById(int Id)
+        public PreviewImageViewModel FindImageById(int Id)
         {
-            var image = imageInfo.All().Where(x => x.Id == Id)
-                .Select(d => new DeleteImageViewModel
+            var image = imageDbSet.All().Where(x => x.Id == Id)
+                .Select(d => new PreviewImageViewModel
                 {
                     Id = d.Id,
                     PhotographyAddictedUserId = d.PhotographyAddictedUserId,
                     Title = d.Title,
                     Picture = d.Picture,
-
+                    UploadedDate = d.UploadedDate,
                 }).FirstOrDefault();
 
             return image;
         }
 
-        public async Task DeleteImage(DeleteImageViewModel input)
+        public async Task DeleteImage(PreviewImageViewModel input)
         {
-            var image = imageInfo.All().Where(x => x.Id == input.Id).FirstOrDefault();
+            var image = imageDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
 
-            imageInfo.Delete(image);
-            await imageInfo.SaveChangesAsync();
+            imageDbSet.Delete(image);
+            await imageDbSet.SaveChangesAsync();
         }
 
         public int GetImagesCount()
         {
-            int count = this.imageInfo.All().Count();
+            int count = this.imageDbSet.All().Count();
 
             return count;
+        }
+
+        public PreviewImagesViewModel PreviewImages(string input)
+        {
+            PreviewImagesViewModel images = new PreviewImagesViewModel();
+
+            if (input == null)
+            {
+                images.PreviewImages = imageDbSet.All().Select(u =>
+                new PreviewImageViewModel
+                {
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    Description = u.Description,
+                    ImageCategory = u.ImageCategory,
+                    ImageComments = u.ImageComments,
+                    Picture = u.Picture,
+                    Scores = u.Scores,
+                    UploadedDate = u.UploadedDate,
+                });
+            }
+            else
+            {
+                images.PreviewImages = imageDbSet.All().Where(n => n.Title.Contains(input)).Select(u =>
+                new PreviewImageViewModel
+                {
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    Description = u.Description,
+                    ImageCategory = u.ImageCategory,
+                    ImageComments = u.ImageComments,
+                    Picture = u.Picture,
+                    Scores = u.Scores,
+                    UploadedDate =u.UploadedDate,
+                });
+            }
+
+            return images;
         }
     }
 }

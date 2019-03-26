@@ -76,6 +76,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var deletedNewComment = newCommentService.FindNewCommentById(Id);
 
+            if (deletedNewComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (deletedNewComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("PreviewNew", "News", new { id = deletedNewComment.NewId });

@@ -1,4 +1,4 @@
-﻿@model PhotographyAddicted.Services.Models.Images.ImagePreviewViewModel
+﻿@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
 
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
@@ -10,7 +10,7 @@
 <h2>ViewPictureDetails</h2>
 
 <p>
-    @Model.ImageCategory
+    @Model.ImageCategory - @Model.UploadedDate
 </p>
 <p>
     @Model.Title - @Model.PhotographyAddictedUser.UserName

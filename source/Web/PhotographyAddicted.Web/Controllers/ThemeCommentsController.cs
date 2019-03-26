@@ -76,6 +76,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var deletedThemeComment = themeCommentService.FindThemeCommentById(Id);
 
+            if (deletedThemeComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (deletedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("PreviewTheme", "Themes", new { id = deletedThemeComment.ThemeId });

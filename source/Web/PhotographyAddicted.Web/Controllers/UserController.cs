@@ -59,7 +59,6 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 return this.View(input); 
             }
-
         }
     }
 }

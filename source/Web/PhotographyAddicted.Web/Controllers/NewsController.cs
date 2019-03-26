@@ -51,6 +51,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var deletedNew = newService.FindNewBy(Id);
 
+            if (deletedNew == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (deletedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("PreviewNews", "News");

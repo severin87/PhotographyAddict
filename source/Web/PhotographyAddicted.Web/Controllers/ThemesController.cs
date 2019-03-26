@@ -24,6 +24,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var deletedTheme = themeService.FindThemeBy(Id);
 
+            if (deletedTheme == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
                 return this.RedirectToAction("PreviewThemes", "Themes");
