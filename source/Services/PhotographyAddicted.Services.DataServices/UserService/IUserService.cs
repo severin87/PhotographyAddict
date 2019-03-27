@@ -12,7 +12,9 @@ namespace PhotographyAddicted.Services.DataServices
     {        
         PreviewUserViewModel PreviewUser(string id);
 
-        IEnumerable<PreviewUserViewModel> PreviewUsers();
+        //IEnumerable<PreviewUserViewModel> PreviewUsers();
+
+        PreviewUsersViewModel PreviewUsers(string input);
 
         Task<string> UpdateProfilePicture(PreviewUserViewModel input, IFormFile ProfilePicture);
 

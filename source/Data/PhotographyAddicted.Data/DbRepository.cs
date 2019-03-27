@@ -11,9 +11,9 @@ namespace PhotographyAddicted.Data
     public class DbRepository<TEntity> : IRepository<TEntity>, IDisposable where TEntity : class
     {
 
-        private PhotographyAddictedContext context;
+        private readonly PhotographyAddictedContext context;
 
-        private DbSet<TEntity> dbSet;
+        private readonly DbSet<TEntity> dbSet;
 
         public DbRepository(PhotographyAddictedContext context)
         {

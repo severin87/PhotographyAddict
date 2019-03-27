@@ -68,22 +68,22 @@ namespace PhotographyAddicted.Services.DataServices
             return count;
         }
 
-        public IEnumerable<PreviewUserViewModel> PreviewUsers()
-        {
-            var userInfos = userDbset.All().Select(u =>
-            new PreviewUserViewModel
-            {
-                CreationDate = u.CreationDate,
-                Id = u.Id,
-                ImageCount = u.Images.Count(),
-                LastLogin = u.LastLogin,
-                ProfilePicture = u.ProfilePicture,
-                Rang = u.Rang,
-                UserName = u.UserName,                
-            });
+        //public IEnumerable<PreviewUserViewModel> PreviewUsers()
+        //{
+        //    var userInfos = userDbset.All().Select(u =>
+        //    new PreviewUserViewModel
+        //    {
+        //        CreationDate = u.CreationDate,
+        //        Id = u.Id,
+        //        ImageCount = u.Images.Count(),
+        //        LastLogin = u.LastLogin,
+        //        ProfilePicture = u.ProfilePicture,
+        //        Rang = u.Rang,
+        //        UserName = u.UserName,                
+        //    });
 
-            return userInfos;
-        }
+        //    return userInfos;
+        //}
         
         public int UserScores(string id)
         {
@@ -103,5 +103,53 @@ namespace PhotographyAddicted.Services.DataServices
 
             return userScores;
         }
+
+       public PreviewUsersViewModel PreviewUsers(string input)
+       {
+            PreviewUsersViewModel themes = new PreviewUsersViewModel();
+
+            if (input == null)
+            {
+                themes.PreviewUsers = userDbset.All().Select(u =>
+                new PreviewUserViewModel
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    ProfilePicture = u.ProfilePicture,
+                    Technique = u.Technique,
+                    SelfDescription = u.SelfDescription,
+                    ImageCount = u.Images.Count(),
+                    Rang = u.Rang,
+                    AverageScore = u.AverageScore,
+                    CreationDate = u.CreationDate,
+                    LastLogin = u.LastLogin,
+                    Blocked = u.Blocked,
+                    IsBanned = u.IsBanned,
+                    Images = u.Images,
+                });
+            }
+            else
+            {
+                themes.PreviewUsers = userDbset.All().Where(n => n.UserName.Contains(input)).Select(u =>
+                new PreviewUserViewModel
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    ProfilePicture = u.ProfilePicture,
+                    Technique = u.Technique,
+                    SelfDescription = u.SelfDescription,
+                    ImageCount = u.Images.Count(),
+                    Rang = u.Rang,
+                    AverageScore = u.AverageScore,
+                    CreationDate = u.CreationDate,
+                    LastLogin = u.LastLogin,
+                    Blocked = u.Blocked,
+                    IsBanned = u.IsBanned,
+                    Images = u.Images,
+                });
+            }
+
+            return themes;
+       }
     }
 }

@@ -22,13 +22,10 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewUsers()
+        public IActionResult PreviewUsers(string input)
         {
-            PreviewUsersViewModel usersProfiles = new PreviewUsersViewModel
-            {
-                UserInfos = userService.PreviewUsers(),
-            };
-
+            PreviewUsersViewModel usersProfiles = userService.PreviewUsers(input);
+            
             return View(usersProfiles);
         }
 
@@ -53,7 +50,7 @@ namespace PhotographyAddicted.Web.Controllers
                 input.Id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await userService.UpdateProfilePicture(input, ProfilePicture);
 
-                return RedirectToAction("PreviewUser", "User", new { Id = input.Id  }); 
+                return RedirectToAction("PreviewUser", "User", new { id = input.Id  }); 
             }
             else
             {

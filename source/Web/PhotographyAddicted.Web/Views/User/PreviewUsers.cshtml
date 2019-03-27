@@ -14,10 +14,18 @@
     <hr />
     <dl class="dl-horizontal"></dl>
 </div>
-
-
+<div class="search-container">
+    <form asp-controller="User" asp-action="PreviewUsers">
+        <p>
+            Title: <input placeholder="Search.." type="text" name="input">
+            <button type="submit">Submit</button>
+            <a class="btn btn-default btn-sm" asp-controller="User" asp-action="PreviewUsers" >Clear!</a>
+        </p>
+    </form>
+</div>
+<hr />
 <div>
-    @foreach (var user in Model.UserInfos)
+    @foreach (var user in Model.PreviewUsers)
     {
         <a>
             @if (user.ProfilePicture != null)
@@ -26,7 +34,7 @@
             }
         </a>
         <h4>
-            @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - 
+            @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - @userService.UserScores(user.Id)
             <a asp-controller="User" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
         </h4>
     }
