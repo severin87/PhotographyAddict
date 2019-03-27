@@ -27,7 +27,7 @@
 
 <div>
     <h1>
-        <a asp-controller="Image" asp-action="PreviewImages">Preview all Images</a>
+        <a asp-controller="Images" asp-action="PreviewImages">Preview all Images</a>
         <br>
     </h1>
     @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(3))
@@ -39,7 +39,7 @@
           }
 
           @comment.Title - @comment.ImageComments.Count()
-          <a class="btn btn-default btn-sm" asp-controller="Image" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>
+          <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>
        </h4>
      }
 </div>
