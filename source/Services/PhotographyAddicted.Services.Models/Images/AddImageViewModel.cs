@@ -15,14 +15,13 @@ namespace PhotographyAddicted.Services.Models.Images
         public string Title { get; set; }
 
         public ImageCategory ImageCategory { get; set; }
-
+        
         public string Description { get; set; }
 
         public DateTime UploadedDate { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
 
-        public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
-        
+        public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }        
     }
 }

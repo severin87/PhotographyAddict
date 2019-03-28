@@ -81,20 +81,24 @@ namespace PhotographyAddicted.Services.DataServices
             return updateImageDbSet.Id;
         }
 
-        public IEnumerable<PreviewImageViewModel> GetImagesByUser(string userId)
+        public PreviewImagesViewModel PreviewUserImages(string userId)
         {
-            var userImages = imageDbSet.All().Where(i => i.PhotographyAddictedUserId == userId)
+            var images = imageDbSet.All().Where(i => i.PhotographyAddictedUserId == userId)
                 .Select( p => new PreviewImageViewModel
                 {
                     Id = p.Id,
                     Title = p.Title,
                     Picture = p.Picture,
                     Scores = p.Scores,
-                    ImageCategory = p.ImageCategory,
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,
                     UploadedDate = p.UploadedDate,
                 })
                 .ToList();
+
+            var userImages = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
 
             return userImages;            
         }
@@ -109,6 +113,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Title = d.Title,
                     Picture = d.Picture,
                     UploadedDate = d.UploadedDate,
+                    ImageCategory = d.ImageCategory,
+                    Description = d.Description,
                 }).FirstOrDefault();
 
             return image;
@@ -148,7 +154,7 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate = u.UploadedDate,
-                });
+                }).OrderByDescending(d => d.UploadedDate);
             }
             else
             {
@@ -165,10 +171,131 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate =u.UploadedDate,
-                });
+                }).OrderByDescending(d => d.UploadedDate);
             }
 
             return images;
+        }
+
+        public PreviewImagesViewModel PreviewImagesByCategoriesAndDates()
+        {
+            var images = new List<PreviewImageViewModel>();
+
+            for (int i = 1; i < 13; i++)
+            {
+                var checkCategory = imageDbSet.All().Where(p => (int)p.ImageCategory == i);
+                if (checkCategory.Count()!=0)
+                {
+                    var currentImage = imageDbSet.All().Where(p => (int)p.ImageCategory == i).OrderByDescending(s => s.UploadedDate).Select(u => new PreviewImageViewModel
+                    {
+                        Id = u.Id,
+                        PhotographyAddictedUser = u.PhotographyAddictedUser,
+                        PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                        Description = u.Description,
+                        ImageCategory = u.ImageCategory,
+                        ImageComments = u.ImageComments,
+                        Picture = u.Picture,
+                        Scores = u.Scores,
+                        UploadedDate = u.UploadedDate,
+                    }).First();
+
+                    images.Add(currentImage);
+                }                   
+            }
+
+            var imagesByCategory = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
+
+            return imagesByCategory;
+        }
+
+        public PreviewImagesViewModel PreviewCategoryImages(int category)
+        {
+            var images = imageDbSet.All().Where(i => (int)i.ImageCategory == category).OrderByDescending(d => d.UploadedDate)
+                .Select(u => new PreviewImageViewModel
+                {
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    Description = u.Description,
+                    ImageCategory = u.ImageCategory,
+                    ImageComments = u.ImageComments,
+                    Picture = u.Picture,
+                    Scores = u.Scores,
+                    UploadedDate = u.UploadedDate,
+                }).ToList();
+
+            var imagesByCategory = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
+
+            return imagesByCategory;
+        }
+
+        public PreviewImagesViewModel PreviewTopImagesLasтThirtyDays(int category)
+        {
+            var images = imageDbSet.All().Where(i => (int)i.ImageCategory == category)
+                .Where(t => t.UploadedDate > DateTime.Now.AddDays(-30)).OrderByDescending(d => d.Scores)
+                .Select(u => new PreviewImageViewModel
+                {
+                    Title = u.Title,
+                    Id = u.Id,
+                    PhotographyAddictedUser = u.PhotographyAddictedUser,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    Description = u.Description,
+                    ImageCategory = u.ImageCategory,
+                    ImageComments = u.ImageComments,
+                    Picture = u.Picture,
+                    Scores = u.Scores,
+                    UploadedDate = u.UploadedDate,
+                }).ToList();
+
+            var imagesByCategory = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
+
+            return imagesByCategory;
+        }
+
+        public PreviewImagesViewModel PreviewTopImagesLasтThirtyDaysByCategory()
+        {
+            var images = new List<PreviewImageViewModel>();
+
+            for (int i = 1; i < 13; i++)
+            {
+                var checkCategory = imageDbSet.All().Where(p => (int)p.ImageCategory == i).Where(t => t.UploadedDate > DateTime.Now.AddDays(-30));
+                if (checkCategory.Count() != 0)
+                {
+                    var currentImage = imageDbSet.All().Where(p => (int)p.ImageCategory == i)
+                        .Where(t => t.UploadedDate > DateTime.Now.AddDays(-30)).OrderByDescending(s => s.Scores).Select(u => new PreviewImageViewModel
+                    {
+                        Title = u.Title,
+                        Id = u.Id,
+                        PhotographyAddictedUser = u.PhotographyAddictedUser,
+                        PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                        Description = u.Description,
+                        ImageCategory = u.ImageCategory,
+                        ImageComments = u.ImageComments,
+                        Picture = u.Picture,
+                        Scores = u.Scores,
+                        UploadedDate = u.UploadedDate,
+                    }).First();
+
+                    images.Add(currentImage);
+                }
+            }
+
+            var imagesByCategory = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
+
+            return imagesByCategory;
         }
     }
 }

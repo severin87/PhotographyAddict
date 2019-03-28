@@ -11,6 +11,16 @@ namespace PhotographyAddicted.Services.DataServices
     {
         PreviewImagesViewModel PreviewImages(string input);
 
+        PreviewImagesViewModel PreviewUserImages(string userId);
+
+        PreviewImagesViewModel PreviewImagesByCategoriesAndDates();
+
+        PreviewImagesViewModel PreviewCategoryImages(int category);
+
+        PreviewImagesViewModel PreviewTopImagesLasтThirtyDaysByCategory();
+
+        PreviewImagesViewModel PreviewTopImagesLasтThirtyDays(int category);
+
         PreviewImageViewModel PreviewImage(int imageId);
 
         PreviewImageViewModel FindImageById(int Id);
@@ -21,8 +31,6 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task DeleteImage(PreviewImageViewModel input);
 
-        int GetImagesCount();
-
-        IEnumerable<PreviewImageViewModel> GetImagesByUser(string userId);       
+        int GetImagesCount(); 
     }
 }
