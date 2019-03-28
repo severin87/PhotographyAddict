@@ -17,6 +17,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
             ImageComments = new HashSet<ImageComment>();
             Themes = new HashSet<Theme>();
             ThemeComments = new HashSet<ThemeComment>();
+            PhotoStoryComments = new HashSet<PhotoStoryComment>();
+            PhotoStorys = new HashSet<PhotoStory>();
         }
         
         public string SelfDescription { get; set; }
@@ -56,6 +58,10 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<Theme> Themes { get; set; }
 
+        public virtual ICollection<PhotoStoryComment> PhotoStoryComments { get; set; }
+
+        public virtual ICollection<PhotoStory> PhotoStorys { get; set; }
+
         //TODO: Dobavqne i statut s priwilegiii zadulveniq. Roli
         //TODO: Dobavqne na lubimi snimki i avtori.
         //TODO: tochki na glasa
@@ -64,9 +70,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: ogranichenie na kacheni snimki za den!!!
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
-        //TODO: View na snimkite raboti stranno bavno.
-        //TODO: Dobavqne na Author and Theme search.
         //TODO: Da probvam da napravq Generic za proverka na Rolq.
-        
+
     }
 }
