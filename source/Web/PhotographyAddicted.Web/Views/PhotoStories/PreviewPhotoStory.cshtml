@@ -56,15 +56,23 @@
 </div>
 
 <div>
+    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="AddPhotoStoryFragment" asp-route-id="@Model.Id">AddFragment</a>
+    }
 
 
 </div>
 
 <div>
-    @foreach (var fragment in Model.PhotoStoryFragments)
+    @if (Model.PhotoStoryFragments!=null)
     {
-
+        foreach (var fragment in Model.PhotoStoryFragments)
+        {
+            <h1>@fragment.Place</h1>
+        }
     }
+   
 </div>
 
 <div>

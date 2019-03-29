@@ -7,7 +7,18 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190319222708_FixAllCascadeDeletingProblems.cs" />
     <Compile Remove="Migrations\20190319225705_FixAllCascadeDeletingProblemsThirdProbe.cs" />
+    <Compile Remove="Migrations\20190329000535_Adding_PhotoStory_Published.cs" />
+    <Compile Remove="Migrations\20190329154357_Add_PhototStoryDbSets.cs" />
+    <Compile Remove="Migrations\20190329182340_Fix_PFID.cs" />
+    <Compile Remove="Migrations\20190329182637_Attempt.cs" />
+    <Compile Remove="Migrations\20190329182947_AttemptSecond.cs" />
+    <Compile Remove="Migrations\20190329183120_AttemptThree.cs" />
     <Compile Remove="Migrations\20190329184656_AttemptFour.cs" />
+    <Compile Remove="Migrations\20190329185447_AttemptFour.cs" />
+    <Compile Remove="Migrations\20190329190448_Adskatatupnq.cs" />
+    <Compile Remove="Migrations\20190329194640_AdskatatupnqMAne.cs" />
+    <Compile Remove="Migrations\20190329195244_Exelent.cs" />
+    <Compile Remove="Migrations\20190329202419_ExelentDali2.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,8 +10,8 @@ using PhotographyAddicted.Web.Models;
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    [Migration("20190323195145_Add_New_NewComment")]
-    partial class Add_New_NewComment
+    [Migration("20190329211245_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -168,11 +168,13 @@ namespace PhotographyAddicted.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Comment");
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<int?>("ImageId");
 
                     b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<string>("UserOpinion");
 
                     b.HasKey("Id");
 
@@ -181,6 +183,125 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasIndex("PhotographyAddictedUserId");
 
                     b.ToTable("ImageComments");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ComentsCount");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<byte[]>("NewImage");
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<string>("TextContent");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotographyAddictedUserId");
+
+                    b.ToTable("News");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.NewComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<int?>("NewId");
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<string>("UserOpinion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NewId");
+
+                    b.HasIndex("PhotographyAddictedUserId");
+
+                    b.ToTable("NewComments");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author");
+
+                    b.Property<string>("Conclusion");
+
+                    b.Property<string>("Introduction");
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<bool>("Published");
+
+                    b.Property<string>("Title");
+
+                    b.Property<DateTime>("UploadedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotographyAddictedUserId");
+
+                    b.ToTable("PhotoStories");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<int?>("PhotoStoryId");
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<string>("UserOpinion");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotoStoryId");
+
+                    b.HasIndex("PhotographyAddictedUserId");
+
+                    b.ToTable("PhotoStoryComments");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryFragment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("PhotoStoryId");
+
+                    b.Property<byte[]>("Picture");
+
+                    b.Property<string>("Place");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotoStoryId");
+
+                    b.ToTable("PhotoStoryFragments");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>
@@ -192,6 +313,8 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<string>("AuthorOpinion");
 
                     b.Property<int>("ComentsCount");
+
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("PhotographyAddictedUserId");
 
@@ -211,6 +334,8 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("PhotographyAddictedUserId");
 
@@ -356,13 +481,59 @@ namespace PhotographyAddicted.Data.Migrations
             modelBuilder.Entity("PhotographyAddicted.Data.Models.ImageComment", b =>
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.Image", "Image")
-                        .WithMany("ImageCommnets")
+                        .WithMany("ImageComments")
                         .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("ImageComments")
                         .HasForeignKey("PhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany("News")
+                        .HasForeignKey("PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.NewComment", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.New", "New")
+                        .WithMany("NewComments")
+                        .HasForeignKey("NewId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany("NewComments")
+                        .HasForeignKey("PhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStory", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany("PhotoStorys")
+                        .HasForeignKey("PhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryComment", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.PhotoStory", "PhotoStory")
+                        .WithMany("PhotoStoryComments")
+                        .HasForeignKey("PhotoStoryId");
+
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany("PhotoStoryComments")
+                        .HasForeignKey("PhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryFragment", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.PhotoStory", "PhotoStory")
+                        .WithMany("PhotoStoryFragments")
+                        .HasForeignKey("PhotoStoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>
