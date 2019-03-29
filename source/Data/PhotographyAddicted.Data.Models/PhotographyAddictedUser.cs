@@ -71,6 +71,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: Da probvam da napravq Generic za proverka na Rolq.
+        //TODO: Proveri novite entitita(PhototStory) i tehnite komentari kak se triqt pri iztrivane na potrebitel.
 
     }
 }

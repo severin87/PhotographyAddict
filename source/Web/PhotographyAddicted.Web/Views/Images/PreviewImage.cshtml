@@ -1,0 +1,90 @@
+﻿@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
+
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "PreviewImage";
+}
+
+<h2>ViewPictureDetails</h2>
+
+<p>
+    @Model.ImageCategory - @Model.UploadedDate
+</p>
+<p>
+    @Model.Title - @Model.PhotographyAddictedUser.UserName
+</p>
+
+<div class="modal-body" id="modal-body" style="cursor: zoom-out; width: 722px; height: 635px;">
+    <img class="img-responsive" style="max-height:100%; position: relative;
+    top: 50%; transform: translateY(-50%);" src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)">
+</div>
+<div>
+    <h4>ImagePreviewViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageCategory)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ImageCategory)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Scores)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Scores)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PhotographyAddictedUserId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PhotographyAddictedUserId)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="AddImageComment" asp-route-id="@Model.Id">Add coment! </a>
+    }
+</div>
+<hr />
+
+<div>
+    @foreach (var comment in Model.ImageComments)
+    {
+        <h4>
+            @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
+            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="DeleteImageComment" asp-route-id="@comment.Id">Delete</a>
+                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="UpdateImageComment" asp-route-id="@comment.Id">Edit</a>
+            }
+        </h4>
+    }
+</div>
+<div>
+    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+    {
+        @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
+        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@Model.Id">Delete</a>
+
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,68 @@
+﻿@model PhotographyAddicted.Services.Models.PhotoStorys.PreviewPhotoStoriesViewModel
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "PreviewPhotoStories";
+}
+
+<h2>PreviewPhotoStories</h2>
+
+<div>
+    <h4>PreviewPhotoStoriesViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+
+<div class="search-container">
+    <form asp-controller="PhotoStories" asp-action="PreviewPhotoStories">
+        <p>
+            Title: <input placeholder="Search.." type="text" name="input">
+            <button type="submit">Submit</button>
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">Clear!</a>
+        </p>
+    </form>
+</div>
+
+<div>
+
+    @if (this.User.Identity.IsAuthenticated)
+    {
+        <h4>
+            
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="AddPhotoStory">AddPhotoStory</a>
+        </h4>
+    }
+
+    <hr />
+    <dl class="dl-horizontal"></dl>
+</div>
+<div>
+    @foreach (var userNew in Model.PreviewPhotoStories)
+    {
+    <h4>
+        @if (userNew.PhotoStoryFragments.Count > 0)
+        {
+            @if (userNew.PhotoStoryFragments.First().Picture != null)
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(userNew.PhotoStoryFragments.First().Picture )" style="max-height: 70px; height: 70%; width: auto;" />
+            }
+        }
+        @userNew.Title@*- @userNew.PhotographyAddictedUser.UserName - @userNew.PhotoStoryComments.Count()*@
+        @*<p>
+            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="PreviewNew" asp-route-id="@userNew.Id">Check new!</a>
+
+            @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
+                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
+            }
+        </p>*@
+    </h4>
+    }
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
+

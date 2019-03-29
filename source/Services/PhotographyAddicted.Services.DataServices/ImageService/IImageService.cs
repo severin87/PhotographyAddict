@@ -25,7 +25,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         PreviewImageViewModel FindImageById(int Id);
 
-        Task<int> AddImage(AddImageViewModel input, IFormFile ProfilePicture);
+        Task<int> AddImage(AddImageViewModel input, IFormFile Picture);
 
         Task<int> UpdateImage(PreviewImageViewModel input);
 

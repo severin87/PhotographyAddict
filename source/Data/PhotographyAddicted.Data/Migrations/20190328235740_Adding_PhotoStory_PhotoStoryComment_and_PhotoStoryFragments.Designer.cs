@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190328235740_Adding_PhotoStory_PhotoStoryComment_and_PhotoStoryFragments")]
+    partial class Adding_PhotoStory_PhotoStoryComment_and_PhotoStoryFragments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,8 +246,6 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<string>("Introduction");
 
                     b.Property<string>("PhotographyAddictedUserId");
-
-                    b.Property<bool>("Published");
 
                     b.Property<string>("Title");
 
