@@ -283,8 +283,9 @@ namespace PhotographyAddicted.Data.Migrations
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryFragment", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description");
 

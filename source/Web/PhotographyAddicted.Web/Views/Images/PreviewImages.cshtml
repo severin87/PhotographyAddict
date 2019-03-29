@@ -14,18 +14,22 @@
     <hr />
     <dl class="dl-horizontal"></dl>
 </div>
-@if (Model.PreviewImages.First().ImageCategory != 0)
-{
-    <div class="search-container">
-        <form asp-controller="Images" asp-action="PreviewImages">
-            <p>
-                Title: <input placeholder="Search.." type="text" name="input">
-                <button type="submit">Submit</button>
-                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
-            </p>
-        </form>
-    </div>
-}
+<div>
+  @if (Model==null)
+    {
+
+    @if (Model.PreviewImages.First().ImageCategory != 0)
+    {
+        <div class="search-container">
+            <form asp-controller="Images" asp-action="PreviewImages">
+                <p>
+                    Title: <input placeholder="Search.." type="text" name="input">
+                    <button type="submit">Submit</button>
+                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
+                </p>
+            </form>
+        </div>
+    }
 
     <div>
         @foreach (var item in Model.PreviewImages)
@@ -63,7 +67,8 @@
         }
 
     </div>
-
+    }
+</div>
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
