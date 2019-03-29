@@ -48,18 +48,18 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
                     using (var stream = new MemoryStream())
                     {
                         await Picture[i].CopyToAsync(stream);
-                       // input.PhotoStoryFragments[i].Picture = stream.ToArray();
+                        // input.PhotoStoryFragments[i].Picture = stream.ToArray();
                     }
                 }
             }
 
-            var photoStory= new PhotoStory()
+            var photoStory = new PhotoStory()
             {
                 Title = input.Title,
                 Author = input.Author,
                 Conclusion = input.Conclusion,
                 Introduction = input.Introduction,
-              //  PhotoStoryFragments = input.PhotoStoryFragments,
+                //  PhotoStoryFragments = input.PhotoStoryFragments,
                 PhotographyAddictedUserId = input.PhotographyAddictedUserId,
                 PhotographyAddictedUser = input.PhotographyAddictedUser,
                 UploadedDate = DateTime.UtcNow,
@@ -80,7 +80,7 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
             {
                 photoStory.PreviewPhotoStories = photoStoryDbSet.All().Select(u =>
                 new PreviewPhotoStoryViewModel
-                {                    
+                {
                     Title = u.Title,
                     Id = u.Id,
                     PhotographyAddictedUser = u.PhotographyAddictedUser,
@@ -104,6 +104,46 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
             }
 
             return photoStory;
+        }
+
+        public PreviewPhotoStoryViewModel PreviewPhotoStory(int id)
+        {
+            var photoStory = photoStoryDbSet.All().Where(x => x.Id == id).Select(m =>
+            new PreviewPhotoStoryViewModel
+            {
+                Id = m.Id,
+                Title = m.Title,
+                PhotographyAddictedUserId = m.PhotographyAddictedUserId,
+                PhotographyAddictedUser = m.PhotographyAddictedUser,
+                Author = m.Author,
+                PhotoStoryFragments = m.PhotoStoryFragments,
+                Conclusion = m.Conclusion,
+                UploadedDate = m.UploadedDate,
+                Introduction = m.Introduction,
+                PhotoStoryComments = m.PhotoStoryComments,
+                Published = m.Published,
+            }).FirstOrDefault();
+
+            return photoStory;
+        }
+              
+
+        public async Task ChangeStatus(int id)
+        {
+            bool publish = photoStoryDbSet.All().Where(x => x.Id == id).FirstOrDefault().Published;
+
+            if (publish == false)
+            {
+                var photoStory = photoStoryDbSet.All().Where(x => x.Id == id).FirstOrDefault();
+                photoStory.Published = true;
+                await photoStoryDbSet.SaveChangesAsync();
+            }
+            else
+            {
+                var photoStory = photoStoryDbSet.All().Where(x => x.Id == id).FirstOrDefault();
+                photoStory.Published = false;
+                await photoStoryDbSet.SaveChangesAsync();
+            }
         }
     }
 }

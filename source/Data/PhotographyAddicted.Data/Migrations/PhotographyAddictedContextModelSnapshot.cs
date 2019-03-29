@@ -255,7 +255,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasIndex("PhotographyAddictedUserId");
 
-                    b.ToTable("PhotoStory");
+                    b.ToTable("PhotoStories");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryComment", b =>
@@ -278,7 +278,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasIndex("PhotographyAddictedUserId");
 
-                    b.ToTable("PhotoStoryComment");
+                    b.ToTable("PhotoStoryComments");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryFragment", b =>
@@ -298,7 +298,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasIndex("PhotoStoryId");
 
-                    b.ToTable("PhotoStoryFragment");
+                    b.ToTable("PhotoStoryFragments");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>

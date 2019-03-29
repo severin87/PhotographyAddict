@@ -27,6 +27,9 @@ namespace PhotographyAddicted.Web.Models
         public DbSet<Image> Images { get; set; }
         public DbSet<ImageComment> ImageComments { get; set; }
         public DbSet<ThemeComment> ThemeComments { get; set; }
+        public DbSet<PhotoStory> PhotoStories { get; set; }
+        public DbSet<PhotoStoryComment> PhotoStoryComments { get; set; }
+        public DbSet<PhotoStoryFragment> PhotoStoryFragments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -25,7 +25,7 @@ namespace PhotographyAddicted.Data.Models
 
         public string Conclusion { get; set; }
 
-        public bool Published { get; set; } = false;
+        public bool Published { get; set; }
 
         public string PhotographyAddictedUserId { get; set; }
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }

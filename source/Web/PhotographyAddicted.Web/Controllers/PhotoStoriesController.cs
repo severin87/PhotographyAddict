@@ -21,7 +21,6 @@ namespace PhotographyAddicted.Web.Controllers
             this.photoStoryService = photoStoryService;
         }
 
-        [HttpGet]
         public IActionResult AddPhotoStory()
         {
             return View();
@@ -34,8 +33,7 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var photoStoryId = await photoStoryService.AddPhotoStory(input);
-                return RedirectToAction("Index", "Home");
-                //return this.RedirectToAction("PreviewThemes", "Themes");
+                return RedirectToAction("PreviewPhotoStory", "PhotoStories", new {id =photoStoryId });
             }
             else
             {
@@ -46,31 +44,21 @@ namespace PhotographyAddicted.Web.Controllers
         [AllowAnonymous]
         public IActionResult PreviewPhotoStories(string input)
         {
-            var sev = photoStoryService.PreviewPhotoStories(input);
-            return View(sev);
+            var photoStories = photoStoryService.PreviewPhotoStories(input);
+            return View(photoStories);
         }
 
-        //[HttpGet]
-        //public IActionResult PreviewPhotoStory()
-        //{
-        //    string sev = photoStoryService.PreviewPhotoStory();
-        //    return Json(sev);
-        //}
+        [AllowAnonymous]
+        public IActionResult PreviewPhotoStory(int id)
+        {
+            var photoStories = photoStoryService.PreviewPhotoStory(id);
+            return View(photoStories);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> AddPhotoStory(AddPhotoStoryViewModel input, List<IFormFile> Picture)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //        var imageId = await photoStoryService.AddPhotoStory(input, Picture);
-
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Index", "Home");
-        //    }
-        //}
+        public async Task<IActionResult> ChangeStatus(int id)
+        {
+            await photoStoryService.ChangeStatus(id);
+            return RedirectToAction("PreviewPhotoStory", new { Id = id });
+        }
     }
 }

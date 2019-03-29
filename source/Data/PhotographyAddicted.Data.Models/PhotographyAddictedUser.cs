@@ -72,6 +72,6 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: Da probvam da napravq Generic za proverka na Rolq.
         //TODO: Proveri novite entitita(PhototStory) i tehnite komentari kak se triqt pri iztrivane na potrebitel.
-
+        //TODO: Napishi si na vsichki async metodi Async na kraq.
     }
 }

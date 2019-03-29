@@ -58,8 +58,8 @@ namespace PhotographyAddicted.Services.DataServices
 
         public PreviewThemeViewModel PreviewTheme(int id)
         {
-            var specificTheme = themeDbSet.All().Include(g=>g.PhotographyAddictedUser)
-                .Where(x => x.Id == id).Select(m=> new PreviewThemeViewModel
+            var specificTheme = themeDbSet.All().Where(x => x.Id == id).Select(m=> 
+            new PreviewThemeViewModel
                 {
                   Id =m.Id,
                   AuthorOpinion = m.AuthorOpinion,

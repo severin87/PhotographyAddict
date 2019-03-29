@@ -16,5 +16,9 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
         Task<int> AddPhotoStory(AddPhotoStoryViewModel input);
 
         PreviewPhotoStoriesViewModel PreviewPhotoStories(string input);
+
+        PreviewPhotoStoryViewModel PreviewPhotoStory(int id);
+
+        Task ChangeStatus(int id);
     }
 }
