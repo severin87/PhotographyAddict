@@ -530,8 +530,7 @@ namespace PhotographyAddicted.Data.Migrations
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.PhotoStory", "PhotoStory")
                         .WithMany("PhotoStoryFragments")
-                        .HasForeignKey("PhotoStoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PhotoStoryId");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>

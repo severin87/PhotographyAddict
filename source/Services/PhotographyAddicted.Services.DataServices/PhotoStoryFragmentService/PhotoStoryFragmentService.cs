@@ -35,12 +35,13 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryFragmentService
                 Picture = input.Picture,
                 Description = input.Description,
                 Place = input.Place,
+                PhotoStoryId = input.PhotoStoryId,
             };
 
             await photoStoryFragmentDbSet.AddAsync(photoStoryFragment);
             await photoStoryFragmentDbSet.SaveChangesAsync();
 
-            return photoStoryFragment.PhotoStory.Id;
+            return (int)photoStoryFragment.PhotoStoryId;
         }
     }
 }

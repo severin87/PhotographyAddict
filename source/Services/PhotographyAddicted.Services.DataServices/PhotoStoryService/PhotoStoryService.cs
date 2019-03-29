@@ -86,7 +86,8 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
                     PhotographyAddictedUser = u.PhotographyAddictedUser,
                     Published = u.Published,
                     UploadedDate = u.UploadedDate,
-                    PhotoStoryFragments = u.PhotoStoryFragments
+                    PhotoStoryFragments = u.PhotoStoryFragments,
+                    PhotographyAddictedUserId = u.PhotographyAddictedUserId,
                 });
             }
             else
@@ -99,7 +100,8 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
                    PhotographyAddictedUser = u.PhotographyAddictedUser,
                    Published = u.Published,
                    UploadedDate = u.UploadedDate,
-                   PhotoStoryFragments = u.PhotoStoryFragments
+                   PhotoStoryFragments = u.PhotoStoryFragments,
+                   PhotographyAddictedUserId = u.PhotographyAddictedUserId,
                });
             }
 
@@ -125,8 +127,7 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
             }).FirstOrDefault();
 
             return photoStory;
-        }
-              
+        }             
 
         public async Task ChangeStatus(int id)
         {

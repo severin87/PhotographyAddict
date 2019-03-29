@@ -41,10 +41,7 @@ namespace PhotographyAddicted.Web.Models
             
             base.OnModelCreating(builder);
 
-            builder.Entity<PhotoStoryFragment>()
-           .HasOne(p => p.PhotoStory)
-          .WithMany(b => b.PhotoStoryFragments)
-          .OnDelete(DeleteBehavior.Cascade);
+           
 
             builder.Entity<New>()
            .HasOne(p => p.PhotographyAddictedUser)

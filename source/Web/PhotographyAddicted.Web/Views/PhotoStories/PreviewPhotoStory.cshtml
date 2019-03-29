@@ -65,14 +65,18 @@
 </div>
 
 <div>
-    @if (Model.PhotoStoryFragments!=null)
+    @if(Model.PhotoStoryFragments != null)
     {
         foreach (var fragment in Model.PhotoStoryFragments)
         {
             <h1>@fragment.Place</h1>
+            @if(fragment.Picture != null)
+            {
+                <img src="data:image;base64,@System.Convert.ToBase64String(fragment.Picture)" style="max-height: 70px; height: 70%; width: auto;" />
+            }
         }
     }
-   
+
 </div>
 
 <div>

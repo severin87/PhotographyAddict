@@ -7,6 +7,8 @@ namespace PhotographyAddicted.Services.Models.PhotoStoryFragments
 {
     public class AddPhotoStoryFragmentViewModel
     {
+        public int Id { get; set; }
+
         public byte[] Picture { get; set; }
 
         public string Place { get; set; }

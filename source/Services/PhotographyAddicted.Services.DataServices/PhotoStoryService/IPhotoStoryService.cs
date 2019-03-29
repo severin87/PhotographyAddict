@@ -11,8 +11,6 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
 {
     public interface IPhotoStoryService
     {
-        Task<int> AddPhotoStoryZ(AddPhotoStoryViewModel input, List<IFormFile> Picture);
-
         Task<int> AddPhotoStory(AddPhotoStoryViewModel input);
 
         PreviewPhotoStoriesViewModel PreviewPhotoStories(string input);

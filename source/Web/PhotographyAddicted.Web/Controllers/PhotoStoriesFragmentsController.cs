@@ -22,7 +22,12 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult AddPhotoStoryFragment(int id)
         {
-            return View();
+            var photoFragment = new AddPhotoStoryFragmentViewModel()
+            {
+                PhotoStoryId = id,
+            };
+
+            return View(photoFragment);
         }
 
         [HttpPost]

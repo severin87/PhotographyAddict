@@ -38,27 +38,31 @@
     <dl class="dl-horizontal"></dl>
 </div>
 <div>
+
     @foreach (var userNew in Model.PreviewPhotoStories)
     {
-    <h4>
-        @if (userNew.PhotoStoryFragments.Count > 0)
+        @if ((userNew.Published == true)||(userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
         {
-            @if (userNew.PhotoStoryFragments.First().Picture != null)
-            {
-                <img src="data:image;base64,@System.Convert.ToBase64String(userNew.PhotoStoryFragments.First().Picture )" style="max-height: 70px; height: 70%; width: auto;" />
-            }
-        }
-        @userNew.Title@*- @userNew.PhotographyAddictedUser.UserName - @userNew.PhotoStoryComments.Count()*@
+            <h4>
+                @if (userNew.PhotoStoryFragments.Count > 0)
+                {
+                    @if (userNew.PhotoStoryFragments.First().Picture != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(userNew.PhotoStoryFragments.First().Picture)" style="max-height: 70px; height: 70%; width: auto;" />
+                    }
+                }
+                @userNew.Title@*- @userNew.PhotographyAddictedUser.UserName - @userNew.PhotoStoryComments.Count()*@
 
-        <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="PreviewPhotoStory" asp-route-id="@userNew.Id" >View the story!</a>
-        @*<p>
-            @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
-                <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
-            }
-        </p>*@
-    </h4>
+                <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="PreviewPhotoStory" asp-route-id="@userNew.Id">View the story!</a>
+                @*<p>
+                        @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                        {
+                            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
+                            <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>
+                        }
+                    </p>*@
+            </h4>
+        }
     }
 </div>
 <div>
