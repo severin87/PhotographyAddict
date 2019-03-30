@@ -1,0 +1,45 @@
+﻿@model PhotographyAddicted.Services.Models.PhotoStoryFragments.PreviewPhotoStoryFragmentViewModel
+
+@{
+    ViewData["Title"] = "PreviewPhotoStoryFragment";
+}
+
+<h2>PreviewPhotoStoryFragment</h2>
+
+<h4>PreviewPhotoStoryFragmentViewModel</h4>
+
+@if (Model.Picture != null)
+{
+    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture )" style="max-height: 70px; height: 70%; width: auto;" />
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdatePhotoStoryFragment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Place" class="control-label"></label>
+                <input asp-for="Place" class="form-control" />
+                <span asp-validation-for="Place" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

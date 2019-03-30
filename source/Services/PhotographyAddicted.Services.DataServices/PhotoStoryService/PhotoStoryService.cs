@@ -146,5 +146,38 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
                 await photoStoryDbSet.SaveChangesAsync();
             }
         }
+
+        public async Task<int> UpdatePreviewPhotoStory(PreviewPhotoStoryViewModel input)
+        {
+            var updatePhotoStory = photoStoryDbSet.All().SingleOrDefault(t => t.Id == input.Id);
+
+            updatePhotoStory.Author = input.Author;
+
+            updatePhotoStory.Introduction = input.Introduction;
+
+            updatePhotoStory.Title = input.Title;
+
+            updatePhotoStory.Conclusion = input.Conclusion;
+
+            await photoStoryDbSet.SaveChangesAsync();
+
+            return (int)updatePhotoStory.Id;
+        }
+
+        public async Task DeletePreviewPhotoStory(PreviewPhotoStoryViewModel input)
+        {
+            var photoStory = photoStoryDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
+
+            photoStoryDbSet.Delete(photoStory);
+
+            await photoStoryDbSet.SaveChangesAsync();            
+        }
+
+        public PreviewPhotoStoryViewModel FindPhotoStoryById(int id)
+        {
+            var photoStory = PreviewPhotoStory(id);
+
+            return photoStory;
+        }
     }
 }

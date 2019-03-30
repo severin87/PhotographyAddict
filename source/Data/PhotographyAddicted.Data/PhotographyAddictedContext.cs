@@ -41,7 +41,20 @@ namespace PhotographyAddicted.Web.Models
             
             base.OnModelCreating(builder);
 
-           
+            builder.Entity<PhotoStory>()
+           .HasOne(p => p.PhotographyAddictedUser)
+           .WithMany(b => b.PhotoStories)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<PhotoStoryFragment>()
+           .HasOne(p => p.PhotoStory)
+           .WithMany(b => b.PhotoStoryFragments)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<PhotoStoryComment>()
+           .HasOne(p => p.PhotoStory)
+           .WithMany(b => b.PhotoStoryComments)
+           .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<New>()
            .HasOne(p => p.PhotographyAddictedUser)

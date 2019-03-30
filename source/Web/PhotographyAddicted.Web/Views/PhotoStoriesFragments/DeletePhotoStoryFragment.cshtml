@@ -1,0 +1,40 @@
+﻿@model PhotographyAddicted.Services.Models.PhotoStoryFragments.PreviewPhotoStoryFragmentViewModel
+
+@{
+    ViewData["Title"] = "DeletePhotoStoryFragment";
+}
+
+<h2>DeletePhotoStoryFragment</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+@if (Model.Picture != null)
+{
+    <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture )" style="max-height: 70px; height: 70%; width: auto;" />
+}
+
+<div>
+    <h4>PreviewPhotoStoryFragmentViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Place)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Place)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+       
+    </dl>
+
+    <form asp-action="DeletePhotoStoryFragment">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

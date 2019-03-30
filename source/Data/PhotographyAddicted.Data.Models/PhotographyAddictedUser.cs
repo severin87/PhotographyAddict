@@ -18,7 +18,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
             Themes = new HashSet<Theme>();
             ThemeComments = new HashSet<ThemeComment>();
             PhotoStoryComments = new HashSet<PhotoStoryComment>();
-            PhotoStorys = new HashSet<PhotoStory>();
+            PhotoStories = new HashSet<PhotoStory>();
         }
         
         public string SelfDescription { get; set; }
@@ -60,7 +60,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<PhotoStoryComment> PhotoStoryComments { get; set; }
 
-        public virtual ICollection<PhotoStory> PhotoStorys { get; set; }
+        public virtual ICollection<PhotoStory> PhotoStories { get; set; }
 
         //TODO: Dobavqne i statut s priwilegiii zadulveniq. Roli
         //TODO: Dobavqne na lubimi snimki i avtori.

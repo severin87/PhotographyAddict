@@ -17,6 +17,12 @@ namespace PhotographyAddicted.Services.DataServices.PhotoStoryService
 
         PreviewPhotoStoryViewModel PreviewPhotoStory(int id);
 
+        PreviewPhotoStoryViewModel FindPhotoStoryById(int id);
+
         Task ChangeStatus(int id);
+
+        Task<int> UpdatePreviewPhotoStory(PreviewPhotoStoryViewModel PhotoStoryFragment);
+
+        Task DeletePreviewPhotoStory(PreviewPhotoStoryViewModel input);
     }
 }

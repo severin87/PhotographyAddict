@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhotographyAddicted.Web.Models;
 
 namespace PhotographyAddicted.Data.Migrations
 {
     [DbContext(typeof(PhotographyAddictedContext))]
-    partial class PhotographyAddictedContextModelSnapshot : ModelSnapshot
+    [Migration("20190329221557_Neznam3")]
+    partial class Neznam3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,6 +293,8 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<int?>("PhotoStoryId");
 
+                    b.Property<string>("PhotographyAddictedUserId");
+
                     b.Property<byte[]>("Picture");
 
                     b.Property<string>("Place");
@@ -298,6 +302,8 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PhotoStoryId");
+
+                    b.HasIndex("PhotographyAddictedUserId");
 
                     b.ToTable("PhotoStoryFragments");
                 });
@@ -511,17 +517,15 @@ namespace PhotographyAddicted.Data.Migrations
             modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStory", b =>
                 {
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
-                        .WithMany("PhotoStories")
-                        .HasForeignKey("PhotographyAddictedUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("PhotoStorys")
+                        .HasForeignKey("PhotographyAddictedUserId");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.PhotoStoryComment", b =>
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.PhotoStory", "PhotoStory")
                         .WithMany("PhotoStoryComments")
-                        .HasForeignKey("PhotoStoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PhotoStoryId");
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("PhotoStoryComments")
@@ -532,8 +536,11 @@ namespace PhotographyAddicted.Data.Migrations
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.PhotoStory", "PhotoStory")
                         .WithMany("PhotoStoryFragments")
-                        .HasForeignKey("PhotoStoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PhotoStoryId");
+
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany()
+                        .HasForeignKey("PhotographyAddictedUserId");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Theme", b =>
