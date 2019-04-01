@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
@@ -15,15 +16,16 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<PhotographyAddictedUser> _userManager;
         private readonly SignInManager<PhotographyAddictedUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
-        private IImageCommentService imageComments;
-        private IThemeCommentService themeComments;
-        private INewCommentService newComments;
+        private readonly IImageCommentService imageComments;
+        private readonly IThemeCommentService themeComments;
+        private readonly INewCommentService newComments;
+        private readonly IPhotoStoryCommentService photoStoryComment;
 
         public DeletePersonalDataModel(
             UserManager<PhotographyAddictedUser> userManager,
             SignInManager<PhotographyAddictedUser> signInManager,
             ILogger<DeletePersonalDataModel> logger, IImageCommentService imageComments,
-            IThemeCommentService themeComments, INewCommentService newComments)
+            IThemeCommentService themeComments, INewCommentService newComments, IPhotoStoryCommentService photoStoryComment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -31,6 +33,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
             this.imageComments =imageComments;
             this.themeComments = themeComments;
             this.newComments = newComments;
+            this.photoStoryComment = photoStoryComment;
         }
 
         [BindProperty]
@@ -74,11 +77,12 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
                     return Page();
                 }
             }
-            
+
             await imageComments.DeleteUserImagesComments(user.Id);
             await themeComments.DeleteUserThemesComments(user.Id);
             await newComments.DeleteUserNewComments(user.Id);
-            
+            await photoStoryComment.DeleteUserPhotoStoryComments(user.Id);
+
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

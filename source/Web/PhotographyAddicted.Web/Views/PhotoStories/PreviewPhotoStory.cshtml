@@ -7,6 +7,10 @@
 }
 
 <h2>PreviewPhotoStory</h2>
+@if (this.User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesComments" asp-action="AddPhotoStoryComment" asp-route-id="@Model.Id">AddComment</a>
+}
 
 @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
 {
@@ -102,6 +106,18 @@
             </dd>
 
         </dl>
+    }
+</div>
+
+<div>
+    @foreach (var comment in Model.PhotoStoryComments)
+    {
+        <h4>@comment.UserOpinion</h4>
+        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesComments" asp-action="UpdatePhotoStoryComment" asp-route-id="@comment.Id">Update</a>
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesComments" asp-action="DeletePhotoStoryComment" asp-route-id="@comment.Id">Delete</a>
+        }
     }
 </div>
 <div>
