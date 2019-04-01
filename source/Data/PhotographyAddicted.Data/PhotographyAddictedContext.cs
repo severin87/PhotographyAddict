@@ -30,6 +30,8 @@ namespace PhotographyAddicted.Web.Models
         public DbSet<PhotoStory> PhotoStories { get; set; }
         public DbSet<PhotoStoryComment> PhotoStoryComments { get; set; }
         public DbSet<PhotoStoryFragment> PhotoStoryFragments { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

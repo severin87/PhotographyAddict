@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -19,6 +20,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
             ThemeComments = new HashSet<ThemeComment>();
             PhotoStoryComments = new HashSet<PhotoStoryComment>();
             PhotoStories = new HashSet<PhotoStory>();
+            SenderConversation = new HashSet<Conversation>();
+            RecepientConversation = new HashSet<Conversation>();
+            Messages = new HashSet<Message>();
         }
         
         public string SelfDescription { get; set; }
@@ -46,6 +50,12 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public string Rang { get; set; }
 
+        [InverseProperty("SenderPhotographyAddictedUser")]
+        public virtual ICollection<Conversation> SenderConversation { get; set; }
+
+        [InverseProperty("RecepientPhotographyAddictedUser")]
+        public virtual ICollection<Conversation> RecepientConversation { get; set; }
+
         public virtual ICollection<New> News { get; set; }
 
         public virtual ICollection<NewComment> NewComments { get; set; }
@@ -61,6 +71,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         public virtual ICollection<PhotoStoryComment> PhotoStoryComments { get; set; }
 
         public virtual ICollection<PhotoStory> PhotoStories { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
 
         //TODO: Dobavqne i statut s priwilegiii zadulveniq. Roli
         //TODO: Dobavqne na lubimi snimki i avtori.

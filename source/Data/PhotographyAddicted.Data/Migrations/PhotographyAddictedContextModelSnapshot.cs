@@ -133,6 +133,29 @@ namespace PhotographyAddicted.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Conversation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("RecepientPhotographyAddictedUserId");
+
+                    b.Property<string>("SenderPhotographyAddictedUserId");
+
+                    b.Property<string>("Subject");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecepientPhotographyAddictedUserId");
+
+                    b.HasIndex("SenderPhotographyAddictedUserId");
+
+                    b.ToTable("Conversations");
+                });
+
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -181,6 +204,31 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasIndex("PhotographyAddictedUserId");
 
                     b.ToTable("ImageComments");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ConversationId");
+
+                    b.Property<int?>("ConversationId1");
+
+                    b.Property<DateTime>("CreationDate");
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConversationId1");
+
+                    b.HasIndex("PhotographyAddictedUserId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.New", b =>
@@ -468,6 +516,17 @@ namespace PhotographyAddicted.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Conversation", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "RecepientPhotographyAddictedUser")
+                        .WithMany("RecepientConversation")
+                        .HasForeignKey("RecepientPhotographyAddictedUserId");
+
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "SenderPhotographyAddictedUser")
+                        .WithMany("SenderConversation")
+                        .HasForeignKey("SenderPhotographyAddictedUserId");
+                });
+
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Image", b =>
                 {
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
@@ -485,6 +544,17 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("ImageComments")
+                        .HasForeignKey("PhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Message", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.Conversation", "Conversation")
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationId1");
+
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithMany("Messages")
                         .HasForeignKey("PhotographyAddictedUserId");
                 });
 
