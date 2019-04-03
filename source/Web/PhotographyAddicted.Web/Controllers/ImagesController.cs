@@ -59,6 +59,12 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var userPictures = imageService.PreviewUserImages(Id);
 
+            if (userPictures.PreviewImages.Count() == 0)
+            {
+                return this.RedirectToAction("PreviewUser", "Users", new { id = Id });
+                // <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
+            }
+
             return View("PreviewImages", userPictures);
         }
         
@@ -120,7 +126,7 @@ namespace PhotographyAddicted.Web.Controllers
         [AllowAnonymous]
         public IActionResult PreviewImages(string input)
         {
-            var images = imageService.PreviewImages(input);
+            var images = imageService.PreviewImages(input);         
 
             return this.View(images);
         }

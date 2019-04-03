@@ -15,10 +15,60 @@
     <dl class="dl-horizontal"></dl>
 </div>
 <div>
-  @if (Model!=null)
+    @if (Model.PreviewImages.Count() != 0)
     {
 
-    @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
+        @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
+        {
+            <div class="search-container">
+                <form asp-controller="Images" asp-action="PreviewImages">
+                    <p>
+                        Title: <input placeholder="Search.." type="text" name="input">
+                        <button type="submit">Submit</button>
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
+                    </p>
+                </form>
+            </div>
+        }
+
+        <div>
+            @foreach (var item in Model.PreviewImages)
+            {
+
+                if (item.Picture != null)
+                {
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+                }
+
+                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">View </a>
+                if (item.ImageCategory != 0)
+                {
+                    if (item.Title == null)
+                    {
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">ViewCategory </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDays" asp-route-id="@((int)item.ImageCategory)">ViewCategoryTop </a>
+
+                    }
+                }
+
+
+                @item.Scores
+                @item.Title
+
+                if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
+                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
+                }
+            }
+
+        </div>
+    }
+    else
     {
         <div class="search-container">
             <form asp-controller="Images" asp-action="PreviewImages">
@@ -29,44 +79,6 @@
                 </p>
             </form>
         </div>
-    }
-
-    <div>
-        @foreach (var item in Model.PreviewImages)
-        {
-
-            if (item.Picture != null)
-            {
-                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-            }
-
-            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">View </a>
-            if (item.ImageCategory != 0)
-            {
-                if (item.Title == null)
-                {
-                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">ViewCategory </a>
-                }
-                else
-                {
-                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDays" asp-route-id="@((int)item.ImageCategory)">ViewCategoryTop </a>
-
-                }
-            }
-
-
-            @item.Scores
-            @item.Title
-
-            if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
-                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
-                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
-            }
-        }
-
-    </div>
     }
 </div>
 <div>
