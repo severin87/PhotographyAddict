@@ -43,6 +43,43 @@ namespace PhotographyAddicted.Web.Models
             
             base.OnModelCreating(builder);
 
+           // builder.Entity<Conversation>()
+           // .HasOne(p => p.SenderPhotographyAddictedUser)
+           // .WithMany(b => b.SenderConversation)
+           // .OnDelete(DeleteBehavior.ClientSetNull);
+
+           // builder.Entity<Conversation>()
+           //.HasOne(p => p.RecepientPhotographyAddictedUser)
+           //.WithMany(b => b.RecepientConversation)
+           //.OnDelete(DeleteBehavior.ClientSetNull);
+
+            //builder.Entity<Match>()
+            //        .HasRequired(m => m.HomeTeam)
+            //        .WithMany(t => t.HomeMatches)
+            //        .HasForeignKey(m => m.HomeTeamId)
+            //        .WillCascadeOnDelete(false);
+
+            //builder.Entity<Match>()
+            //            .HasRequired(m => m.GuestTeam)
+            //            .WithMany(t => t.AwayMatches)
+            //            .HasForeignKey(m => m.GuestTeamId)
+            //            .WillCascadeOnDelete(false);
+
+            // builder.Entity<Conversation>()
+            //.HasOne(p => p.SenderPhotographyAddictedUser)
+            //.WithMany(b => b.RecepientConversation)
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            // builder.Entity<Message>()
+            //.HasOne(p => p.Conversation)
+            //.WithMany(b => b.Messages)
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            // builder.Entity<Message>()
+            //.HasOne(p => p.PhotographyAddictedUser)
+            //.WithMany(b => b.Messages)
+            //.OnDelete(DeleteBehavior.Cascade);
+
             builder.Entity<PhotoStory>()
            .HasOne(p => p.PhotographyAddictedUser)
            .WithMany(b => b.PhotoStories)

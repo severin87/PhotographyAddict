@@ -18,7 +18,7 @@
   @if (Model!=null)
     {
 
-    @if (Model.PreviewImages.First().ImageCategory != 0)
+    @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
     {
         <div class="search-container">
             <form asp-controller="Images" asp-action="PreviewImages">

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.ConversationService;
+using PhotographyAddicted.Services.DataServices.MessageService;
 using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
@@ -20,12 +22,15 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
         private readonly IThemeCommentService themeComments;
         private readonly INewCommentService newComments;
         private readonly IPhotoStoryCommentService photoStoryComment;
+        private readonly IConversationService conversationService;
+        private readonly IMessageService messageService;
 
         public DeletePersonalDataModel(
             UserManager<PhotographyAddictedUser> userManager,
             SignInManager<PhotographyAddictedUser> signInManager,
             ILogger<DeletePersonalDataModel> logger, IImageCommentService imageComments,
-            IThemeCommentService themeComments, INewCommentService newComments, IPhotoStoryCommentService photoStoryComment)
+            IThemeCommentService themeComments, INewCommentService newComments, IPhotoStoryCommentService photoStoryComment,
+            IConversationService conversationService, IMessageService messageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,6 +39,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
             this.themeComments = themeComments;
             this.newComments = newComments;
             this.photoStoryComment = photoStoryComment;
+            this.conversationService = conversationService;
+            this.messageService = messageService;
         }
 
         [BindProperty]
@@ -82,6 +89,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
             await themeComments.DeleteUserThemesComments(user.Id);
             await newComments.DeleteUserNewComments(user.Id);
             await photoStoryComment.DeleteUserPhotoStoryComments(user.Id);
+            await messageService.DeleteUserMessages(user.Id);
+            await conversationService.DeleteUserConversations(user.Id);
 
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
