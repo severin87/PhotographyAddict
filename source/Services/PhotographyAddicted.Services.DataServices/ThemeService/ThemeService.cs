@@ -84,14 +84,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         public PreviewThemeViewModel FindThemeBy(int Id)
         {
-            var theme = themeDbSet.All().Where(x => x.Id == Id)
-                .Select(d => new PreviewThemeViewModel
-                {
-                    Id = d.Id,
-                    PhotographyAddictedUserId = d.PhotographyAddictedUserId,
-                    Title = d.Title,
-                    AuthorOpinion = d.AuthorOpinion,
-                }).FirstOrDefault();
+            var theme = PreviewTheme(Id);
 
             return theme;
         }

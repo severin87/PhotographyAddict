@@ -83,7 +83,11 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: Da probvam da napravq Generic za proverka na Rolq.
-        //TODO: Proveri novite entitita(PhototStory) i tehnite komentari kak se triqt pri iztrivane na potrebitel.
         //TODO: Napishi si na vsichki async metodi Async na kraq.
+        //TODO: Da si podredq i preimenuvam vsichki commenti  !!!!!!!!!
+        //TODO: DNevna proverka za broi snimki kacheni.
+        //TODO: DNevna proverka za Raiting i tochki.
+        //TODO: Ima nqma ban proverka.
+        //TODO: Da si kriptiram suobshteniqta.
     }
 }

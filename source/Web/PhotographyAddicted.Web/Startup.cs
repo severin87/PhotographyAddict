@@ -23,6 +23,8 @@ using Microsoft.AspNetCore.Authentication.Facebook;
 using PhotographyAddicted.Services.DataServices.PhotoStoryService;
 using PhotographyAddicted.Services.DataServices.PhotoStoryFragmentService;
 using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
+using PhotographyAddicted.Services.DataServices.MessageService;
+using PhotographyAddicted.Services.DataServices.ConversationService;
 
 namespace PhotographyAddicted.Web
 {
@@ -81,6 +83,9 @@ namespace PhotographyAddicted.Web
             services.AddScoped<IPhotoStoryService, PhotoStoryService>();
             services.AddScoped<IPhotoStoryFragmentService, PhotoStoryFragmentService>();
             services.AddScoped<IPhotoStoryCommentService, PhotoStoryCommentService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IConversationService, ConversationService>();
+
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {
                 facebookOptions.AppId = Configuration["AppId"];

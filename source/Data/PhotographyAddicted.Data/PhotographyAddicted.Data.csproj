@@ -19,6 +19,7 @@
     <Compile Remove="Migrations\20190329194640_AdskatatupnqMAne.cs" />
     <Compile Remove="Migrations\20190329195244_Exelent.cs" />
     <Compile Remove="Migrations\20190329202419_ExelentDali2.cs" />
+    <Compile Remove="Migrations\20190402125735_ChangeConversationId.cs" />
   </ItemGroup>
 
   <ItemGroup>

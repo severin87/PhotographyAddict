@@ -114,7 +114,8 @@
                         @Model.UserName -
                     </dt>
                     <dd>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>@*asp-route-id="@Model.Id"*@
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a> |
+                        <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a> 
                     </dd>
                 </dl>
             </div>
@@ -128,11 +129,12 @@
             <br>
             @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-                <div>
-                   <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
-                   <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
-                   <a asp-controller="Home" asp-action="Index">Back to Home</a>
-                </div>
+            <div>
+                <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
+                <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages.</a> |
+                <a asp-controller="Home" asp-action="Index">Back to Home</a>
+            </div>
             }   
         </div>
         <div class="columnRight">

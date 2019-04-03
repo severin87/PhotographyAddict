@@ -212,19 +212,19 @@ namespace PhotographyAddicted.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ConversationId");
-
-                    b.Property<int?>("ConversationId1");
+                    b.Property<int?>("ConversationId");
 
                     b.Property<DateTime>("CreationDate");
 
                     b.Property<string>("PhotographyAddictedUserId");
 
+                    b.Property<string>("RecepientId");
+
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConversationId1");
+                    b.HasIndex("ConversationId");
 
                     b.HasIndex("PhotographyAddictedUserId");
 
@@ -551,7 +551,7 @@ namespace PhotographyAddicted.Data.Migrations
                 {
                     b.HasOne("PhotographyAddicted.Data.Models.Conversation", "Conversation")
                         .WithMany("Messages")
-                        .HasForeignKey("ConversationId1");
+                        .HasForeignKey("ConversationId");
 
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
                         .WithMany("Messages")
