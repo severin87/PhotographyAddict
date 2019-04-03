@@ -114,8 +114,13 @@
                         @Model.UserName -
                     </dt>
                     <dd>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a> |
-                        <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a> 
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a> 
+                        @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                        {
+                        <div>
+                          | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
+                        </div>
+                        }
                     </dd>
                 </dl>
             </div>
