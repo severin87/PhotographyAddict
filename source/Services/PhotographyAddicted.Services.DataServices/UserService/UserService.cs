@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Services.Models.Users;
@@ -15,7 +16,7 @@ namespace PhotographyAddicted.Services.DataServices
     public class UserService : IUserService
     {
         private IRepository<PhotographyAddictedUser> userDbset;
-
+              
         public UserService(IRepository<PhotographyAddictedUser> userDbset)
         {
             this.userDbset = userDbset;

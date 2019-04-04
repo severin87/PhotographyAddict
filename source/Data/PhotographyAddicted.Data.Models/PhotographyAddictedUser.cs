@@ -77,17 +77,22 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqne i statut s priwilegiii zadulveniq. Roli
         //TODO: Dobavqne na lubimi snimki i avtori.
         //TODO: tochki na glasa
-        //TODO: Suobshteniq
-        //TODO: Technika na vsqka snimka
         //TODO: ogranichenie na kacheni snimki za den!!!
-        //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: Da probvam da napravq Generic za proverka na Rolq.
-        //TODO: Napishi si na vsichki async metodi Async na kraq.
-        //TODO: Da si podredq i preimenuvam vsichki commenti  !!!!!!!!!
         //TODO: DNevna proverka za broi snimki kacheni.
         //TODO: DNevna proverka za Raiting i tochki.
         //TODO: Ima nqma ban proverka.
+        //TODO: Technika na vsqka snimka
+        //10
+
+        //Vsichki Services and Dbsets da stanat readonly
+        //TODO: Amina da skriva a ne da trie syobshteniq.
         //TODO: Da si kriptiram suobshteniqta.
+        //TODO: Da vidq s ajax kakvo stava.
+        //TODO: Da si podredq i preimenuvam vsichki commenti  !!!!!!!!!
+        //TODO: Napishi si na vsichki async metodi Async na kraq.
+        //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
+        //4
     }
 }

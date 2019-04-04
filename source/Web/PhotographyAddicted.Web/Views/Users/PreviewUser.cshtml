@@ -7,7 +7,6 @@
 }
 
 <h2>ViewUserProfile</h2>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -44,17 +43,17 @@
                         @Html.DisplayFor(model => model.UserName)
                     </dd>
                     @*<dt>
-                    @Html.DisplayNameFor(model => model.SelfDescription)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.SelfDescription)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Technique)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Technique)
-                </dd>*@
+                            @Html.DisplayNameFor(model => model.SelfDescription)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.SelfDescription)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Technique)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Technique)
+                        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.ProfilePicture)
                     </dt>
@@ -75,11 +74,11 @@
                         @Html.DisplayFor(model => model.CreationDate)
                     </dd>
                     @*<dt>
-                    @Html.DisplayNameFor(model => model.Blocked)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Blocked)
-                </dd>*@
+                            @Html.DisplayNameFor(model => model.Blocked)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Blocked)
+                        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.LastLogin)
                     </dt>
@@ -99,11 +98,11 @@
                         @Html.DisplayFor(model => model.AverageScore)
                     </dd>
                     @*<dt>
-                    @Html.DisplayNameFor(model => model.IsBanned)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.IsBanned)
-                </dd>*@
+                            @Html.DisplayNameFor(model => model.IsBanned)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.IsBanned)
+                        </dd>*@
                     <dt>
                         @Html.DisplayNameFor(model => model.Rang)
                     </dt>
@@ -114,12 +113,12 @@
                         @Model.UserName -
                     </dt>
                     <dd>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a> 
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
                         @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                         {
-                        <div>
-                          | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
-                        </div>
+                            <div>
+                                | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
+                            </div>
                         }
                     </dd>
                 </dl>
@@ -134,13 +133,13 @@
             <br>
             @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
             {
-            <div>
-                <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
-                <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages.</a> |
-                <a asp-controller="Home" asp-action="Index">Back to Home</a>
-            </div>
-            }   
+                <div>
+                    <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
+                    <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages.</a> |
+                    <a asp-controller="Home" asp-action="Index">Back to Home</a>
+                </div>
+            }
         </div>
         <div class="columnRight">
             <div>
@@ -176,6 +175,9 @@
             </dd>
         </dl>
     </div>
-
+    @if (this.User.IsInRole("Admin"))
+    {
+    <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights</a>       
+    }
 </body>
 

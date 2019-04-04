@@ -19,7 +19,7 @@
         <p>
             Title: <input placeholder="Search.." type="text" name="input">
             <button type="submit">Submit</button>
-            <a class="btn btn-default btn-sm" asp-controller="Users" asp-action="PreviewUsers" >Clear!</a>
+            <a class="btn btn-default btn-sm" asp-controller="Users" asp-action="PreviewUsers">Clear!</a>
         </p>
     </form>
 </div>
@@ -27,17 +27,18 @@
 <div>
     @foreach (var user in Model.PreviewUsers)
     {
-        <a>
-            @if (user.ProfilePicture != null)
-            {
-                <img src="data:image;base64,@System.Convert.ToBase64String(user.ProfilePicture )" style="max-height: 110px; height: 70%; width: auto;" />
-            }
-        </a>
-        <h4>
-            @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - @userService.UserScores(user.Id)
-            <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
-        </h4>
-    }
+    <a>
+        @if (user.ProfilePicture != null)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(user.ProfilePicture )" style="max-height: 110px; height: 70%; width: auto;" />
+        }
+    </a>
+    <h4>
+        @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - @userService.UserScores(user.Id)
+        <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
+    </h4>
+}
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>
+@this.User.IsInRole("Admin");

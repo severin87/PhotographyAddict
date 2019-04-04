@@ -38,6 +38,11 @@
                     <li><a asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
                     <li><a asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
                     <li><a asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Idtu">Admin1</a></li>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Idtu">AdminE</a></li>
+                    }*@
 
                 </ul>
                 <partial name="_LoginPartial" />

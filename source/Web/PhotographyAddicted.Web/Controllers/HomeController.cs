@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Services.DataServices;
@@ -16,9 +18,52 @@ namespace PhotographyAddicted.Web.Controllers
     {
         private readonly IUserService userService;
 
-        public HomeController(IUserService userService)
+        private readonly UserManager<PhotographyAddictedUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+
+        public HomeController(IUserService userService, UserManager<PhotographyAddictedUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userService = userService;
+            this.roleManager = roleManager;
+            this.userManager = userManager;
+        }
+
+        public async Task<IActionResult> Idtu()
+        {
+            if (this.User.Identity.Name != null)
+            {
+
+
+                await this.roleManager.CreateAsync(new IdentityRole("Admin"));
+
+                var userInfo = await userManager.GetUserAsync(this.User);
+
+
+                await userManager.AddToRoleAsync(userInfo, "Admin");
+                await  userManager.IsInRoleAsync(userInfo, "Moderator");
+                return Json(userInfo.PasswordHash);
+            }
+            else
+            {
+                return Json("A taka");
+            }
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult ForAdmin()
+        {
+            if (this.User.IsInRole("Admin"))
+
+            {
+
+                ViewBag.Message = "Welcome to the admin area!";
+
+                return Json("Welcome to the admin area!");
+
+            }
+            else
+                return Json("Welcome to the admin area Ujjjj s Tortuise! Tarikat!!!!!!!!");
+
         }
 
         public IActionResult Index()

@@ -20,4 +20,5 @@ namespace PhotographyAddicted.Services.Models.PhotoStoryComments
         public string PhotographyAddictedUserId { get; set; }
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
     }
+    
 }

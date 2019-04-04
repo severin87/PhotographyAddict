@@ -25,6 +25,7 @@ using PhotographyAddicted.Services.DataServices.PhotoStoryFragmentService;
 using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
 using PhotographyAddicted.Services.DataServices.MessageService;
 using PhotographyAddicted.Services.DataServices.ConversationService;
+using PhotographyAddicted.Services.DataServices.CommonService;
 
 namespace PhotographyAddicted.Web
 {
@@ -52,7 +53,7 @@ namespace PhotographyAddicted.Web
                      options.UseSqlServer(
                          this.Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<PhotographyAddictedUser>(options =>
+            services.AddIdentity<PhotographyAddictedUser, IdentityRole>(options =>
             {
                 options.User.RequireUniqueEmail = true;
                 options.Password.RequiredUniqueChars = 0;
@@ -60,7 +61,10 @@ namespace PhotographyAddicted.Web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
             })
-                .AddEntityFrameworkStores<PhotographyAddictedContext>();
+                .AddEntityFrameworkStores<PhotographyAddictedContext>()
+                .AddRoles<IdentityRole>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddResponseCompression(options =>
             {
@@ -85,6 +89,7 @@ namespace PhotographyAddicted.Web
             services.AddScoped<IPhotoStoryCommentService, PhotoStoryCommentService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IConversationService, ConversationService>();
+            services.AddScoped<ICommonService, CommonService>();
 
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {
