@@ -75,22 +75,25 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         public virtual ICollection<Message> Messages { get; set; }
 
         //TODO: Dobavqne na lubimi snimki i avtori.
-        //TODO: tochki na glasa
-        //TODO: DNevna proverka za Raiting i tochki.
+        //TODO: Tochki na glasa
+        //TODO: Dnevna proverka za Raiting i tochki.
         //TODO: Ima nqma ban proverka.
-        //TODO: Technika na vsqka snimka
-        //10
+        //4
 
+        //TODO: Nastroika dali sa syglasni s pravilata
+        
+        //TODO: Dobavqne na opciq za dobavqne na reklami za Admina
+        //TODO: Da razchistq HomeControlera
         //TODO: DNevna proverka za broi snimki kacheni.
         //TODO: DObavqne na linkove kum komentarite.
         //TODO: ogranichenie na kacheni snimki za den!!!
-        //Vsichki Services and Dbsets da stanat readonly
+        //TODO: Vsichki Services and Dbsets da stanat readonly
         //TODO: Amina da skriva a ne da trie syobshteniq.
         //TODO: Da si kriptiram suobshteniqta.
         //TODO: Da vidq s ajax kakvo stava.
         //TODO: Da si podredq i preimenuvam vsichki commenti  !!!!!!!!!
         //TODO: Napishi si na vsichki async metodi Async na kraq.
         //TODO: Dobavqna na zaqwka kum admin za smqna na Username.
-        //4
+        //13
     }
 }

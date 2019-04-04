@@ -51,7 +51,6 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
-
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -87,16 +86,26 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
+                TimeSpan span1 = TimeSpan.FromDays(3);
 
                 signedUser.LastLogin = DateTime.UtcNow;
+                TimeSpan razlika = signedUser.LastLogin.Subtract(signedUser.Blocked);
+                TimeSpan razlikaBash = span1.Subtract(razlika);
+                DateTime dt = new DateTime() + razlikaBash;
+                
+                if (signedUser.IsBanned)
+                {
+                    ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.Blocked.ToString()}  for next: {dt.Day}:{dt.Hour}:{dt.Minute}");
+                    return Page();
+                }
 
                 var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, 
                 Input.Password, Input.RememberMe,  lockoutOnFailure: true);
-
+                
                 // Can turn it back if you don't want turn UserName to Email !!!
                 //var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
-                {
+                {                    
                     await _signInManager.UserManager.UpdateAsync(signedUser);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
