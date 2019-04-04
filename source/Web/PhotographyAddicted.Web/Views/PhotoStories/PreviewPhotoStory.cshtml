@@ -27,11 +27,17 @@
         </h1>
     </div>
 
-    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-    {
-        <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="UpdatePhotoStory" asp-route-id="@Model.Id">Update</a>
-        <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="DeletePhotoStory" asp-route-id="@Model.Id">Delete</a>
-    }
+    @*@if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+        {
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="UpdatePhotoStory" asp-route-id="@Model.Id">Update</a>
+            <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="DeletePhotoStory" asp-route-id="@Model.Id">Delete</a>
+        }*@
+}
+
+@if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+{
+    <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="UpdatePhotoStory" asp-route-id="@Model.Id">Update</a>
+    <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="DeletePhotoStory" asp-route-id="@Model.Id">Delete</a>
 }
 <div>
     <h4>PreviewPhotoStoryViewModel</h4>
@@ -70,8 +76,6 @@
     {
         <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="AddPhotoStoryFragment" asp-route-id="@Model.Id">AddFragment</a>
     }
-
-
 </div>
 
 <div>
@@ -85,7 +89,8 @@
                 <img src="data:image;base64,@System.Convert.ToBase64String(fragment.Picture)" style="max-height: 70px; height: 70%; width: auto;" />
             }
 
-            @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
                 <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="UpdatePhotoStoryFragment" asp-route-id="@fragment.Id">Update</a>
                 <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="DeletePhotoStoryFragment" asp-route-id="@fragment.Id">Delete</a>
@@ -113,7 +118,8 @@
     @foreach (var comment in Model.PhotoStoryComments)
     {
         <h4>@comment.UserOpinion</h4>
-        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+            || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
         {
             <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesComments" asp-action="UpdatePhotoStoryComment" asp-route-id="@comment.Id">Update</a>
             <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesComments" asp-action="DeletePhotoStoryComment" asp-route-id="@comment.Id">Delete</a>

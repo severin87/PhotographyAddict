@@ -25,12 +25,13 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var updatedNew = this.newService.FindNewBy(id);
 
-            if (updatedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                 || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewNew", new { id = updatedNew.Id });
+                return this.View(updatedNew);
             }
 
-            return this.View(updatedNew);
+            return this.RedirectToAction("PreviewNew", new { id = updatedNew.Id });
         }
 
         [HttpPost]
@@ -46,7 +47,6 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewNews", "News");
         }
 
-        [Authorize]
         public IActionResult DeleteNew(int Id)
         {
             var deletedNew = newService.FindNewBy(Id);
@@ -56,15 +56,15 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (deletedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewNews", "News");
+                return View(deletedNew);
             }
 
-            return View(deletedNew);
+            return this.RedirectToAction("PreviewNews", "News");
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DeleteNew(PreviewNewViewModel input)
         {

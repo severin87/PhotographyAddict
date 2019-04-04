@@ -42,7 +42,8 @@
             <p>
                 <a class="btn btn-default btn-sm" asp-controller="News" asp-action="PreviewNew" asp-route-id="@userNew.Id">Check new!</a>
 
-                @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                @if (userNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
                 {
                     <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@userNew.Id">Update </a>
                     <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@userNew.Id">Delete</a>

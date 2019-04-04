@@ -24,12 +24,12 @@ namespace PhotographyAddicted.Web.Controllers
 
             var updatedNew = this.newCommentService.ViewUpdateNewById(id);
 
-            if (updatedNew.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewNew", "News", new { id = updatedNew.NewId });
+                return this.View(updatedNew);
             }
-
-            return this.View(updatedNew);
+            return this.RedirectToAction("PreviewNew", "News", new { id = updatedNew.NewId });
         }
 
         [HttpPost]
@@ -81,12 +81,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedNewComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (deletedNewComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewNew", "News", new { id = deletedNewComment.NewId });
+                return View(deletedNewComment);
             }
 
-            return View(deletedNewComment);
+            return this.RedirectToAction("PreviewNew", "News", new { id = deletedNewComment.NewId });
         }
 
         [Authorize]

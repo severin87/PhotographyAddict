@@ -24,12 +24,13 @@ namespace PhotographyAddicted.Web.Controllers
 
             var updatedImageComment = this.imageCommentService.ViewUpdateImageById(id);
 
-            if (updatedImageComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (updatedImageComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewImage", "Images", new { id = updatedImageComment.ImageId });
+                return this.View(updatedImageComment);
             }
 
-            return this.View(updatedImageComment);
+            return this.RedirectToAction("PreviewImage", "Images", new { id = updatedImageComment.ImageId });
         }
 
         [HttpPost]
@@ -55,12 +56,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedImageComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (deletedImageComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewImage", "Images", new { id = deletedImageComment.ImageId });
+                return View(deletedImageComment);
             }
 
-            return View(deletedImageComment);
+            return this.RedirectToAction("PreviewImage", "Images", new { id = deletedImageComment.ImageId });
         }
 
         [Authorize]

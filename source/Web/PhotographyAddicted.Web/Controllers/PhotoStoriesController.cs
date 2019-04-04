@@ -30,13 +30,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if ((photoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                || photoStory.PhotographyAddictedUserId == null)
+            if ((photoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                || photoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("Index", "Home");
+                return View(photoStory);
             }
 
-            return View(photoStory);
+            return this.RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -51,12 +51,13 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var userPhotoStory = photoStoryService.FindPhotoStoryById(id);
 
-            if (userPhotoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (userPhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewImage", new { id = userPhotoStory.Id });
+                return this.View(userPhotoStory);
             }
 
-            return this.View(userPhotoStory);
+            return this.RedirectToAction("PreviewImage", new { id = userPhotoStory.Id });
         }
 
         [HttpPost]

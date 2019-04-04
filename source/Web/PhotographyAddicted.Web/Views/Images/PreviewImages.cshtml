@@ -58,7 +58,8 @@
                 @item.Scores
                 @item.Title
 
-                if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                    || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
                 {
                     @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
                     <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>

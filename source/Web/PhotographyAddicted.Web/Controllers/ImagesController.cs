@@ -33,12 +33,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedImage.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier) || deletedImage.PhotographyAddictedUserId == null)
+            if (deletedImage.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                || deletedImage.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewImages", "Images", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
+                return View(deletedImage);
             }
 
-            return View(deletedImage);
+            return this.RedirectToAction("PreviewImages", "Images", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 
         [HttpPost]
@@ -51,7 +52,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             await imageService.DeleteImage(input);
             input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return this.RedirectToAction("PreviewImages", "Images", new { id = input.PhotographyAddictedUserId });
+            return this.RedirectToAction("PreviewUser", "Users", new { id = input.PhotographyAddictedUserId });
         }
 
         [AllowAnonymous]
@@ -80,12 +81,13 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var userPictures = imageService.FindImageById(id);
 
-            if (userPictures.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (userPictures.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewImage", new { id = userPictures.Id });
-            }            
+                return this.View(userPictures);
+            }
 
-            return this.View(userPictures);
+            return this.RedirectToAction("PreviewImage", new { id = userPictures.Id });
         }
 
         [HttpPost]

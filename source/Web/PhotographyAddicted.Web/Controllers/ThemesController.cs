@@ -29,12 +29,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (deletedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewThemes", "Themes");
+                return View(deletedTheme);
             }
 
-            return View(deletedTheme);
+            return this.RedirectToAction("PreviewThemes", "Themes");           
         }
 
         [HttpPost]
@@ -54,12 +55,13 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var updatedTheme = this.themeService.FindThemeBy(id);
 
-            if (updatedTheme.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (updatedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                 || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewTheme", new { id = updatedTheme.Id });
+                return this.View(updatedTheme);
             }
 
-            return this.View(updatedTheme);
+            return this.RedirectToAction("PreviewTheme", new { id = updatedTheme.Id });
         }
 
         [HttpPost]

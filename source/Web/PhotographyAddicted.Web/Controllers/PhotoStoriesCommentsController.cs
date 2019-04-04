@@ -61,12 +61,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (photoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (photoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewPhotoStory", "PhotoStories", new { id = photoStory.PhotoStoryId });
+                return View(photoStory);
             }
 
-            return View(photoStory);
+            return this.RedirectToAction("PreviewPhotoStory", "PhotoStories", new { id = photoStory.PhotoStoryId });
         }
 
         [HttpPost]
@@ -87,12 +88,13 @@ namespace PhotographyAddicted.Web.Controllers
 
             var photoStory = this.photoStoryCommentService.PreviewPhotoStoryCommentById(id);
 
-            if (photoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (photoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("PreviewPhotoStory", "PhotoStories", new { id = photoStory.PhotoStoryId });
+                return this.View(photoStory);
             }
 
-            return this.View(photoStory);
+            return this.RedirectToAction("PreviewPhotoStory", "PhotoStories", new { id = photoStory.PhotoStoryId });
         }
 
         [HttpPost]

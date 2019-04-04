@@ -10,6 +10,7 @@ using PhotographyAddicted.Services.Models.ThemesComments;
 
 namespace PhotographyAddicted.Web.Controllers
 {
+    [Authorize]
     public class ThemesCommentsController : BaseController
     {
         private readonly IThemeCommentService themeCommentService;
@@ -21,15 +22,15 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult UpdateThemeComment(int id)
         {
-
             var updatedThemeComment = this.themeCommentService.ViewUpdateThemeById(id);
 
-            if (updatedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if ((updatedThemeComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator")))
             {
-                return this.RedirectToAction("PreviewTheme", "Themes", new { id = updatedThemeComment.ThemeId });
+                return this.View(updatedThemeComment);
             }
 
-            return this.View(updatedThemeComment);
+            return this.RedirectToAction("PreviewTheme", "Themes", new { id = updatedThemeComment.ThemeId });
         }
 
         [HttpPost]
@@ -44,8 +45,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             return this.RedirectToAction("PreviewTheme", "Themes", new { Id = themeId });
         }
-
-        [Authorize]
+        
         public IActionResult AddThemeComment(int Id)
         {
             var newThemeComment = new AddThemeCommentViewModel()
@@ -56,7 +56,6 @@ namespace PhotographyAddicted.Web.Controllers
             return View(newThemeComment);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddThemeComment(AddThemeCommentViewModel input)
         {
@@ -70,8 +69,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             return this.RedirectToAction("PreviewTheme", "Themes", new { id = input.ThemeId });
         }
-
-        [Authorize]
+        
         public IActionResult DeleteThemeComment(int Id)
         {
             var deletedThemeComment = themeCommentService.FindThemeCommentById(Id);
@@ -81,15 +79,15 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedThemeComment.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if ((deletedThemeComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                || this.User.IsInRole("Moderator") || this.User.IsInRole("Admin")))
             {
-                return this.RedirectToAction("PreviewTheme", "Themes", new { id = deletedThemeComment.ThemeId });
+                return View(deletedThemeComment);
             }
 
-            return View(deletedThemeComment);
+            return this.RedirectToAction("PreviewTheme", "Themes", new { id = deletedThemeComment.ThemeId });
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DeleteThemeComment(DeleteThemeCommentViewModel input)
         {

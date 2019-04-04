@@ -48,13 +48,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if ((photoFragment.PhotoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier)) 
-                || photoFragment.PhotoStory.PhotographyAddictedUserId == null)
+            if ((photoFragment.PhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)) 
+                || photoFragment.PhotoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("Index", "Home");
+                return View("UpdatePhotoStoryFragment", photoFragment);
             }
 
-            return View("UpdatePhotoStoryFragment", photoFragment);
+            return this.RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -74,13 +74,13 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if ((photoFragment.PhotoStory.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                || photoFragment.PhotoStory.PhotographyAddictedUserId == null)
+            if ((photoFragment.PhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                || photoFragment.PhotoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
             {
-                return this.RedirectToAction("Index", "Home");
+                return View(photoFragment);
             }
 
-            return View(photoFragment);
+            return this.RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
