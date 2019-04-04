@@ -15,7 +15,11 @@ namespace PhotographyAddicted.Services.Models.Images
         public string Title { get; set; }
 
         public ImageCategory ImageCategory { get; set; }
-        
+
+        public string Equipment { get; set; }
+
+        public string Settings { get; set; }
+
         public string Description { get; set; }
 
         public DateTime UploadedDate { get; set; }

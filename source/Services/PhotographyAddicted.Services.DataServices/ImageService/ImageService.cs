@@ -40,6 +40,8 @@ namespace PhotographyAddicted.Services.DataServices
                 Description = input.Description,
                 PhotographyAddictedUserId = input.PhotographyAddictedUserId,
                 UploadedDate = DateTime.UtcNow,
+                Equipment = input.Equipment,
+                Settings = input.Settings,
                 
             };
             await imageDbSet.AddAsync(newImage);
@@ -63,6 +65,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Description =p.Description,
                     ImageComments =p.ImageComments,
                     UploadedDate = p.UploadedDate,
+                    Equipment = p.Equipment,
+                    Settings = p.Settings,
                 }).FirstOrDefault();
 
             return currentImage;
@@ -75,6 +79,8 @@ namespace PhotographyAddicted.Services.DataServices
             updateImageDbSet.ImageCategory = input.ImageCategory;
             updateImageDbSet.Title = input.Title;
             updateImageDbSet.Description = input.Description;
+            updateImageDbSet.Equipment = input.Equipment;
+            updateImageDbSet.Settings = input.Settings;
 
             await imageDbSet.SaveChangesAsync();
 
@@ -115,6 +121,8 @@ namespace PhotographyAddicted.Services.DataServices
                     UploadedDate = d.UploadedDate,
                     ImageCategory = d.ImageCategory,
                     Description = d.Description,
+                    Equipment = d.Equipment,
+                    Settings = d.Settings,
                 }).FirstOrDefault();
 
             return image;
@@ -154,6 +162,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate = u.UploadedDate,
+                    Equipment = u.Equipment,
+                    Settings = u.Settings,
                 }).OrderByDescending(d => d.UploadedDate);
             }
             else
@@ -171,6 +181,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate =u.UploadedDate,
+                    Equipment = u.Equipment,
+                    Settings = u.Settings,
                 }).OrderByDescending(d => d.UploadedDate);
             }
 
@@ -197,6 +209,8 @@ namespace PhotographyAddicted.Services.DataServices
                         Picture = u.Picture,
                         Scores = u.Scores,
                         UploadedDate = u.UploadedDate,
+                        Equipment = u.Equipment,
+                        Settings = u.Settings,
                     }).First();
 
                     images.Add(currentImage);
@@ -226,6 +240,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate = u.UploadedDate,
+                    Equipment = u.Equipment,
+                    Settings = u.Settings,
                 }).ToList();
 
             var imagesByCategory = new PreviewImagesViewModel()
@@ -252,6 +268,8 @@ namespace PhotographyAddicted.Services.DataServices
                     Picture = u.Picture,
                     Scores = u.Scores,
                     UploadedDate = u.UploadedDate,
+                    Equipment = u.Equipment,
+                    Settings = u.Settings,
                 }).ToList();
 
             var imagesByCategory = new PreviewImagesViewModel()
@@ -284,7 +302,9 @@ namespace PhotographyAddicted.Services.DataServices
                         Picture = u.Picture,
                         Scores = u.Scores,
                         UploadedDate = u.UploadedDate,
-                    }).First();
+                        Equipment = u.Equipment,
+                        Settings = u.Settings,
+                        }).First();
 
                     images.Add(currentImage);
                 }

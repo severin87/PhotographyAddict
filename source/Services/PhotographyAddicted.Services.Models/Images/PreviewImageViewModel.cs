@@ -19,6 +19,10 @@ namespace PhotographyAddicted.Services.Models.Images
         
         public ImageCategory ImageCategory { get; set; }
 
+        public string Equipment { get; set; }
+
+        public string Settings { get; set; }
+
         public int Scores { get; set; }
 
         public string Description { get; set; }

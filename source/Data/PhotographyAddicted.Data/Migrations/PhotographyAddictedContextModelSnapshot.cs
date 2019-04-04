@@ -160,6 +160,8 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<string>("Equipment");
+
                     b.Property<int>("ImageCategory");
 
                     b.Property<string>("PhotographyAddictedUserId");
@@ -167,6 +169,8 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<byte[]>("Picture");
 
                     b.Property<int>("Scores");
+
+                    b.Property<string>("Settings");
 
                     b.Property<string>("Title");
 

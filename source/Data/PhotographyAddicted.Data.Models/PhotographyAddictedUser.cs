@@ -74,18 +74,16 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<Message> Messages { get; set; }
 
-        //TODO: Dobavqne i statut s priwilegiii zadulveniq. Roli
         //TODO: Dobavqne na lubimi snimki i avtori.
         //TODO: tochki na glasa
-        //TODO: ogranichenie na kacheni snimki za den!!!
-        //TODO: DObavqne na linkove kum komentarite.
-        //TODO: Da probvam da napravq Generic za proverka na Rolq.
-        //TODO: DNevna proverka za broi snimki kacheni.
         //TODO: DNevna proverka za Raiting i tochki.
         //TODO: Ima nqma ban proverka.
         //TODO: Technika na vsqka snimka
         //10
 
+        //TODO: DNevna proverka za broi snimki kacheni.
+        //TODO: DObavqne na linkove kum komentarite.
+        //TODO: ogranichenie na kacheni snimki za den!!!
         //Vsichki Services and Dbsets da stanat readonly
         //TODO: Amina da skriva a ne da trie syobshteniq.
         //TODO: Da si kriptiram suobshteniqta.

@@ -20,6 +20,10 @@ namespace PhotographyAddicted.Data.Models
 
         public string Title { get; set; }
 
+        public string Equipment { get; set; }
+
+        public string Settings { get; set; }
+
         public int Scores { get; set; }
 
         public ImageCategory ImageCategory { get; set; }
