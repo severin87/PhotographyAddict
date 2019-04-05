@@ -407,7 +407,7 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<int>("AverageScore");
 
-                    b.Property<DateTime>("BanLength");
+                    b.Property<int>("BanLengthDays");
 
                     b.Property<DateTime>("BannedDate");
 

@@ -179,7 +179,19 @@
     </div>
     @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
     {
-        <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights</a>
+        <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
+    }
+
+    @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
+    {
+        if (!Model.IsBanned)
+        {
+            <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="false" asp-route-name="@Model.UserName">BanUser</a>
+        }
+        else
+        {
+            <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="true" asp-route-name="@Model.UserName">UnBanUser</a>
+        }
     }
 </body>
 

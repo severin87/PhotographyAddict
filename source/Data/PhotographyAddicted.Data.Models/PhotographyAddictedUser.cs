@@ -34,8 +34,6 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         public byte[] ProfilePicture { get; set; }
 
         public DateTime CreationDate { get; set; }
-
-
         
 
         public DateTime LastLogin { get; set; }
@@ -48,7 +46,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public DateTime BannedDate { get; set; }
 
-        public DateTime BanLength { get; set; }
+        public int BanLengthDays { get; set; }
 
         public string Rang { get; set; }
 

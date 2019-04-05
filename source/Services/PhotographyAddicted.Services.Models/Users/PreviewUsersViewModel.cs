@@ -6,8 +6,6 @@ namespace PhotographyAddicted.Services.Models.Users
 {
     public class PreviewUsersViewModel
     {
-
-       public IEnumerable<PreviewUserViewModel> PreviewUsers { get; set; }
-
+        public IEnumerable<PreviewUserViewModel> PreviewUsers { get; set; }
     }
 }
