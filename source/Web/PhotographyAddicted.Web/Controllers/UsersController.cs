@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.CommonService;
 using PhotographyAddicted.Services.Models.Users;
 
 namespace PhotographyAddicted.Web.Controllers
@@ -15,10 +16,12 @@ namespace PhotographyAddicted.Web.Controllers
     public class UsersController : BaseController
     {
         private readonly IUserService userService;
+        private readonly ICommonService commonService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ICommonService commonService)
         {
             this.userService = userService;
+            this.commonService = commonService;
         }
 
         [AllowAnonymous]
@@ -30,8 +33,13 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewUser(string Id)
+        public async Task<IActionResult> PreviewUser(string Id)
         {
+            if (await commonService.IsUserBanned(this.User.Identity.Name))
+            {
+                return Redirect("../../Identity/Account/Login");
+            }
+
             var userProfile = userService.PreviewUser(Id);
            
             return View(userProfile);

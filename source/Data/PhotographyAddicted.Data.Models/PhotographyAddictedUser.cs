@@ -36,7 +36,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         public DateTime CreationDate { get; set; }
 
 
-        public DateTime Blocked { get; set; }
+        
 
         public DateTime LastLogin { get; set; }
 
@@ -46,7 +46,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public bool IsBanned { get; set; }
 
-        // public string Role { get; set; }
+        public DateTime BannedDate { get; set; }
+
+        public DateTime BanLength { get; set; }
 
         public string Rang { get; set; }
 
@@ -81,7 +83,10 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //4
 
         //TODO: Nastroika dali sa syglasni s pravilata
-        
+
+        //TODO Chasa da se opravi.
+        //TODO RAzchisti HomeControlera.
+        //TODO: public IHttpContextAccessor httpContextAccessor; Vse oshte ne mi trqbva.
         //TODO: Dobavqne na opciq za dobavqne na reklami za Admina
         //TODO: Da razchistq HomeControlera
         //TODO: DNevna proverka za broi snimki kacheni.

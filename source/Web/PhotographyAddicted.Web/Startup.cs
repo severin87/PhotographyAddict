@@ -90,6 +90,7 @@ namespace PhotographyAddicted.Web
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IConversationService, ConversationService>();
             services.AddScoped<ICommonService, CommonService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAuthentication().AddFacebook(facebookOptions => 
             {

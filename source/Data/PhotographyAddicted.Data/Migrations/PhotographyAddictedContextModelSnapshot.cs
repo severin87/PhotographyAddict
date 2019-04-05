@@ -407,7 +407,9 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<int>("AverageScore");
 
-                    b.Property<DateTime>("Blocked");
+                    b.Property<DateTime>("BanLength");
+
+                    b.Property<DateTime>("BannedDate");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();

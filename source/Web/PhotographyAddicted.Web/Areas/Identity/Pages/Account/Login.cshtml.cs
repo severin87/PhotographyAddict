@@ -81,7 +81,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 // It's necessary  when change UserName from email to Username !!!
 
                 var signedUser = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
-                if (signedUser==null)
+                if (signedUser == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
@@ -89,13 +89,13 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 TimeSpan span1 = TimeSpan.FromDays(3);
 
                 signedUser.LastLogin = DateTime.UtcNow;
-                TimeSpan razlika = signedUser.LastLogin.Subtract(signedUser.Blocked);
+                TimeSpan razlika = signedUser.BannedDate.Subtract(signedUser.LastLogin);
                 TimeSpan razlikaBash = span1.Subtract(razlika);
                 DateTime dt = new DateTime() + razlikaBash;
-                
+                DateTime aha = signedUser.BannedDate.AddHours(72);
                 if (signedUser.IsBanned)
                 {
-                    ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.Blocked.ToString()}  for next: {dt.Day}:{dt.Hour}:{dt.Minute}");
+                    ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.BannedDate.ToString()} till:{aha.Date}/* for next: {dt.Day}:{dt.Hour}:{dt.Minute}*/");
                     return Page();
                 }
 

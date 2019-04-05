@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.Models.Themes;
 using System.Security.Claims;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.CommonService;
 
 namespace PhotographyAddicted.Web.Controllers
 {
@@ -14,10 +15,12 @@ namespace PhotographyAddicted.Web.Controllers
     public class ThemesController : BaseController
     {
         private IThemeService themeService;
+        private readonly ICommonService commonService;
 
-        public ThemesController(IThemeService themeService)
+        public ThemesController(IThemeService themeService, ICommonService commonService)
         {
             this.themeService = themeService;
+            this.commonService = commonService;
         }
        
         public IActionResult DeleteTheme(int Id)
@@ -105,8 +108,13 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult PreviewThemes(string input)
+        public async Task<IActionResult> PreviewThemes(string input)
         {
+            if (await commonService.IsUserBanned(this.User.Identity.Name))
+            {
+                return Redirect("../../Identity/Account/Login");
+            }
+
             var themes = themeService.PreviewThemes(input);
             
             return View(themes);

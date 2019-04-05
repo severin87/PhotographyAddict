@@ -16,7 +16,7 @@ namespace PhotographyAddicted.Services.DataServices
     public class UserService : IUserService
     {
         private IRepository<PhotographyAddictedUser> userDbset;
-              
+               
         public UserService(IRepository<PhotographyAddictedUser> userDbset)
         {
             this.userDbset = userDbset;
@@ -54,7 +54,8 @@ namespace PhotographyAddicted.Services.DataServices
                 AverageScore = UserScores(id),
                 CreationDate = u.CreationDate,
                 LastLogin = u.LastLogin,
-                Blocked = u.Blocked,
+                BanLength = u.BanLength,
+                BannedDate = u.BannedDate,
                 IsBanned = u.IsBanned,
                 Images = u.Images
             }).FirstOrDefault();
@@ -108,7 +109,7 @@ namespace PhotographyAddicted.Services.DataServices
        public PreviewUsersViewModel PreviewUsers(string input)
        {
             PreviewUsersViewModel themes = new PreviewUsersViewModel();
-
+            
             if (input == null)
             {
                 themes.PreviewUsers = userDbset.All().Select(u =>
@@ -124,7 +125,8 @@ namespace PhotographyAddicted.Services.DataServices
                     AverageScore = u.AverageScore,
                     CreationDate = u.CreationDate,
                     LastLogin = u.LastLogin,
-                    Blocked = u.Blocked,
+                    BanLength = u.BanLength,
+                    BannedDate = u.BannedDate,
                     IsBanned = u.IsBanned,
                     Images = u.Images,
                 });
@@ -144,7 +146,8 @@ namespace PhotographyAddicted.Services.DataServices
                     AverageScore = u.AverageScore,
                     CreationDate = u.CreationDate,
                     LastLogin = u.LastLogin,
-                    Blocked = u.Blocked,
+                    BanLength = u.BanLength,
+                    BannedDate = u.BannedDate,
                     IsBanned = u.IsBanned,
                     Images = u.Images,
                 });

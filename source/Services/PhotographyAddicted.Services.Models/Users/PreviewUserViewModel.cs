@@ -18,9 +18,7 @@ namespace PhotographyAddicted.Services.Models.Users
         public byte[] ProfilePicture { get; set; }
 
         public DateTime CreationDate { get; set; }
-
-
-        public DateTime Blocked { get; set; }
+                    
 
         public DateTime LastLogin { get; set; }
 
@@ -30,7 +28,9 @@ namespace PhotographyAddicted.Services.Models.Users
 
         public bool IsBanned { get; set; }
 
-        // public string Role { get; set; }
+        public DateTime BannedDate { get; set; }
+
+        public DateTime BanLength { get; set; }
 
         public string Rang { get; set; }
                
