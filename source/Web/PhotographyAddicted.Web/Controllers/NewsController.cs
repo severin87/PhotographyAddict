@@ -25,8 +25,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var updatedNew = this.newService.FindNewBy(id);
 
-            if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                 || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return this.View(updatedNew);
             }
@@ -56,8 +55,7 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            if (deletedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return View(deletedNew);
             }

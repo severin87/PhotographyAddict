@@ -76,8 +76,7 @@
     {
         <h4>
             @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="DeleteImageComment" asp-route-id="@comment.Id">Delete</a>
                 <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="UpdateImageComment" asp-route-id="@comment.Id">Edit</a>
@@ -86,8 +85,7 @@
     }
 </div>
 <div>
-    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-        || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
     {
         @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
         <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@Model.Id">Edit</a>

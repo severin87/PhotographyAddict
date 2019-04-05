@@ -32,8 +32,7 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (deletedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            if (deletedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return View(deletedTheme);
             }
@@ -58,8 +57,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var updatedTheme = this.themeService.FindThemeBy(id);
 
-            if (updatedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                 || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            if (updatedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return this.View(updatedTheme);
             }

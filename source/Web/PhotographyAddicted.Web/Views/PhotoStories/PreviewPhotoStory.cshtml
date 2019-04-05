@@ -34,7 +34,7 @@
         }*@
 }
 
-@if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+@if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
 {
     <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="UpdatePhotoStory" asp-route-id="@Model.Id">Update</a>
     <a class="btn btn-default btn-sm" asp-controller="PhotoStories" asp-action="DeletePhotoStory" asp-route-id="@Model.Id">Delete</a>
@@ -90,7 +90,7 @@
             }
 
             @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+               || this.User.IsInRole("Moderator"))
             {
                 <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="UpdatePhotoStoryFragment" asp-route-id="@fragment.Id">Update</a>
                 <a class="btn btn-default btn-sm" asp-controller="PhotoStoriesFragments" asp-action="DeletePhotoStoryFragment" asp-route-id="@fragment.Id">Delete</a>

@@ -22,8 +22,7 @@
 
     <h1>
 
-        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-             || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
         {
         <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@Model.Id">Update </a>
         <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@Model.Id">Delete</a>
@@ -42,8 +41,7 @@
     {
     <h4>
         @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-             || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
         {
         <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>
         <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id">Edit</a>

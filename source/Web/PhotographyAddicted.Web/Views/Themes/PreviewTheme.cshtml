@@ -12,7 +12,7 @@
 <h1>
     @Model.Title - @Model.PhotographyAddictedUser.UserName - @Model.ThemeCategory - @Model.CreationDate
 
-    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
     {
         <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
         <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@Model.Id">Delete</a>
@@ -29,8 +29,7 @@
 {
 <li>
     @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-    @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-        || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+    @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
     {
         <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
         <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id">Update</a>

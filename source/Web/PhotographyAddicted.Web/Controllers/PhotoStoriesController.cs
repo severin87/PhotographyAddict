@@ -31,7 +31,7 @@ namespace PhotographyAddicted.Web.Controllers
             }
 
             if ((photoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                || photoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+                || photoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Moderator"))
             {
                 return View(photoStory);
             }
@@ -51,8 +51,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var userPhotoStory = photoStoryService.FindPhotoStoryById(id);
 
-            if (userPhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-                || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+            if (userPhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return this.View(userPhotoStory);
             }

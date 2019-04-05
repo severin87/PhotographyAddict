@@ -1,6 +1,8 @@
 ﻿@model PhotographyAddicted.Services.Models.Users.PreviewUserViewModel
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+@using PhotographyAddicted.Services.DataServices.CommonService
+@inject ICommonService commonService
 
 @{
     ViewData["Title"] = "PreviewUser";
@@ -175,9 +177,9 @@
             </dd>
         </dl>
     </div>
-    @if (this.User.IsInRole("Admin"))
+    @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
     {
-    <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights</a>       
+        <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights</a>
     }
 </body>
 

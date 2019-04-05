@@ -34,8 +34,7 @@
     <p>
         <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">View </a>
 
-        @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)
-            || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+        @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
         {
             <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id">Update </a>
             <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id">Delete</a>

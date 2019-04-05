@@ -49,7 +49,7 @@ namespace PhotographyAddicted.Web.Controllers
             }
 
             if ((photoFragment.PhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)) 
-                || photoFragment.PhotoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+                || photoFragment.PhotoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Moderator"))
             {
                 return View("UpdatePhotoStoryFragment", photoFragment);
             }
@@ -75,7 +75,7 @@ namespace PhotographyAddicted.Web.Controllers
             }
 
             if ((photoFragment.PhotoStory.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                || photoFragment.PhotoStory.PhotographyAddictedUserId != null || this.User.IsInRole("Admin") || this.User.IsInRole("Moderator"))
+                || photoFragment.PhotoStory.PhotographyAddictedUserId != null  || this.User.IsInRole("Moderator"))
             {
                 return View(photoFragment);
             }
