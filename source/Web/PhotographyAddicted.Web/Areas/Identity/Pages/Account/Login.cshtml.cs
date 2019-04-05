@@ -86,15 +86,11 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
-                TimeSpan span1 = TimeSpan.FromDays(3);
-
-                //signedUser.LastLogin = DateTime.UtcNow;
-                //TimeSpan razlika = signedUser.BannedDate.Subtract(signedUser.LastLogin);
-                //TimeSpan razlikaBash = span1.Subtract(razlika);
-                //DateTime dt = new DateTime() + razlikaBash;
-                DateTime aha = signedUser.BannedDate.AddHours(signedUser.BanLengthDays*24);
+                
                 if (signedUser.IsBanned)
                 {
+                    DateTime aha = signedUser.BannedDate.AddHours(signedUser.BanLengthDays * 24);
+
                     ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.BannedDate.ToString("dddd, dd MMMM yyyy HH:mm:ss")}  till: {aha.ToString("dddd, dd MMMM yyyy HH:mm:ss")}");
                     return Page();
                 }

@@ -182,7 +182,8 @@
         <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
     }
 
-    @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
+    @if ((this.User.IsInRole("Moderator")&& !await commonService.IsUserModerator(Model.Id)) ||
+       (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
     {
         if (!Model.IsBanned)
         {
