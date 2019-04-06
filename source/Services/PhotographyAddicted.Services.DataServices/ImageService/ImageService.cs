@@ -16,12 +16,18 @@ namespace PhotographyAddicted.Services.DataServices
     {
         private readonly IRepository<Image> imageDbSet;
 
+        private readonly IRepository<FavouriteImage> favouriteImageDbSet;
+        private readonly IRepository<Favourite> favouriteDbSet;
+
         private IRepository<PhotographyAddictedUser> userDbset;
 
-        public ImageService(IRepository<Image> imageDbSet, IRepository<PhotographyAddictedUser> userDbset)
+        public ImageService(IRepository<Image> imageDbSet, IRepository<PhotographyAddictedUser> userDbset
+            , IRepository<FavouriteImage> favouriteImageDbSet , IRepository<Favourite> favouriteDbSet)
         {
             this.imageDbSet = imageDbSet;
             this.userDbset = userDbset;
+            this.favouriteImageDbSet = favouriteImageDbSet;
+            this.favouriteDbSet = favouriteDbSet;
         }
 
         public async Task<int> AddImage(AddImageViewModel input, IFormFile Picture)
@@ -321,17 +327,28 @@ namespace PhotographyAddicted.Services.DataServices
             return imagesByCategory;
         }
 
-        public async Task<int> AddImageToFavourites(string userId, int imageId)
+        public async Task AddImageToFavourites(string userId, int imageId)
         {
-            var image = imageDbSet.All().Where(x => x.Id == imageId).FirstOrDefault();
+            // var user2 = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.FavouriteImages.Select(x =>x.Image.Id).ToList();
 
+
+            // var image = imageDbSet.All().Where(x => x.Id == imageId).FirstOrDefault();
             var user = userDbset.All().Where(u => u.Id == userId).FirstOrDefault();
+            var favourite = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
+            
+            if (favourite == null)
+            {
+                Favourite sev = new Favourite() {Name ="Maleee",PhotographyAddictedUserId =userId };
+                await favouriteDbSet.AddAsync(sev);
+                userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.Name = "Maleeee2";
+                await favouriteDbSet.SaveChangesAsync();
+            }
+            var hmh = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
+            await favouriteImageDbSet.AddAsync(new FavouriteImage { FavouriteId = hmh.Id, ImageId = imageId });
 
-            user.Favourite.FavouriteImages.Add(new FavouriteImage { Image = image});
-           
+            var neZnam = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.FavouriteImages.Select(v=>v.Image).ToList();
             await userDbset.SaveChangesAsync();
-
-            return image.Id;
+            
         }
     }
 }

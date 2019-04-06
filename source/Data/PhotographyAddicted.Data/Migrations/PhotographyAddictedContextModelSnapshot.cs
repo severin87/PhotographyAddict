@@ -158,6 +158,8 @@ namespace PhotographyAddicted.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Name");
+
                     b.Property<string>("PhotographyAddictedUserId");
 
                     b.HasKey("Id");
@@ -571,7 +573,7 @@ namespace PhotographyAddicted.Data.Migrations
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.FavouriteImage", b =>
                 {
-                    b.HasOne("PhotographyAddicted.Data.Models.Favourite", "Favourite")
+                    b.HasOne("PhotographyAddicted.Data.Models.Favourite", "Favorite")
                         .WithMany("FavouriteImages")
                         .HasForeignKey("FavouriteId")
                         .OnDelete(DeleteBehavior.Restrict);

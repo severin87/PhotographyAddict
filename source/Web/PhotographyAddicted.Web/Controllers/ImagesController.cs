@@ -169,7 +169,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             await imageService.AddImageToFavourites(userId, imageId);
 
-            return View("PreviewImage", imageId);
+            return this.RedirectToAction("PreviewImage", new { id = imageId });
         }
     }
 }

@@ -49,7 +49,7 @@ namespace PhotographyAddicted.Web.Models
            .HasKey(bc => new { bc.FavouriteId, bc.ImageId });
 
            builder.Entity<FavouriteImage>()
-            .HasOne(bc => bc.Favourite)
+            .HasOne(bc => bc.Favorite)
        .WithMany(b => b.FavouriteImages)
        .HasForeignKey(bc => bc.FavouriteId).OnDelete(DeleteBehavior.Restrict);
 
