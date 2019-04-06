@@ -50,6 +50,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public string Rang { get; set; }
 
+        public virtual Favourite Favourite { get; set; }
+
         [InverseProperty("SenderPhotographyAddictedUser")]
         public virtual ICollection<Conversation> SenderConversation { get; set; }
 
@@ -77,10 +79,10 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
         //TODO: Dobavqne na lubimi snimki i avtori.
         //TODO: Tochki na glasa
         //TODO: Dnevna proverka za Raiting i tochki.
-        //TODO: Ima nqma ban proverka.
-        //4
+        //3
 
         //TODO: Nastroika dali sa syglasni s pravilata
+        //TODO Vij dali kaskadnoto triene na lubimi nmqa da iztrie istinskite snimki.
 
         //TODO Chasa da se opravi.
         //TODO RAzchisti HomeControlera.

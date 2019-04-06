@@ -152,6 +152,38 @@ namespace PhotographyAddicted.Data.Migrations
                     b.ToTable("Conversations");
                 });
 
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Favourite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PhotographyAddictedUserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PhotographyAddictedUserId")
+                        .IsUnique()
+                        .HasFilter("[PhotographyAddictedUserId] IS NOT NULL");
+
+                    b.ToTable("Favourites");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.FavouriteImage", b =>
+                {
+                    b.Property<int>("FavouriteId");
+
+                    b.Property<int>("ImageId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("FavouriteId", "ImageId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("FavouriteImages");
+                });
+
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -527,6 +559,27 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "SenderPhotographyAddictedUser")
                         .WithMany("SenderConversation")
                         .HasForeignKey("SenderPhotographyAddictedUserId");
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.Favourite", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", "PhotographyAddictedUser")
+                        .WithOne("Favourite")
+                        .HasForeignKey("PhotographyAddicted.Data.Models.Favourite", "PhotographyAddictedUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.FavouriteImage", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.Favourite", "Favourite")
+                        .WithMany("FavouriteImages")
+                        .HasForeignKey("FavouriteId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("PhotographyAddicted.Data.Models.Image", "Image")
+                        .WithMany("FavouriteImages")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Image", b =>

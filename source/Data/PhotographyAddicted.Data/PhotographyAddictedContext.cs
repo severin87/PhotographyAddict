@@ -32,6 +32,8 @@ namespace PhotographyAddicted.Web.Models
         public DbSet<PhotoStoryFragment> PhotoStoryFragments { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Favourite> Favourites { get; set; }
+        public DbSet<FavouriteImage> FavouriteImages { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,42 +45,23 @@ namespace PhotographyAddicted.Web.Models
             
             base.OnModelCreating(builder);
 
-           // builder.Entity<Conversation>()
-           // .HasOne(p => p.SenderPhotographyAddictedUser)
-           // .WithMany(b => b.SenderConversation)
-           // .OnDelete(DeleteBehavior.ClientSetNull);
+            builder.Entity<FavouriteImage>()
+           .HasKey(bc => new { bc.FavouriteId, bc.ImageId });
 
-           // builder.Entity<Conversation>()
-           //.HasOne(p => p.RecepientPhotographyAddictedUser)
-           //.WithMany(b => b.RecepientConversation)
-           //.OnDelete(DeleteBehavior.ClientSetNull);
+           builder.Entity<FavouriteImage>()
+            .HasOne(bc => bc.Favourite)
+       .WithMany(b => b.FavouriteImages)
+       .HasForeignKey(bc => bc.FavouriteId).OnDelete(DeleteBehavior.Restrict);
 
-            //builder.Entity<Match>()
-            //        .HasRequired(m => m.HomeTeam)
-            //        .WithMany(t => t.HomeMatches)
-            //        .HasForeignKey(m => m.HomeTeamId)
-            //        .WillCascadeOnDelete(false);
+            builder.Entity<FavouriteImage>()
+                .HasOne(bc => bc.Image)
+                .WithMany(c => c.FavouriteImages)
+                .HasForeignKey(bc => bc.ImageId).OnDelete(DeleteBehavior.Restrict);
 
-            //builder.Entity<Match>()
-            //            .HasRequired(m => m.GuestTeam)
-            //            .WithMany(t => t.AwayMatches)
-            //            .HasForeignKey(m => m.GuestTeamId)
-            //            .WillCascadeOnDelete(false);
-
-            // builder.Entity<Conversation>()
-            //.HasOne(p => p.SenderPhotographyAddictedUser)
-            //.WithMany(b => b.RecepientConversation)
-            //.OnDelete(DeleteBehavior.Cascade);
-
-            // builder.Entity<Message>()
-            //.HasOne(p => p.Conversation)
-            //.WithMany(b => b.Messages)
-            //.OnDelete(DeleteBehavior.Cascade);
-
-            // builder.Entity<Message>()
-            //.HasOne(p => p.PhotographyAddictedUser)
-            //.WithMany(b => b.Messages)
-            //.OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<PhotographyAddictedUser>()
+           .HasOne(x => x.Favourite)
+           .WithOne(x => x.PhotographyAddictedUser).HasForeignKey<Favourite>(x => x.PhotographyAddictedUserId)
+           .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<PhotoStory>()
            .HasOne(p => p.PhotographyAddictedUser)

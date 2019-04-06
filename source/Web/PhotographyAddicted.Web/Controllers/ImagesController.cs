@@ -164,5 +164,12 @@ namespace PhotographyAddicted.Web.Controllers
 
             return View("PreviewImages", images);
         }
+
+        public async  Task<IActionResult> AddImageToFavourites(string userId, int imageId)
+        {
+            await imageService.AddImageToFavourites(userId, imageId);
+
+            return View("PreviewImage", imageId);
+        }
     }
 }

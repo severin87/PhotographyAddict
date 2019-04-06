@@ -15,10 +15,13 @@ namespace PhotographyAddicted.Services.DataServices
     public class ImageService : IImageService
     {
         private readonly IRepository<Image> imageDbSet;
-               
-        public ImageService(IRepository<Image> imageDbSet )
+
+        private IRepository<PhotographyAddictedUser> userDbset;
+
+        public ImageService(IRepository<Image> imageDbSet, IRepository<PhotographyAddictedUser> userDbset)
         {
             this.imageDbSet = imageDbSet;
+            this.userDbset = userDbset;
         }
 
         public async Task<int> AddImage(AddImageViewModel input, IFormFile Picture)
@@ -316,6 +319,19 @@ namespace PhotographyAddicted.Services.DataServices
             };
 
             return imagesByCategory;
+        }
+
+        public async Task<int> AddImageToFavourites(string userId, int imageId)
+        {
+            var image = imageDbSet.All().Where(x => x.Id == imageId).FirstOrDefault();
+
+            var user = userDbset.All().Where(u => u.Id == userId).FirstOrDefault();
+
+            user.Favourite.FavouriteImages.Add(new FavouriteImage { Image = image});
+           
+            await userDbset.SaveChangesAsync();
+
+            return image.Id;
         }
     }
 }

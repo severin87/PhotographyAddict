@@ -27,6 +27,8 @@ namespace PhotographyAddicted.Services.DataServices
 
         Task<int> AddImage(AddImageViewModel input, IFormFile Picture);
 
+        Task<int> AddImageToFavourites(string userId, int imageId);
+
         Task<int> UpdateImage(PreviewImageViewModel input);
 
         Task DeleteImage(PreviewImageViewModel input);
