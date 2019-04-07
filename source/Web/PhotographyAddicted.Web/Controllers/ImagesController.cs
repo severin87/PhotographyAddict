@@ -177,7 +177,8 @@ namespace PhotographyAddicted.Web.Controllers
 
             return this.RedirectToAction("PreviewImage", new { id = imageId });
         }
-        
+
+        [AllowAnonymous]
         public IActionResult PreviewUserFavoriteImages(string userId)
         {
             var images = imageService.PreviewUserFavoriteImages(userId);

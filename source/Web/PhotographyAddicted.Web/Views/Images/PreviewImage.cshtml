@@ -12,19 +12,21 @@
 <h2>ViewPictureDetails</h2>
 
 @{
-    string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-    if (imageService.IsImageInFavouriteImage(userId, Model.Id))
+    if (this.User.Identity.IsAuthenticated)
     {
-        <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="DeleteImageToFavourites"
-           asp-route-userId="@userId" asp-route-imageId="@Model.Id">DeleteImageToFavourites</a>
-    }
-    else
-    {
-        <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
-           asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
-    }
+        string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+        if (imageService.IsImageInFavouriteImage(userId, Model.Id))
+        {
+            <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="DeleteImageToFavourites"
+               asp-route-userId="@userId" asp-route-imageId="@Model.Id">DeleteImageToFavourites</a>
+        }
+        else
+        {
+            <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
+               asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
+        }
+    }
 }
 
 <p>
@@ -105,10 +107,8 @@
 <div>
     @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
     {
-        @*@Html.ActionLink("Edit", "EditPictureInfo", "Image", new { Id = Model.Id })*@
         <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@Model.Id">Edit</a>
         <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@Model.Id">Delete</a>
-
     }
     <a asp-action="Index">Back to List</a>
 </div>
