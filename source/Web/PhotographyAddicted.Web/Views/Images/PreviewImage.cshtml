@@ -1,4 +1,6 @@
 ﻿@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
+@using PhotographyAddicted.Services.DataServices.ImageService
+@inject IImageService imageService
 
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
@@ -8,13 +10,24 @@
 }
 
 <h2>ViewPictureDetails</h2>
-@{string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier); }
+
 @{
+    string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="AddImageToFavourites"
+    if (imageService.IsImageInFavouriteImage(userId, Model.Id))
+    {
+        <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="DeleteImageToFavourites"
+           asp-route-userId="@userId" asp-route-imageId="@Model.Id">DeleteImageToFavourites</a>
+    }
+    else
+    {
+        <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
+           asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
+    }
+    <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
        asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
-
 }
+
 <p>
     @Model.ImageCategory - @Model.UploadedDate
 </p>

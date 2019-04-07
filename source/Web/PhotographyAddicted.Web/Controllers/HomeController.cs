@@ -45,7 +45,7 @@ namespace PhotographyAddicted.Web.Controllers
 
                 var userInfo = await userManager.GetUserAsync(this.User);
 
-
+                
                 await userManager.AddToRoleAsync(userInfo, "Admin");
                 await  userManager.IsInRoleAsync(userInfo, "Moderator");
                 return Json(userInfo.PasswordHash);

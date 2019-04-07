@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotographyAddicted.Services.DataServices
+namespace PhotographyAddicted.Services.DataServices.ImageService
 {
     public interface IImageService
     {
@@ -28,6 +28,12 @@ namespace PhotographyAddicted.Services.DataServices
         Task<int> AddImage(AddImageViewModel input, IFormFile Picture);
 
         Task AddImageToFavourites(string userId, int imageId);
+
+        Task DeleteImageToFavourites(string userId, int imageId);
+
+        bool IsImageInFavouriteImage(string userId, int imageId);
+
+        Task AddFavorite(string userId);
 
         Task<int> UpdateImage(PreviewImageViewModel input);
 

@@ -158,8 +158,6 @@ namespace PhotographyAddicted.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
-
                     b.Property<string>("PhotographyAddictedUserId");
 
                     b.HasKey("Id");
@@ -176,8 +174,6 @@ namespace PhotographyAddicted.Data.Migrations
                     b.Property<int>("FavouriteId");
 
                     b.Property<int>("ImageId");
-
-                    b.Property<string>("Name");
 
                     b.HasKey("FavouriteId", "ImageId");
 

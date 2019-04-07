@@ -26,6 +26,7 @@ using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
 using PhotographyAddicted.Services.DataServices.MessageService;
 using PhotographyAddicted.Services.DataServices.ConversationService;
 using PhotographyAddicted.Services.DataServices.CommonService;
+using PhotographyAddicted.Services.DataServices.ImageService;
 
 namespace PhotographyAddicted.Web
 {

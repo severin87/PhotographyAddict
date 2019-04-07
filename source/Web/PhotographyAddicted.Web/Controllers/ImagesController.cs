@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Data.Common;
 using PhotographyAddicted.Data.Models;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.ImageService;
 using PhotographyAddicted.Services.Models.Images;
 using System;
 using System.Collections.Generic;
@@ -168,6 +169,13 @@ namespace PhotographyAddicted.Web.Controllers
         public async  Task<IActionResult> AddImageToFavourites(string userId, int imageId)
         {
             await imageService.AddImageToFavourites(userId, imageId);
+
+            return this.RedirectToAction("PreviewImage", new { id = imageId });
+        }
+
+        public async Task<IActionResult> DeleteImageToFavourites(string userId, int imageId)
+        {
+            await imageService.DeleteImageToFavourites(userId, imageId);
 
             return this.RedirectToAction("PreviewImage", new { id = imageId });
         }

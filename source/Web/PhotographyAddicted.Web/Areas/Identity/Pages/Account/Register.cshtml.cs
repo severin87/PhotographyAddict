@@ -11,12 +11,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 using PhotographyAddicted.Data.Common;
+using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.ImageService;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        private readonly IImageService imageService;
         private readonly SignInManager<PhotographyAddictedUser> _signInManager;
         private readonly UserManager<PhotographyAddictedUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -26,12 +29,13 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
             UserManager<PhotographyAddictedUser> userManager,
             SignInManager<PhotographyAddictedUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IImageService imageService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.imageService = imageService;
         }
 
         [BindProperty]
@@ -93,8 +97,11 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                   
+                    await imageService.AddFavorite(user.Id);
+
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
