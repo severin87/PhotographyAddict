@@ -15,17 +15,15 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
     public class ImageService : IImageService
     {
         private readonly IRepository<Image> imageDbSet;
-
         private readonly IRepository<FavouriteImage> favouriteImageDbSet;
         private readonly IRepository<Favourite> favouriteDbSet;
-
-        private IRepository<PhotographyAddictedUser> userDbset;
+        private IRepository<PhotographyAddictedUser> userDbSet;
 
         public ImageService(IRepository<Image> imageDbSet, IRepository<PhotographyAddictedUser> userDbset
             , IRepository<FavouriteImage> favouriteImageDbSet , IRepository<Favourite> favouriteDbSet)
         {
             this.imageDbSet = imageDbSet;
-            this.userDbset = userDbset;
+            this.userDbSet = userDbset;
             this.favouriteImageDbSet = favouriteImageDbSet;
             this.favouriteDbSet = favouriteDbSet;
         }
@@ -329,7 +327,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         public async Task AddImageToFavourites(string userId, int imageId)
         {
-            var userFavorite = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
+            var userFavorite = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
             var favoriteImage = (new FavouriteImage { FavouriteId = userFavorite.Id, ImageId = imageId });
 
             if (!favouriteImageDbSet.All().Contains(favoriteImage))
@@ -337,22 +335,22 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 await favouriteImageDbSet.AddAsync(favoriteImage);
             }           
 
-            await userDbset.SaveChangesAsync();            
+            await userDbSet.SaveChangesAsync();            
         }
 
         public async Task DeleteImageToFavourites(string userId, int imageId)
         {
-            var userFavoriteImage = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.FavouriteImages
+            var userFavoriteImage = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.FavouriteImages
                 .Where(x => x.ImageId == imageId).First();
 
             favouriteImageDbSet.Delete(userFavoriteImage);
            
-            await userDbset.SaveChangesAsync();
+            await userDbSet.SaveChangesAsync();
         }
 
         public async Task AddFavorite(string userId)
         {
-            var favourite = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
+            var favourite = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
 
             if (favourite == null)
             {
@@ -365,8 +363,9 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         public bool IsImageInFavouriteImage(string userId, int imageId)
         {
-            var favourite = userDbset.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
+            var favourite = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Favourite;
             var favouriteImage = favouriteImageDbSet.All().Where(x=>x.FavouriteId == favourite.Id && x.ImageId == imageId).FirstOrDefault();
+
             if (favouriteImage == null)
             {
                 return false;
@@ -375,6 +374,28 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
             {
                 return true;
             }           
+        }
+
+        public PreviewImagesViewModel PreviewUserFavoriteImages(string userId)
+        {
+            var images = userDbSet.All().Where(i => i.Id == userId).FirstOrDefault().Favourite.FavouriteImages
+                .Select(p => new PreviewImageViewModel
+                {
+                    Id = p.ImageId,
+                    Title = p.Image.Title,
+                    Picture = p.Image.Picture,
+                    Scores = p.Image.Scores,
+                    PhotographyAddictedUserId = p.Image.PhotographyAddictedUserId,
+                    UploadedDate = p.Image.UploadedDate,
+                })
+                 .ToList();
+
+            var userImages = new PreviewImagesViewModel()
+            {
+                PreviewImages = images,
+            };
+
+            return userImages;
         }
     }
 }

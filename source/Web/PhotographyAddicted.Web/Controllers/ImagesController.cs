@@ -142,7 +142,6 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
         public IActionResult PreviewCategoryImages(int id)
         {
             var images = imageService.PreviewCategoryImages(id);
@@ -178,6 +177,13 @@ namespace PhotographyAddicted.Web.Controllers
             await imageService.DeleteImageToFavourites(userId, imageId);
 
             return this.RedirectToAction("PreviewImage", new { id = imageId });
+        }
+        
+        public IActionResult PreviewUserFavoriteImages(string userId)
+        {
+            var images = imageService.PreviewUserFavoriteImages(userId);
+
+            return View("PreviewImages", images);
         }
     }
 }

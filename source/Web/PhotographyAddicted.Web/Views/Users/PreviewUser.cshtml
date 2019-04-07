@@ -9,6 +9,11 @@
 }
 
 <h2>ViewUserProfile</h2>
+
+<div>
+    <a asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id">@Model.UserName</a>
+</div>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -182,8 +187,8 @@
         <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
     }
 
-    @if ((this.User.IsInRole("Moderator")&& !await commonService.IsUserModerator(Model.Id)) ||
-       (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+    @if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
+      (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
     {
         if (!Model.IsBanned)
         {

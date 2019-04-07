@@ -13,6 +13,8 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         PreviewImagesViewModel PreviewUserImages(string userId);
 
+        PreviewImagesViewModel PreviewUserFavoriteImages(string userId);
+
         PreviewImagesViewModel PreviewImagesByCategoriesAndDates();
 
         PreviewImagesViewModel PreviewCategoryImages(int category);
