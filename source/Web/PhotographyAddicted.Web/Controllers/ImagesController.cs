@@ -64,7 +64,6 @@ namespace PhotographyAddicted.Web.Controllers
             if (userPictures.PreviewImages.Count() == 0)
             {
                 return this.RedirectToAction("PreviewUser", "Users", new { id = Id });
-                // <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
             }
 
             return View("PreviewImages", userPictures);

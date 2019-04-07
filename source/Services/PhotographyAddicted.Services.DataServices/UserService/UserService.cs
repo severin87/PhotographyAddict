@@ -57,7 +57,8 @@ namespace PhotographyAddicted.Services.DataServices
                 BanLengthDays = u.BanLengthDays,
                 BannedDate = u.BannedDate,
                 IsBanned = u.IsBanned,
-                Images = u.Images
+                Images = u.Images,
+                Favourite = u.Favourite,
             }).FirstOrDefault();
             
                 return user;
@@ -129,6 +130,7 @@ namespace PhotographyAddicted.Services.DataServices
                     BannedDate = u.BannedDate,
                     IsBanned = u.IsBanned,
                     Images = u.Images,
+                    Favourite = u.Favourite,
                 });
             }
             else
@@ -150,6 +152,7 @@ namespace PhotographyAddicted.Services.DataServices
                     BannedDate = u.BannedDate,
                     IsBanned = u.IsBanned,
                     Images = u.Images,
+                    Favourite = u.Favourite,
                 });
             }
 

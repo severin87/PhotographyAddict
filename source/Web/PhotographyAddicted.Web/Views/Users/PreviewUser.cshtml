@@ -10,9 +10,14 @@
 
 <h2>ViewUserProfile</h2>
 
-<div>
+@if (Model.Favourite.FavouriteImages.Count() > 0)
+{
     <a asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id">@Model.UserName</a>
-</div>
+}
+else
+{
+    <h4 style="color:red">Nqma snimki v lubimi.</h4>
+}
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -120,7 +125,15 @@
                         @Model.UserName -
                     </dt>
                     <dd>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
+                        @if (Model.Images.Count() > 0)
+                        {
+                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
+                        }
+                        else
+                        {
+                            <h4 style="color:red">Nqma snimki</h4>
+                        }
+
                         @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                         {
                             <div>
@@ -188,7 +201,7 @@
     }
 
     @if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
-      (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+    (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
     {
         if (!Model.IsBanned)
         {

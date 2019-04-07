@@ -33,7 +33,9 @@ namespace PhotographyAddicted.Services.Models.Users
         public int BanLengthDays { get; set; }
 
         public string Rang { get; set; }
-               
+
+        public virtual Favourite Favourite { get; set; }
+
         public virtual ICollection<Image> Images { get; set; }
     }
 }
