@@ -34,6 +34,7 @@ namespace PhotographyAddicted.Web.Models
         public DbSet<Message> Messages { get; set; }
         public DbSet<Favourite> Favourites { get; set; }
         public DbSet<FavouriteImage> FavouriteImages { get; set; }
+        public DbSet<VotedUser> VotedUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,15 +49,20 @@ namespace PhotographyAddicted.Web.Models
             builder.Entity<FavouriteImage>()
            .HasKey(bc => new { bc.FavouriteId, bc.ImageId });
 
-           builder.Entity<FavouriteImage>()
-            .HasOne(bc => bc.Favorite)
-       .WithMany(b => b.FavouriteImages)
-       .HasForeignKey(bc => bc.FavouriteId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<VotedUser>()
+           .HasOne(p => p.Image)
+           .WithMany(b => b.VotedUsers)
+           .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<FavouriteImage>()
-                .HasOne(bc => bc.Image)
-                .WithMany(c => c.FavouriteImages)
-                .HasForeignKey(bc => bc.ImageId).OnDelete(DeleteBehavior.Restrict);
+           .HasOne(bc => bc.Image)
+           .WithMany(c => c.FavouriteImages)
+           .HasForeignKey(bc => bc.ImageId).OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<FavouriteImage>()
+           .HasOne(bc => bc.Favorite)
+           .WithMany(b => b.FavouriteImages)
+           .HasForeignKey(bc => bc.FavouriteId).OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<PhotographyAddictedUser>()
            .HasOne(x => x.Favourite)

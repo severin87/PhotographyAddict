@@ -29,6 +29,10 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         Task<int> AddImage(AddImageViewModel input, IFormFile Picture);
 
+        Task DeleteFavouriteImage(int imageId);
+
+        Task DeleteFavouriteImage(string userId);
+
         Task AddImageToFavourites(string userId, int imageId);
 
         Task AddImageScores(string userId, int imageId);

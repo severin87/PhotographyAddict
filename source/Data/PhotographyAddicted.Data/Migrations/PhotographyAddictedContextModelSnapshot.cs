@@ -428,6 +428,23 @@ namespace PhotographyAddicted.Data.Migrations
                     b.ToTable("ThemeComments");
                 });
 
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.VotedUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("VotedUsers");
+                });
+
             modelBuilder.Entity("PhotographyAddicted.Web.Areas.Identity.Data.PhotographyAddictedUser", b =>
                 {
                     b.Property<string>("Id")
@@ -577,7 +594,7 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasOne("PhotographyAddicted.Data.Models.Image", "Image")
                         .WithMany("FavouriteImages")
                         .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PhotographyAddicted.Data.Models.Image", b =>
@@ -676,6 +693,14 @@ namespace PhotographyAddicted.Data.Migrations
                     b.HasOne("PhotographyAddicted.Data.Models.Theme", "Theme")
                         .WithMany("ThemeComments")
                         .HasForeignKey("ThemeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotographyAddicted.Data.Models.VotedUser", b =>
+                {
+                    b.HasOne("PhotographyAddicted.Data.Models.Image", "Image")
+                        .WithMany("VotedUsers")
+                        .HasForeignKey("ImageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

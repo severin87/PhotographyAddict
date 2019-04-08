@@ -11,6 +11,7 @@ namespace PhotographyAddicted.Data.Models
         {
             ImageComments = new HashSet<ImageComment>();
             FavouriteImages = new HashSet<FavouriteImage>();
+            VotedUsers = new HashSet<VotedUser>();
         }
 
         public int Id { get; set; }
@@ -37,5 +38,7 @@ namespace PhotographyAddicted.Data.Models
         public virtual ICollection<FavouriteImage> FavouriteImages { get; set; }
 
         public virtual ICollection<ImageComment> ImageComments { get; set; }
+
+        public virtual ICollection<VotedUser> VotedUsers { get; set; }
     }
 }

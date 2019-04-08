@@ -50,7 +50,6 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 UploadedDate = DateTime.UtcNow,
                 Equipment = input.Equipment,
                 Settings = input.Settings,
-                
             };
 
             await imageDbSet.AddAsync(newImage);
@@ -76,6 +75,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     UploadedDate = p.UploadedDate,
                     Equipment = p.Equipment,
                     Settings = p.Settings,
+                    VotedUsers = p.VotedUsers,
                 }).FirstOrDefault();
 
             return currentImage;
@@ -107,6 +107,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     Scores = p.Scores,
                     PhotographyAddictedUserId = p.PhotographyAddictedUserId,
                     UploadedDate = p.UploadedDate,
+                    VotedUsers = p.VotedUsers,
                 })
                 .ToList();
 
@@ -132,6 +133,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     Description = d.Description,
                     Equipment = d.Equipment,
                     Settings = d.Settings,
+                    VotedUsers = d.VotedUsers,
                 }).FirstOrDefault();
 
             return image;
@@ -139,6 +141,8 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         public async Task DeleteImage(PreviewImageViewModel input)
         {
+            await DeleteFavouriteImage(input.Id);
+
             var image = imageDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
 
             imageDbSet.Delete(image);
@@ -173,6 +177,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     UploadedDate = u.UploadedDate,
                     Equipment = u.Equipment,
                     Settings = u.Settings,
+                    VotedUsers = u.VotedUsers,
                 }).OrderByDescending(d => d.UploadedDate);
             }
             else
@@ -192,6 +197,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     UploadedDate =u.UploadedDate,
                     Equipment = u.Equipment,
                     Settings = u.Settings,
+                    VotedUsers = u.VotedUsers,
                 }).OrderByDescending(d => d.UploadedDate);
             }
 
@@ -220,6 +226,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                         UploadedDate = u.UploadedDate,
                         Equipment = u.Equipment,
                         Settings = u.Settings,
+                        VotedUsers = u.VotedUsers,
                     }).First();
 
                     images.Add(currentImage);
@@ -251,6 +258,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     UploadedDate = u.UploadedDate,
                     Equipment = u.Equipment,
                     Settings = u.Settings,
+                    VotedUsers = u.VotedUsers,
                 }).ToList();
 
             var imagesByCategory = new PreviewImagesViewModel()
@@ -279,6 +287,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     UploadedDate = u.UploadedDate,
                     Equipment = u.Equipment,
                     Settings = u.Settings,
+                    VotedUsers = u.VotedUsers,
                 }).ToList();
 
             var imagesByCategory = new PreviewImagesViewModel()
@@ -313,6 +322,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                         UploadedDate = u.UploadedDate,
                         Equipment = u.Equipment,
                         Settings = u.Settings,
+                        VotedUsers = u.VotedUsers,
                         }).First();
 
                     images.Add(currentImage);
@@ -427,15 +437,51 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 userVoteScores += 5;
             }
 
-            var image = imageDbSet.All().Where(i => i.Id == imageId).FirstOrDefault();
-            image.Scores += userVoteScores;
+            var image = imageDbSet.All().Where(i => i.Id == imageId).FirstOrDefault();            
 
-            var user = userDbSet.All().Where(i => i.Id ==image.PhotographyAddictedUserId ).FirstOrDefault();
+            if (!image.VotedUsers.Any(x => x.UserId == userId) && (image.PhotographyAddictedUserId != userId))
+            {
+                image.Scores += userVoteScores;
 
-            int userScores = user.Images.Select(x => x.Scores).Sum();
+                var user = userDbSet.All().Where(i => i.Id == image.PhotographyAddictedUserId).FirstOrDefault();
 
-            user.AverageScore = userScores/ user.Images.Count();
-                       
+                int userScores = user.Images.Select(x => x.Scores).Sum();
+
+                user.AverageScore = userScores / user.Images.Count();
+
+                image.VotedUsers.Add(new VotedUser { UserId = userId });
+
+                await userDbSet.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteFavouriteImage(int imageId)
+        {
+            var favouriteImages = favouriteImageDbSet.All().Where(x => x.ImageId == imageId)
+                 .ToList();
+
+            foreach (var favouriteImage in favouriteImages)
+            {
+                favouriteImageDbSet.Delete(favouriteImage);
+            }
+
+            await favouriteImageDbSet.SaveChangesAsync();
+        }
+
+        public async Task DeleteFavouriteImage(string userId)
+        {
+            var userFavouriteId = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Favourite.Id;
+            var userFavouriteImageId = userDbSet.All().Where(u => u.Id == userId).FirstOrDefault().Images.Select(x => x.Id).ToList();
+
+            var favouriteImages = favouriteImageDbSet.All().Where(x => x.FavouriteId == userFavouriteId)
+                .ToList();
+
+            foreach (var favouriteImage in favouriteImages)
+            {
+                favouriteImageDbSet.Delete(favouriteImage);
+            }
+
+            await favouriteImageDbSet.SaveChangesAsync();
             await userDbSet.SaveChangesAsync();
         }
     }

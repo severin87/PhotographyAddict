@@ -30,23 +30,19 @@
 }
 
 @{
-    if (this.User.Identity.IsAuthenticated)
+    if (this.User.Identity.IsAuthenticated && (Model.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
     {
-        string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="AddImageScores"
-           asp-route-userId="@userId" asp-route-imageId="@Model.Id">Vote for this pic!</a>
-
-        @*if (imageService.IsImageInFavouriteImage(userId, Model.Id))
+        if (!Model.VotedUsers.Any(x => x.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
         {
-            <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="DeleteImageToFavourites"
-               asp-route-userId="@userId" asp-route-imageId="@Model.Id">DeleteImageToFavourites</a>
+            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="AddImageScores"
+               asp-route-userId="@userId" asp-route-imageId="@Model.Id">Vote for this pic!</a>
         }
         else
         {
-            <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
-               asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
-        }*@
+            <h3 style="color:red">You allready voted.</h3>
+        }
     }
 }
 

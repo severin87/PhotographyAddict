@@ -31,5 +31,7 @@ namespace PhotographyAddicted.Services.Models.Images
         public virtual PhotographyAddictedUser PhotographyAddictedUser { get; set; }
 
         public virtual ICollection<ImageComment> ImageComments { get; set; }
+
+        public virtual ICollection<VotedUser> VotedUsers { get; set; }
     }
 }
