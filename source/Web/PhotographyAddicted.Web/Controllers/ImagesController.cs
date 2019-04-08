@@ -185,5 +185,12 @@ namespace PhotographyAddicted.Web.Controllers
 
             return View("PreviewImages", images);
         }
+
+        public async Task<IActionResult> AddImageScores(string userId, int imageId)
+        {
+            await imageService.AddImageScores(userId, imageId);
+
+            return this.RedirectToAction("PreviewImage", new { id = imageId });
+        }
     }
 }

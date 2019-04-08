@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using PhotographyAddicted.Data.Common;
@@ -51,6 +52,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 Settings = input.Settings,
                 
             };
+
             await imageDbSet.AddAsync(newImage);
             await imageDbSet.SaveChangesAsync();
 
@@ -396,6 +398,45 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
             };
 
             return userImages;
+        }
+
+        public async Task AddImageScores(string userId, int imageId)
+        {
+            var userAverageScores = userDbSet.All().Where(i => i.Id == userId).FirstOrDefault().AverageScore;
+
+            int userVoteScores = 0;
+
+            if (userAverageScores >= 0 && userAverageScores <= 100)
+            {
+                userVoteScores += 1;
+            }
+            else if (userAverageScores > 100 && userAverageScores <= 200)
+            {
+                userVoteScores += 2;
+            }
+            else if (userAverageScores > 200 && userAverageScores <= 350)
+            {
+                userVoteScores += 3;
+            }
+            else if (userAverageScores > 350 && userAverageScores <= 600)
+            {
+                userVoteScores += 4;
+            }
+            else if (userAverageScores > 700 )
+            {
+                userVoteScores += 5;
+            }
+
+            var image = imageDbSet.All().Where(i => i.Id == imageId).FirstOrDefault();
+            image.Scores += userVoteScores;
+
+            var user = userDbSet.All().Where(i => i.Id ==image.PhotographyAddictedUserId ).FirstOrDefault();
+
+            int userScores = user.Images.Select(x => x.Scores).Sum();
+
+            user.AverageScore = userScores/ user.Images.Count();
+                       
+            await userDbSet.SaveChangesAsync();
         }
     }
 }

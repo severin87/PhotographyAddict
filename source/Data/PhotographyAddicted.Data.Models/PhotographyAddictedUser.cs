@@ -33,8 +33,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public byte[] ProfilePicture { get; set; }
 
-        public DateTime CreationDate { get; set; }
-        
+        public DateTime CreationDate { get; set; }        
 
         public DateTime LastLogin { get; set; }
 

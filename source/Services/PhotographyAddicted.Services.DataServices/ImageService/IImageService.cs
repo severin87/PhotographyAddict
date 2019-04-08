@@ -31,6 +31,8 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
         Task AddImageToFavourites(string userId, int imageId);
 
+        Task AddImageScores(string userId, int imageId);
+
         Task DeleteImageToFavourites(string userId, int imageId);
 
         bool IsImageInFavouriteImage(string userId, int imageId);
