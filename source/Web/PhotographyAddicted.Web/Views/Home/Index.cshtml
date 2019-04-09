@@ -11,7 +11,7 @@
 
 <div>
     <h1>
-        <a asp-controller="News" asp-action="PreviewNews">Preview all News</a>
+        <a asp-controller="News" asp-action="PreviewNews" >Preview all News</a>
         <br>
     </h1>
     @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(3))

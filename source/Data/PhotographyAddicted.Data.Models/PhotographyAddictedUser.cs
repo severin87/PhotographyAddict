@@ -75,13 +75,9 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<Message> Messages { get; set; }
 
-
-        //TODO: Tochki na glasa
-        //TODO: Dnevna proverka za Raiting i tochki.
-        //2
+               
 
         //TODO: Nastroika dali sa syglasni s pravilata
-        //TODO Vij dali kaskadnoto triene na lubimi nmqa da iztrie istinskite snimki.
 
         //TODO Chasa da se opravi.
         //TODO RAzchisti HomeControlera.

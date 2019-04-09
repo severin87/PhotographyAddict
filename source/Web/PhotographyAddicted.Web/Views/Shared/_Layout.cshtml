@@ -3,52 +3,77 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PhotographyAddicted.Web</title>
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <title>@ViewData["Title"] - PhotographyAddicted.Web</title>
+    
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon"> @*Pri men ne raboti*@
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PhotographyAddicted.Web</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>*@
-                    <li><a asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Forum</a></li>
-                    <li><a asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
-                    <li><a asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
-                    <li><a asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
-                    <li><a asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
-                    <li><a asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="Idtu">Admin1</a></li>
-                    @if (this.User.IsInRole("Admin"))
-                    {
-                        <li><a asp-area="" asp-controller="Home" asp-action="Idtu">AdminE</a></li>
-                    }*@
+       
+    <style>
+        .topnav a {
+            float: right;
+            color: #e6e6e6;
+            text-align: center;
+            padding: 4px 18px;
+            opacity: 0.8;
+            background: -webkit-linear-gradient(#8c8c8c, #eee);
 
+            text-decoration: none;
+            font-size: 21px;
+            border: 1px solid rgba(255, 255, 255, .2);
+        }
+
+            .topnav a:hover {
+                color: #404040;
+                background: #f2f2f2;
+            }
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-light list-unstyled" navbar-fixed-top style="background-color:aquamarine;">
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <a class="topnav" href="https://localhost:44385/">
+                    <img src="~/images/logoLittle.png" />
+                </a>
+                <ul class="navbar-nav" >
+                    <li><a class="nav-link" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" style="color: white">    Forum</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
+                    <li><a class="nav-link" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
         </div>
     </nav>
+
+    @*<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PhotographyAddicted.Web</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                        <li><a asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Forum</a></li>
+                        <li><a asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
+                        <li><a asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
+                        <li><a asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
+                        <li><a asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
+                        <li><a asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>*@
 
     <partial name="_CookieConsentPartial" />
 
@@ -89,4 +114,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
