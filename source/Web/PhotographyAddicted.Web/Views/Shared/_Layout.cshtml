@@ -4,48 +4,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/navBar.css" rel="stylesheet" />
 
     <title>@ViewData["Title"] - PhotographyAddicted.Web</title>
-    
-    <link rel="icon" href="~/favicon.ico" type="image/x-icon"> @*Pri men ne raboti*@
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon">
+
 </head>
-<body>
-       
-    <style>
-        .topnav a {
-            float: right;
-            color: #e6e6e6;
-            text-align: center;
-            padding: 4px 18px;
-            opacity: 0.8;
-            background: -webkit-linear-gradient(#8c8c8c, #eee);
-
-            text-decoration: none;
-            font-size: 21px;
-            border: 1px solid rgba(255, 255, 255, .2);
-        }
-
-            .topnav a:hover {
-                color: #404040;
-                background: #f2f2f2;
-            }
-    </style>
+<body>          
     <nav class="navbar navbar-expand-lg navbar-light list-unstyled" navbar-fixed-top style="background-color:aquamarine;">
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarNav">
                 <a class="topnav" href="https://localhost:44385/">
-                    <img src="~/images/logoLittle.png" />
+                    <img src="~/images/PAlogo.png" />
                 </a>
-                <ul class="navbar-nav" >
-                    <li><a class="nav-link" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" style="color: white">    Forum</a></li>
-                    <li><a class="nav-link" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
-                    <li><a class="nav-link" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
-                    <li><a class="nav-link" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
-                    <li><a class="nav-link" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
-                    <li><a class="nav-link" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
+                <ul class="navbar-nav">
+                    <li><a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" style="padding-left:50px">Forum</a></li>
+                    <li><a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
+                    <li><a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
+                    <li><a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
+                    <li><a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
+                    <li><a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories" >PhotoStories</a></li>
                 </ul>
-                <partial name="_LoginPartial" />
+
             </div>
+            <partial name="_LoginPartial" />
         </div>
     </nav>
 

@@ -35,3 +35,44 @@ body {
         display: none;
     }
 }
+
+.nav-style {
+    color: black;
+    padding-right: 15px;
+    padding-left: 15px;
+    font: bold Georgia;
+    font-size: 100%;
+    text-decoration: unset
+}
+
+    .nav-style:hover {
+        color: white;
+        text-decoration: unset
+    }
+
+.logPart {
+    font-size: 90%;
+    font: bold Georgia;
+    color: black;
+    text-decoration: unset;
+    padding-right: 20px;
+}
+
+    .logPart:hover {
+        color: white;
+        text-decoration: unset
+    }
+
+.logPartUser {
+    font-size: 90%;
+    font: bold Georgia;
+    color: black;
+    padding-left: 1px;
+    margin-left: 1px;
+    text-decoration: unset;
+}
+
+    .logPartUser:hover {
+        color: white;
+        text-decoration: unset
+    }
