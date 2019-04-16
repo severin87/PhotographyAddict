@@ -211,9 +211,11 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
             for (int i = 1; i < 13; i++)
             {
                 var checkCategory = imageDbSet.All().Where(p => (int)p.ImageCategory == i);
+
                 if (checkCategory.Count()!=0)
                 {
-                    var currentImage = imageDbSet.All().Where(p => (int)p.ImageCategory == i).OrderByDescending(s => s.UploadedDate).Select(u => new PreviewImageViewModel
+                    var currentImage = imageDbSet.All().Where(p => (int)p.ImageCategory == i)
+                        .OrderByDescending(s => s.UploadedDate).Select(u => new PreviewImageViewModel
                     {
                         Id = u.Id,
                         PhotographyAddictedUser = u.PhotographyAddictedUser,
@@ -484,5 +486,20 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
             await favouriteImageDbSet.SaveChangesAsync();
             await userDbSet.SaveChangesAsync();
         }
+
+        public PreviewImageViewModel PreviewImageOfTheDay()
+        {
+            var topImage = imageDbSet.All().Where(t => t.UploadedDate > DateTime.Now.AddDays(-30))
+                .OrderByDescending(i => i.Scores).Select(i =>
+                new PreviewImageViewModel
+                {
+                    Picture = i.Picture,
+                    PhotographyAddictedUser = i.PhotographyAddictedUser,
+                    Id = i.Id,
+                    Title = i.Title,
+                }).FirstOrDefault();
+
+            return topImage;
+        }    
     }
 }

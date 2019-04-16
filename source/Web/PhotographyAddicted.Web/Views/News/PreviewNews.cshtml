@@ -34,7 +34,7 @@
     <dl class="dl-horizontal"></dl>
 </div>
 <div>
-    @foreach (var userNew in Model.PreviewNews)
+    @foreach (var userNew in Model.PreviewNews.OrderByDescending(d =>d.CreationDate))
     {
         <h4>
             <img src="data:image;base64,@System.Convert.ToBase64String(userNew.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />

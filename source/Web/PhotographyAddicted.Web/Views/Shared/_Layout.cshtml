@@ -1,95 +1,53 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/navBar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="~/css/navBar.css" rel="stylesheet" asp-append-version="true"  />
 
     <title>@ViewData["Title"] - PhotographyAddicted.Web</title>
     <link rel="icon" href="~/favicon.ico" type="image/x-icon">
-
+    
 </head>
-<body>          
-    <nav class="navbar navbar-expand-lg navbar-light list-unstyled" navbar-fixed-top style="background-color:aquamarine;">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <a class="topnav" href="https://localhost:44385/">
-                    <img src="~/images/PAlogo.png" />
-                </a>
-                <ul class="navbar-nav">
-                    <li><a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" style="padding-left:50px">Forum</a></li>
-                    <li><a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
-                    <li><a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
-                    <li><a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
-                    <li><a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
-                    <li><a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories" >PhotoStories</a></li>
-                </ul>
-
+<body>
+    <div class="container-fluid">
+        <div class="row" style="background-color:black; min-height:40px">
+            
+            <div class="col-md-5 offset-md-2 " >
+                    <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;">
+                        <img src="~/images/BWLogoLitle3.png" />
+                    </a>
+                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Forum</a>
+                <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a>
+                <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">Photos</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">Top photos</a>
+                <a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">Stories</a>
             </div>
-            <partial name="_LoginPartial" />
+            <div class="col-md-3" style="text-align:right;  padding-top: 3px;">
+                <partial name="_LoginPartial" />
+            </div>
         </div>
-    </nav>
 
-    @*<nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PhotographyAddicted.Web</a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
+        <partial name="_CookieConsentPartial" />
 
-                        <li><a asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Forum</a></li>
-                        <li><a asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a></li>
-                        <li><a asp-area="" asp-controller="News" asp-action="PreviewNews">News</a></li>
-                        <li><a asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">ImagesByCategory</a></li>
-                        <li><a asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">TopImagesByCategory</a></li>
-                        <li><a asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">PhotoStories</a></li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>*@
+        <div class="container-fluid">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; 2019 - PhotographyAddicted.Web</p>
 
-    <partial name="_CookieConsentPartial" />
+            </footer>
+        </div>      
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2019 - PhotographyAddicted.Web</p>
-
-        </footer>
+        @RenderSection("Scripts", required: false)
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </div>
-
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
 
