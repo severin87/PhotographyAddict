@@ -22,7 +22,21 @@
                 <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">Title: @imageService.PreviewImageOfTheDay().Title</a>
             </div>
             <hr class="my-4">
-
+            
+            <div class="row">
+                @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(3))
+                {
+                    <div class="col-md-12">                    
+                       <div class="alert alert-info" role="alert">
+                          @*<p style="font-size:smaller; margin-bottom:2px; margin-top:2px"> This is a success alert—check it out!</p>*@
+                          <a class="d-inline-block text-truncate" style="font-size:medium;  font-weight: bold; margin-bottom:2px; margin-top:2px; color: black; max-width: 489px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@comment.Id">@comment.Title</a>
+                          <hr style="margin-bottom:2px; margin-top:2px">
+                          <p style=" font-size:x-small; margin-bottom:2px; margin-top:2px">@comment.CreationDate - @comment.ThemeComments.Count()</p>
+                       </div>
+                    </div>                    
+                }
+            </div>
+            @*<a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>*@
         </div>
     </div>
 
@@ -86,7 +100,6 @@
                 </h4>
             }
         </div>
-        <hr style="width:1px;  border-left:1px solid hsl(0, 0%, 91%); height:10vh;" />
     </div>
 </div>
 
