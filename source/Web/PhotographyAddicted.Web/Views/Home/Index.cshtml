@@ -8,98 +8,107 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    .multine-ellipsis {
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
+</style>
+
 <div class="row">
     <div class="col-md-5 offset-md-2">
-        <div class="jumbotron " style="min-height: 1500px; padding-top:15px; background-color:azure">
-            <div>
+        <div class="jumbotron " style="min-height: 911px; padding-top:15px; background-color:azure">
+            <div style="padding-top: 5px;">
                 <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">
                     <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
-                         style="max-width: 525px; max-height: 400px; display: block;  margin-left: auto; margin-right: auto; " />
+                         style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
                 </a>
             </div>
-            <div>
+            <div style="padding-top: 5px;">
                 <a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id">Author: @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
                 <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">Title: @imageService.PreviewImageOfTheDay().Title</a>
             </div>
             <hr class="my-4">
-            
             <div class="row">
-                @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(3))
+                @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(4))
                 {
-                    <div class="col-md-12">                    
-                       <div class="alert alert-info" role="alert">
-                          @*<p style="font-size:smaller; margin-bottom:2px; margin-top:2px"> This is a success alert—check it out!</p>*@
-                          <a class="d-inline-block text-truncate" style="font-size:medium;  font-weight: bold; margin-bottom:2px; margin-top:2px; color: black; max-width: 489px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@comment.Id">@comment.Title</a>
-                          <hr style="margin-bottom:2px; margin-top:2px">
-                          <p style=" font-size:x-small; margin-bottom:2px; margin-top:2px">@comment.CreationDate - @comment.ThemeComments.Count()</p>
-                       </div>
-                    </div>                    
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <a class="d-inline-block text-truncate" style="padding-bottom: 1px; padding-top: 1px; font-size:medium;  font-weight: bold; margin-bottom:1px; margin-top:2px; color: black; max-width: 487px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@comment.Id">@comment.Title</a>
+                            <hr style="margin-bottom:2px; margin-top:1px">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@comment.PhotographyAddictedUser.UserName - @themeService.CreationThemeDate(comment.CreationDate)</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @comment.ThemeComments.Count()</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
-            @*<a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>*@
+            <p style="margin-top:4px"><hr class="my-4"></p>
         </div>
     </div>
 
     <div class="col-md-3">
-        <div class="jumbotron " style="min-height: 1500px; padding-top:15px; background-color:azure">
+        <div class="jumbotron " style="min-height: 800px; padding-top:10px; background-color:azure">
             <h3>
                 <a class="news-style" asp-controller="News" asp-action="PreviewNews">Preview all News</a>
             </h3>
-            <hr class="my-4">
+            @*<hr class="my-4">*@
             @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(5))
             {
+                <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
+                    @themeService.CreationThemeDate(comment.CreationDate)        <svg height="1" width="218">
+                        <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
+                    </svg>
+                </div>
+
                 <div class="row">
                     <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id">
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                     </a>
 
                     <div class="col-md-7">
-                        <a class="news-style" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" style="font-size: 85%; font-weight: bold;"> @comment.Title</a>
-                        <p style="font-size: 80%;"> @comment.TextContent</p>
+                        <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id"> @comment.Title</a>
+                        @*<p class="text-truncate" style="font-size: 80%; max-width:120px;"> @comment.TextContent</p>*@
                     </div>
                 </div>
-                <hr class="my-4">
+
             }
+            <p style="margin-top:41px"><hr class="my-4"></p>
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-12 col-md-8">
-        <hr />
-        <div>
-            <h1>
-                <a asp-controller="Images" asp-action="PreviewImages">Preview all Images</a>
-                <br>
-            </h1>
-            @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(3))
-            {
-                <h4>
-                    @if (comment.Picture != null)
+    @*<div class="row">
+            <div class="col-12 col-md-8">
+                <hr />
+                <div>
+                    <h1>
+                        <a asp-controller="Images" asp-action="PreviewImages">Preview all Images</a>
+                        <br>
+                    </h1>
+                    @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(3))
                     {
-                        <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+                        <h4>
+                            @if (comment.Picture != null)
+                            {
+                                <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+                            }
+
+                            @comment.Title - @comment.ImageComments.Count()
+                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>
+                        </h4>
                     }
+                </div>
+                <hr />
+            </div>
+        </div>*@
 
-                    @comment.Title - @comment.ImageComments.Count()
-                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>
-                </h4>
-            }
-        </div>
-        <hr />
-
-        <div>
-            <h1>
-                <a asp-controller="Themes" asp-action="PreviewThemes">Preview all Themes</a>
-                <br>
-            </h1>
-            @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(3))
-            {
-                <h4>
-                    @comment.Title - @comment.ThemeComments.Count()
-                    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@comment.Id">Check new!</a>
-                </h4>
-            }
-        </div>
-    </div>
-</div>
 

@@ -15,12 +15,12 @@
 <body>
     <div class="container-fluid">
         <div class="row" style="background-color:black; min-height:40px">
-            
-            <div class="col-md-5 offset-md-2 " >
-                    <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;">
-                        <img src="~/images/BWLogoLitle3.png" />
-                    </a>
-                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Forum</a>
+
+            <div class="col-md-5 offset-md-2 ">
+                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;">
+                    <img src="~/images/bwLogoPALittle2.png" />
+                </a>
+                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Форум</a>
                 <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a>
                 <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a>
                 <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">Photos</a>
@@ -35,18 +35,20 @@
         <partial name="_CookieConsentPartial" />
 
         <div class="container-fluid">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2019 - PhotographyAddicted.Web</p>
+                @RenderBody()
 
-            </footer>
-        </div>      
+                <div class="col-md-8 offset-md-2">
+                    <hr />
+                    <footer>
+                        <p>&copy; 2019 - PhotographyAddicted.Web</p>
+                    </footer>
+                </div>
+        </div>
 
-        @RenderSection("Scripts", required: false)
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </div>
 </body>
 </html>
