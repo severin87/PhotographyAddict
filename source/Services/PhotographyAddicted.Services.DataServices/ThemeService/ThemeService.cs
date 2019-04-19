@@ -128,21 +128,5 @@ namespace PhotographyAddicted.Services.DataServices
 
             return themes;
         }
-
-        public string CreationThemeDate(DateTime creationDate)
-        {
-
-            string formatedCreationDate = String.Format("{0:d}", creationDate);
-            string formatedNowDate = String.Format("{0:d}", DateTime.UtcNow);
-
-            if (formatedNowDate == formatedCreationDate)
-            {
-                string creationHour = String.Format("{0:t}", creationDate);
-
-                return creationHour;
-            }
-
-            return formatedCreationDate;
-        }
     }
 }

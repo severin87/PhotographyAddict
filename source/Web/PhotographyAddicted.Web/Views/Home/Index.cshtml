@@ -1,23 +1,15 @@
 ﻿@using PhotographyAddicted.Services.DataServices
 @using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+
 @inject INewService  newService
 @inject IThemeService themeService
 @inject IImageService imageService
+@inject ICommonService commonService
 
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<style>
-    .multine-ellipsis {
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-    }
-</style>
 
 <div class="row">
     <div class="col-md-5 offset-md-2">
@@ -42,7 +34,7 @@
                             <hr style="margin-bottom:2px; margin-top:1px">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@comment.PhotographyAddictedUser.UserName - @themeService.CreationThemeDate(comment.CreationDate)</p>
+                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@comment.PhotographyAddictedUser.UserName - @commonService.CreationDate(comment.CreationDate)</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @comment.ThemeComments.Count()</p>
@@ -52,63 +44,36 @@
                     </div>
                 }
             </div>
-            <p style="margin-top:4px"><hr class="my-4"></p>
+            <p style="margin-top:4px">
+                <hr class="my-4">
+            </p>
         </div>
     </div>
-
     <div class="col-md-3">
         <div class="jumbotron " style="min-height: 800px; padding-top:10px; background-color:azure">
             <h3>
                 <a class="news-style" asp-controller="News" asp-action="PreviewNews">Preview all News</a>
             </h3>
-            @*<hr class="my-4">*@
             @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(5))
             {
                 <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
-                    @themeService.CreationThemeDate(comment.CreationDate)        <svg height="1" width="218">
+                    @commonService.CreationDate(comment.CreationDate)
+                    <svg height="1" width="218">
                         <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
                     </svg>
                 </div>
-
                 <div class="row">
                     <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id">
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                     </a>
-
                     <div class="col-md-7">
                         <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id"> @comment.Title</a>
-                        @*<p class="text-truncate" style="font-size: 80%; max-width:120px;"> @comment.TextContent</p>*@
                     </div>
                 </div>
-
             }
-            <p style="margin-top:41px"><hr class="my-4"></p>
+            <p style="margin-top:41px">
+                <hr class="my-4">
+            </p>
         </div>
     </div>
 </div>
-    @*<div class="row">
-            <div class="col-12 col-md-8">
-                <hr />
-                <div>
-                    <h1>
-                        <a asp-controller="Images" asp-action="PreviewImages">Preview all Images</a>
-                        <br>
-                    </h1>
-                    @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(3))
-                    {
-                        <h4>
-                            @if (comment.Picture != null)
-                            {
-                                <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                            }
-
-                            @comment.Title - @comment.ImageComments.Count()
-                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">Check new!</a>
-                        </h4>
-                    }
-                </div>
-                <hr />
-            </div>
-        </div>*@
-
-

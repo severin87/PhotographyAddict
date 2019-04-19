@@ -33,6 +33,7 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> PreviewUser(string Id)
         {
             if (await commonService.IsUserBanned(this.User.Identity.Name))
@@ -40,9 +41,17 @@ namespace PhotographyAddicted.Web.Controllers
                 return Redirect("../../Identity/Account/Login");
             }
 
-            var userProfile = userService.PreviewUser(Id);
-           
-            return View(userProfile);
+            var user = userService.PreviewUser(Id);
+
+            return View(user);
+        }
+        
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult PreviewUserPost(string Id)
+        {
+            return RedirectToAction("PreviewUser", "Users", new { Id });
+            //return View(userProfile);
         }
         
         public IActionResult UpdateProfilePicture()

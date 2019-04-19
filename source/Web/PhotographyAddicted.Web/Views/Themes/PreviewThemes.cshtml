@@ -1,44 +1,74 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.PreviewThemesViewModel
+
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+
+@inject IImageService imageService
+@inject ICommonService commonService
 
 @{
     ViewData["Title"] = "PreviewThemes";
 }
 
-<h2>PreviewAllThemes</h2>
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="jumbotron " style="min-height: 911px; padding-top:15px; background-color:azure">
+            <div class="search-container">
+                <form asp-controller="Themes" asp-action="PreviewThemes">
+                    <p>
+                        Title: <input placeholder="Search.." type="text" name="input">
+                        <button type="submit">Submit</button>
+                        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewThemes">Clear!</a>
+                    </p>
+                </form>
+            </div>
 
-<div class="search-container">
-    <form asp-controller="Themes" asp-action="PreviewThemes">
-        <p>
-            Title: <input placeholder="Search.." type="text" name="input">
-            <button type="submit">Submit</button>
-            <a class="btn btn-default btn-sm"  asp-controller="Themes" asp-action="PreviewThemes" >Clear!</a>
-        </p>
-    </form>
+
+            <h2>
+                @ViewData["Title"] -
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    <a asp-area="" asp-controller="Themes" asp-action="AddTheme" style="color: orangered">CreateTheme</a>
+                    @*<li><a asp-area="" asp-controller="User" asp-action="ViewUserProfile">User Profile</a></li>*@
+                }
+            </h2>
+
+            @foreach (var theme in Model.PreviewThemes)
+            {
+                <h1>@theme.Title - @theme.UserName - @theme.ThemeCategory - @theme.CreationDate</h1>
+                <p>
+                    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">View </a>
+
+                    @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                    {
+                        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id">Update </a>
+                        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id">Delete</a>
+                    }
+                </p>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="jumbotron " style="max-height: 911px; padding-top:15px; background-color:azure">            
+            <div  style="max-height: 411px; " >
+                <hr />
+                @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(5))
+                {
+                    <h4>
+                        @if (comment.Picture != null)
+                        {
+                                                       
+                         <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style=" max-width: 240px; width: 100%; max-height: 240px; height: 100%; "/>
+                         </a>
+                        }                  
+                    </h4>
+                    <hr />
+                }
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<h2>
-    @ViewData["Title"] -
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <a asp-area="" asp-controller="Themes" asp-action="AddTheme" style="color: orangered">CreateTheme</a>
-        @*<li><a asp-area="" asp-controller="User" asp-action="ViewUserProfile">User Profile</a></li>*@
-    }
-</h2>
-
-@foreach (var theme in Model.PreviewThemes)
- {
-<h1>@theme.Title - @theme.UserName - @theme.ThemeCategory - @theme.CreationDate</h1>
-    <p>
-        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">View </a>
-
-        @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-        {
-            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id">Update </a>
-            <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id">Delete</a>
-        }
-    </p>
- }
-

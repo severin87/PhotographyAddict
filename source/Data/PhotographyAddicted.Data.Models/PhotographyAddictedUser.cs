@@ -75,7 +75,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<Message> Messages { get; set; }
 
-               
+        //TODO: Ostava problema s mnogo visokite snimki pri pokazvaneto im v maluk variant ot strani.
 
         //TODO: Nastroika dali sa syglasni s pravilata
 

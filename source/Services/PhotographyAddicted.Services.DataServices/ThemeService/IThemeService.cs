@@ -21,7 +21,5 @@ namespace PhotographyAddicted.Services.DataServices
         Task UpdateTheme(PreviewThemeViewModel input);
 
         int GetThemesCount();
-
-        string CreationThemeDate(DateTime creationDate);
     }
 }

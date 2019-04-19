@@ -116,6 +116,11 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var imageId = await imageService.AddImage(input, Picture);
+                if (imageId == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Picture is bigger than 256kb");
+                    return this.View(input);
+                }
 
                 return RedirectToAction("PreviewUser", "Users", new { Id = input.PhotographyAddictedUserId });
             }

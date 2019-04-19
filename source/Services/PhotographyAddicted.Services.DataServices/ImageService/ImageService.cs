@@ -37,7 +37,15 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 {
                     await Picture.CopyToAsync(stream);
                     input.Picture = stream.ToArray();
+                    
                 }
+            }
+
+            int byteCount = input.Picture.Length;
+            
+            if (byteCount > 265000)
+            {
+                return 0;
             }
 
             var newImage = new Image()
