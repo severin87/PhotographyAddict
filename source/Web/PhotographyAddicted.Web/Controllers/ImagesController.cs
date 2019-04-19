@@ -26,36 +26,49 @@ namespace PhotographyAddicted.Web.Controllers
             this.imageService = imageService;
         }
 
-        public IActionResult DeleteImage(int Id)
+        public async Task<IActionResult> DeleteImage(int Id)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(input);
+            //}
             var deletedImage = imageService.FindImageById(Id);
 
-            if (deletedImage == null)
-            {
-                return this.RedirectToAction("Index", "Home");
-            }
-
-            if (deletedImage.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) 
-                || deletedImage.PhotographyAddictedUserId != null || this.User.IsInRole("Moderator"))
-            {
-                return View(deletedImage);
-            }
-
-            return this.RedirectToAction("PreviewImages", "Images", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
+            await imageService.DeleteImage(deletedImage);
+            deletedImage.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return this.RedirectToAction("PreviewUser", "Users", new { id = deletedImage.PhotographyAddictedUserId });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteImage(PreviewImageViewModel input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(input);
-            }
+        //public IActionResult DeleteImage(int Id)
+        //{
+        //    var deletedImage = imageService.FindImageById(Id);
 
-            await imageService.DeleteImage(input);
-            input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return this.RedirectToAction("PreviewUser", "Users", new { id = input.PhotographyAddictedUserId });
-        }
+        //    if (deletedImage == null)
+        //    {
+        //        return this.RedirectToAction("Index", "Home");
+        //    }
+
+        //    if (deletedImage.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) 
+        //        || deletedImage.PhotographyAddictedUserId != null || this.User.IsInRole("Moderator"))
+        //    {
+        //        return View(deletedImage);
+        //    }
+
+        //    return this.RedirectToAction("PreviewImages", "Images", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
+        //}
+
+        //[HttpPost]
+        //public async Task<IActionResult> DeleteImage(PreviewImageViewModel input)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(input);
+        //    }
+
+        //    await imageService.DeleteImage(input);
+        //    input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    return this.RedirectToAction("PreviewUser", "Users", new { id = input.PhotographyAddictedUserId });
+        //}
 
         [AllowAnonymous]
         public IActionResult PreviewUserImages(string Id)
@@ -73,9 +86,14 @@ namespace PhotographyAddicted.Web.Controllers
         [AllowAnonymous]
         public IActionResult PreviewImage(int id)
         {
-            var userPictures = imageService.PreviewImage(id);
+            var image= imageService.PreviewImage(id);
 
-            return View(userPictures);
+            if (image == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }            
+
+            return View(image);
         }
         
         public IActionResult UpdateImage(int id)
