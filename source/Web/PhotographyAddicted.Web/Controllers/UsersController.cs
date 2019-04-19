@@ -51,7 +51,6 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult PreviewUserPost(string Id)
         {
             return RedirectToAction("PreviewUser", "Users", new { Id });
-            //return View(userProfile);
         }
         
         public IActionResult UpdateProfilePicture()

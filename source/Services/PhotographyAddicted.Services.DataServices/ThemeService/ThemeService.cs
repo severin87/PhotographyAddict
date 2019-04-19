@@ -124,6 +124,7 @@ namespace PhotographyAddicted.Services.DataServices
                     ThemeComments = u.ThemeComments,
                     UserName = u.PhotographyAddictedUser.UserName,
                 });
+                themes.input = input;
             }
 
             return themes;

@@ -106,6 +106,7 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> PreviewThemes(string input)
         {
             if (await commonService.IsUserBanned(this.User.Identity.Name))
@@ -116,6 +117,13 @@ namespace PhotographyAddicted.Web.Controllers
             var themes = themeService.PreviewThemes(input);
             
             return View(themes);
-        }       
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult PreviewThemesSearch(string input)
+        {
+            return RedirectToAction("PreviewThemes", "Themes", new { input });
+        }
     }
 }
