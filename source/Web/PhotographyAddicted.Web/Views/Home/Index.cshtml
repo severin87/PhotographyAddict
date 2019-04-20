@@ -1,6 +1,8 @@
 ﻿@using PhotographyAddicted.Services.DataServices
 @using PhotographyAddicted.Services.DataServices.ImageService
 @using PhotographyAddicted.Services.DataServices.CommonService
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 
 @inject INewService  newService
 @inject IThemeService themeService
@@ -13,7 +15,7 @@
 
 <div class="row">
     <div class="col-md-5 offset-md-2">
-        <div class="jumbotron " style="min-height: 911px; padding-top:15px; background-color:azure">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <div style="padding-top: 5px;">
                 <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">
                     <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
@@ -25,19 +27,73 @@
                 <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">Title: @imageService.PreviewImageOfTheDay().Title</a>
             </div>
             <hr class="my-4">
-            <div class="row">
-                @foreach (var comment in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate).Take(4))
+            <div class="row" >
+                @foreach (var theme in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.CreationDate))
                 {
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
-                            <a class="d-inline-block text-truncate" style="padding-bottom: 1px; padding-top: 1px; font-size:medium;  font-weight: bold; margin-bottom:1px; margin-top:2px; color: black; max-width: 487px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@comment.Id">@comment.Title</a>
+                            <div>
+                                <a class="d-inline-block text-truncate themes" style=" max-width: 410px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">
+
+                                    @if ((int)theme.ThemeCategory == 0)
+                                    {
+                                        <i class="far fa-paper-plane ">&nbsp</i>
+                                    }
+                                    else if ((int)theme.ThemeCategory == 1)
+                                    {
+                                        <i class="fas fa-palette">&nbsp</i>
+                                    }
+                                    else if ((int)theme.ThemeCategory == 2)
+                                    {
+                                        <i class="fas fa-desktop">&nbsp</i>
+                                    }
+                                    else if ((int)theme.ThemeCategory == 3)
+                                    {
+                                        <i class="fas fa-child">&nbsp</i>
+                                    }
+                                    else if ((int)theme.ThemeCategory == 4)
+                                    {
+                                        <i class="fas fa-camera-retro">&nbsp</i>
+                                    }
+
+                                    @theme.Title
+                                </a>
+                                @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                {
+                                    <a class="btn btn-sm sButton" data-toggle="modal" data-target="#exampleModal" data-placement="bottom" title="Delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Cancle"><i class="fas fa-window-close"></i></a>
+                                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                }
+                            </div>
+
                             <hr style="margin-bottom:2px; margin-top:1px">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@comment.PhotographyAddictedUser.UserName - @commonService.CreationDate(comment.CreationDate)</p>
+                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@theme.PhotographyAddictedUser.UserName - @commonService.CreationDate(theme.CreationDate)</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @comment.ThemeComments.Count()</p>
+                                    <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +106,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="jumbotron " style="min-height: 800px; padding-top:10px; background-color:azure">
+        <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
             <h3>
                 <a class="news-style" asp-controller="News" asp-action="PreviewNews">Preview all News</a>
             </h3>
@@ -68,6 +124,9 @@
                     </a>
                     <div class="col-md-7">
                         <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id"> @comment.Title</a>
+                       <br />
+                        <a style="font-size: 70%; font-weight: bold; font: bold Georgia; ">@comment.ComentsCount</a>
+                        <i class="far fa-comment-alt" style="font-size: 90%;"></i>
                     </div>
                 </div>
             }

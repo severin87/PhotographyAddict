@@ -23,7 +23,24 @@ namespace PhotographyAddicted.Web.Controllers
             this.commonService = commonService;
         }
        
-        public IActionResult DeleteTheme(int Id)
+        //public IActionResult DeleteTheme(int Id)
+        //{
+        //    var deletedTheme = themeService.FindThemeBy(Id);
+
+        //    if (deletedTheme == null)
+        //    {
+        //        return this.RedirectToAction("Index", "Home");
+        //    }
+
+        //    if (deletedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+        //    {
+        //        return View(deletedTheme);
+        //    }
+
+        //    return this.RedirectToAction("PreviewThemes", "Themes");           
+        //}
+        
+        public async Task<IActionResult> DeleteTheme(int Id)
         {
             var deletedTheme = themeService.FindThemeBy(Id);
 
@@ -31,24 +48,12 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 return this.RedirectToAction("Index", "Home");
             }
-
-            if (deletedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+            if (!ModelState.IsValid)
             {
                 return View(deletedTheme);
             }
 
-            return this.RedirectToAction("PreviewThemes", "Themes");           
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DeleteTheme(PreviewThemeViewModel input)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(input);
-            }
-
-            await themeService.DeleteTheme(input);
+            await themeService.DeleteTheme(deletedTheme);
 
             return this.RedirectToAction("PreviewThemes", "Themes");
         }

@@ -1,15 +1,19 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.PreviewThemeViewModel
+@using PhotographyAddicted.Services.DataServices.CommonService
 @using PhotographyAddicted.Data.Models
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+@using PhotographyAddicted.Services.DataServices.ImageService
+
+@inject IImageService imageService
+@inject ICommonService commonService
+
 
 @{
     ViewData["Title"] = "PreviewTheme";
 }
 
-<h2>Details</h2>
-
-<h1>
+@*<h1>
     @Model.Title - @Model.PhotographyAddictedUser.UserName - @Model.ThemeCategory - @Model.CreationDate
 
     @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
@@ -27,13 +31,112 @@
 
 @foreach (var comment in Model.ThemeComments)
 {
-<li>
-    @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-    @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-    {
-        <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
-        <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id">Update</a>
-    }
-</li>
-}
+    <li>
+        @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
+        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+        {
+            <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
+            <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id">Update</a>
+        }
+    </li>
+}*@
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="row">
+                <div class="col-md-9">
+                    <h1>
+                        @Model.Title - @Model.UserName - @Model.CreationDate
+                    </h1>
+                    <h4>@Model.AuthorOpinion</h4>
+                </div>
+                <div class="col-md-3">
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                    <a class="btn btn-sm  btn-info " style="float:right" role="button" data-toggle="tooltip" data-placement="top" title="Add comment" asp-controller="ThemesComments" asp-action="AddThemeComment" asp-route-id="@Model.Id"><i class="fas fa-plus-square"></i>  Comment</a>
+                    }
+                    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                    {
 
+                        <a class="btn btn-sm sButton" data-toggle="modal" data-target="#exampleModal" data-placement="bottom" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ...  <input type="text" name="nameUser" value="nameUser" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                    }
+                </div>
+            </div>
+            @if (Model.ThemeComments.Count() == 0)
+            {
+                <hr class="my-4">
+                <div class="alert alert-info" role="alert">
+                    Still there is  no coments !!!
+                </div>
+            }
+            else
+            {
+                <hr class="my-4">
+                <div class="row">
+                    @foreach (var comment in Model.ThemeComments)
+                    {
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">
+                                <div>
+                                    <a>
+                                        @comment.PhotographyAddictedUser.UserName - @comment.UserOpinion
+                                    </a>
+
+                                </div>
+
+                                <hr style="margin-bottom:2px; margin-top:1px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@comment.PhotographyAddictedUser.UserName - @commonService.CreationDate(comment.CreationDate)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
+            <div style="padding-top:7px;">
+                @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                    <hr />
+                    @if (comment.Picture != null)
+                    {
+
+                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
