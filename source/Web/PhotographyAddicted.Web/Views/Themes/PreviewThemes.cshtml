@@ -32,30 +32,72 @@
                 <div class="col-md-3">
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                    <p style="float:right">
-                         <a class="btn btn-sm  btn-info " href="~/Themes/AddTheme" role="button" data-toggle="tooltip" data-placement="top" title="Add new theme">
-                              <i class="fas fa-plus-square"></i>  Theme
-                         </a>
-                    </p>                    
+                        <p style="float:right">
+                            <a class="btn btn-sm  btn-info " href="~/Themes/AddTheme" role="button" data-toggle="tooltip" data-placement="top" title="Add new theme">
+                                <i class="fas fa-plus-square"></i>  Theme
+                            </a>
+                        </p>
                     }
                 </div>
             </div>
             @if (Model.PreviewThemes.FirstOrDefault() == null)
             {
-            <h4>There is no themes whit name <a style="color:red">"@Model.input"</a> </h4>
+                <h4>There is no themes whit name <a style="color:red">"@Model.input"</a> </h4>
             }
-            @foreach (var theme in Model.PreviewThemes.OrderByDescending(x =>x.CreationDate).Take(5))
+            else
             {
-                <h4>@theme.Title - @theme.UserName - @theme.ThemeCategory - @theme.CreationDate</h4>
-                <p>
-                    <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">View </a>
-
-                    @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                <hr class="my-4">
+                <div class="row">
+                    @foreach (var theme in Model.PreviewThemes.OrderByDescending(x => x.CreationDate).Take(10))
                     {
-                        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id">Update </a>
-                        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id">Delete</a>
+                        <div class="col-md-12">
+                            <div class="alert alert-info" role="alert">                               
+                                <div>
+                                    <a class="d-inline-block text-truncate themes " asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">
+                                        
+                                            @if ((int)theme.ThemeCategory == 0)
+                                            {
+                                                <i class="far fa-paper-plane ">&nbsp</i>
+                                            }
+                                            else if ((int)theme.ThemeCategory == 1)
+                                            {
+                                                <i class="fas fa-palette">&nbsp</i>
+                                            }
+                                            else if ((int)theme.ThemeCategory == 2)
+                                            {
+                                                <i class="fas fa-desktop">&nbsp</i>
+                                            }
+                                            else if ((int)theme.ThemeCategory == 3)
+                                            {
+                                                <i class="fas fa-child">&nbsp</i>
+                                            }
+                                            else if ((int)theme.ThemeCategory == 4)
+                                            {
+                                                <i class="fas fa-camera-retro">&nbsp</i>
+                                            }
+                                        
+                                        @theme.Title - @theme.ThemeCategory
+                                    </a>
+                                    @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                    {
+                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id"><i class="fas fa-wrench"></i> </a>
+                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@theme.Id"><i class="fas fa-trash-alt"></i></a>
+                                    }
+                                </div>
+                               
+                                <hr style="margin-bottom:2px; margin-top:1px">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@theme.PhotographyAddictedUser.UserName - @commonService.CreationDate(theme.CreationDate)</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     }
-                </p>
+                </div>
             }
         </div>
     </div>
