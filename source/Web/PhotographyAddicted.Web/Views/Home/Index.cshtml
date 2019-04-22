@@ -17,14 +17,14 @@
     <div class="col-md-5 offset-md-2">
         <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <div style="padding-top: 5px;">
-                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">
+                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id"  data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
                     <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
                          style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
                 </a>
             </div>
             <div style="padding-top: 5px;">
-                <a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id">Author: @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
-                <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id">Title: @imageService.PreviewImageOfTheDay().Title</a>
+                <a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id"  data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">Author: @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
+                <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id"  data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">Title: @imageService.PreviewImageOfTheDay().Title</a>
             </div>
             <hr class="my-4">
             <div class="row" >
@@ -33,7 +33,7 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <div>
-                                <a class="d-inline-block text-truncate themes" style=" max-width: 410px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">
+                                <a class="d-inline-block text-truncate themes" style=" max-width: 410px;" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">
 
                                     @if ((int)theme.ThemeCategory == 0)
                                     {
@@ -60,37 +60,15 @@
                                 </a>
                                 @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                                 {
-                                    <a class="btn btn-sm sButton" data-toggle="modal" data-target="#exampleModal" data-placement="bottom" title="Delete">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    ...
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Cancle"><i class="fas fa-window-close"></i></a>
-                                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                     <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
                                 }
                             </div>
 
                             <hr style="margin-bottom:2px; margin-top:1px">
-                            <div class="row">
+                            <div class="row" style=" color: black;">
                                 <div class="col-md-6">
-                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@theme.PhotographyAddictedUser.UserName - @commonService.CreationDate(theme.CreationDate)</p>
+                                    <p style="  font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px"><a class="nav-styleLittle" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id">@theme.PhotographyAddictedUser.UserName</a> - @commonService.CreationDate(theme.CreationDate)</p>
                                 </div>
                                 <div class="col-md-6">
                                     <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
@@ -108,7 +86,7 @@
     <div class="col-md-3">
         <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
             <h3>
-                <a class="news-style" asp-controller="News" asp-action="PreviewNews">Preview all News</a>
+                <a class="news-style" asp-controller="News" asp-action="PreviewNews" data-toggle="tooltip" data-placement="bottom" title="Preview all news">Preview all News</a>
             </h3>
             @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(5))
             {
@@ -119,14 +97,14 @@
                     </svg>
                 </div>
                 <div class="row">
-                    <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id">
+                    <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                     </a>
                     <div class="col-md-7">
-                        <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id"> @comment.Title</a>
+                        <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
                        <br />
-                        <a style="font-size: 70%; font-weight: bold; font: bold Georgia; ">@comment.ComentsCount</a>
-                        <i class="far fa-comment-alt" style="font-size: 90%;"></i>
+                        <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                        <i class="far fa-comment-alt" style="font-size: 90%;"  data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
                     </div>
                 </div>
             }

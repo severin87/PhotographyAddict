@@ -22,10 +22,10 @@
                         <form asp-controller="Themes" asp-action="PreviewThemesSearch">
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
-                                    <button class="btn btn-info" type="submit">Search</button>
+                                    <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">Search</button>
                                     <a class="btn btn-info" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Clear"><i class="fas fa-eraser"></i></a>
                                 </div>
-                                <input placeholder="Search theme.." value="@Model.input" type="text" name="input" class="form-control" aria-describedby="basic-addon1">
+                                <input placeholder="Search theme.." value="@Model.input" type="text" name="input" class="form-control" aria-describedby="basic-addon1" >
                             </div>
                         </form>
                     </div>
@@ -44,9 +44,9 @@
             @if (Model.PreviewThemes.FirstOrDefault() == null)
             {
             <hr class="my-4">
-                <div class="alert alert-info" role="alert">
-                    There is no themes whit name <a style="color:red">"@Model.input"</a>
-                </div>
+            <div class="alert alert-info" role="alert">
+                There is no themes that include <a style="color:red">"@Model.input"</a>
+            </div>
             }
             else
             {
@@ -57,7 +57,7 @@
                         <div class="col-md-12">
                             <div class="alert alert-info" role="alert">
                                 <div>
-                                    <a class="d-inline-block text-truncate themes " asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id">
+                                    <a class="d-inline-block text-truncate themes " asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">
 
                                         @if ((int)theme.ThemeCategory == 0)
                                         {
@@ -84,38 +84,19 @@
                                     </a>
                                     @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                                     {
-                                        var sev = theme.Id;
-                                        <a class="btn btn-sm sButton" data-toggle="modal" data-target="#exampleModal" data-placement="bottom" title="Delete">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        ...  <input type="text" name="nameUser" value="nameUser" />
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Cancle"><i class="fas fa-window-close"></i></a>
-                                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                         <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
                                     }
                                 </div>
 
                                 <hr style="margin-bottom:2px; margin-top:1px">
-                                <div class="row">
+                                <div class="row" style=" color: black;">
                                     <div class="col-md-6">
-                                        <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">@theme.PhotographyAddictedUser.UserName - @commonService.CreationDate(theme.CreationDate)</p>
+                                        <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
+                                        <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@theme.PhotographyAddictedUser.Id"
+                                            data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">
+                                            @theme.PhotographyAddictedUser.UserName</a> - @commonService.CreationDate(theme.CreationDate)
+                                        </p>
                                     </div>
                                     <div class="col-md-6">
                                         <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
@@ -138,7 +119,7 @@
                     @if (comment.Picture != null)
                     {
 
-                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id">
+                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
                             <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
                         </a>
                     }

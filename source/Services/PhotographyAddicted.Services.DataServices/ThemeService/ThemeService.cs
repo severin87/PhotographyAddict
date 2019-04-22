@@ -28,11 +28,23 @@ namespace PhotographyAddicted.Services.DataServices
                 AuthorOpinion = input.AuthorOpinion,
                 Title = input.Title,
                 ThemeCategory = input.ThemeCategory,
-                CreationDate = DateTime.UtcNow,
-                
+                CreationDate = DateTime.UtcNow,                
             };
 
             await themeDbSet.AddAsync(theme);
+            await themeDbSet.SaveChangesAsync();
+
+            var themeComment = new ThemeComment
+            {
+                PhotographyAddictedUser = theme.PhotographyAddictedUser,
+                PhotographyAddictedUserId = input.PhotographyAddictedUserId,
+                ThemeId = theme.Id,
+                Theme = theme,
+                UserOpinion = theme.AuthorOpinion,
+                CreationDate = DateTime.UtcNow,
+            };
+
+            theme.ThemeComments.Add(themeComment);
             await themeDbSet.SaveChangesAsync();
         }
 

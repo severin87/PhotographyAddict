@@ -14,15 +14,15 @@
     <div class="container-fluid">
         <div class="row" style="background-color:black; min-height:40px">
             <div class="col-md-5 offset-md-2 ">
-                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;">
+                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Home page">
                     <img src="~/images/Asa.png" />
                 </a>
-                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes">Форум</a>
-                <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers">Authors</a>
-                <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews">News</a>
-                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate">Photos</a>
-                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory">Top photos</a>
-                <a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories">Stories</a>
+                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Go to the forum">Форум</a>
+                <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Go to the authors">Authors</a>
+                <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews" data-toggle="tooltip" data-placement="bottom" title="Go to the news">News</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate" data-toggle="tooltip" data-placement="bottom" title="Go to the recent photos">Photos</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory" data-toggle="tooltip" data-placement="bottom" title="Go to the top photos">Top photos</a>
+                <a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories" data-toggle="tooltip" data-placement="bottom" title="Go to the stories">Stories</a>
             </div>
             <div class="col-md-3" style="text-align:right;  padding-top: 3px;">
                 <partial name="_LoginPartial" />
