@@ -1,7 +1,9 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.PreviewThemeViewModel
 @using PhotographyAddicted.Services.DataServices.ImageService
 
+@inject IImageService imageServiceimageService
 @inject IImageService imageService
+
 @{
     ViewData["Title"] = "DeleteTheme";
 }
@@ -16,11 +18,12 @@
             <hr class="my-4">
             <div class="row">
                 <div class="col-md-8 ">
-                        <div><form asp-action="DeleteTheme">
-                            <input class="btn btn-info btn-sm" value="Delete"  type="submit" style=" float:left; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Save changes">                            
-                            <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewThemes" style=" margin-top:8px; float:right;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">Cancel</a>                        
-                            </form>
-                        </div>                       
+                    <div>
+                        <form asp-action="DeleteTheme">
+                            <input class="btn btn-info btn-sm" value="Delete" type="submit" style=" float:left; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Save changes">
+                            <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewThemes" style=" margin-top:8px; float:right;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">Cancel</a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -31,12 +34,12 @@
             <div style="padding-top:7px;">
                 @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
                 {
-                <hr />
-                @if (comment.Picture != null)
+                    <hr />
+                    @if (comment.Picture != null)
                     {
-                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
-                    <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
-                </a>
+                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                        </a>
                     }
                 }
             </div>
