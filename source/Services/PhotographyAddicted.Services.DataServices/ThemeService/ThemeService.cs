@@ -50,11 +50,10 @@ namespace PhotographyAddicted.Services.DataServices
 
         public async Task DeleteTheme(PreviewThemeViewModel input)
         {
-            var themeComment = themeDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
+            var theme = themeDbSet.All().Where(x => x.Id == input.Id).FirstOrDefault();
 
-            themeDbSet.Delete(themeComment);
+            themeDbSet.Delete(theme);
             await themeDbSet.SaveChangesAsync();
-
         }
 
         public async Task UpdateTheme(PreviewThemeViewModel input)

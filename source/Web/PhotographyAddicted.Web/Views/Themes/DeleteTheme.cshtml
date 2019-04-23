@@ -1,44 +1,45 @@
 ﻿@model PhotographyAddicted.Services.Models.Themes.PreviewThemeViewModel
+@using PhotographyAddicted.Services.DataServices.ImageService
 
+@inject IImageService imageService
 @{
     ViewData["Title"] = "DeleteTheme";
 }
 
-<h2>DeleteTheme</h2>
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="jumbotron " style="min-height: 1250px; padding-top:15px; background-color:azure">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>DeleteThemeViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AuthorOpinion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AuthorOpinion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotographyAddictedUserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhotographyAddictedUserId)
-        </dd>
-    </dl>
-    
-    <form asp-action="DeleteTheme">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-controller="Themes" asp-action="PreviewAllThemes" >Cancel </a>
-    </form>
+            <br>
+            <h3>Are you sure you want to delete</h3>
+            <h3>@Model.Title with @Model.ThemeComments.Count coments?</h3>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-8 ">
+                        <div><form asp-action="DeleteTheme">
+                            <input class="btn btn-info btn-sm" value="Delete"  type="submit" style=" float:left; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Save changes">                            
+                            <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewThemes" style=" margin-top:8px; float:right;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">Cancel</a>                        
+                            </form>
+                        </div>                       
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <div class="jumbotron " style="min-height: 1250px;  padding-top:15px; background-color:azure">
+            <div style="padding-top:7px;">
+                @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                <hr />
+                @if (comment.Picture != null)
+                    {
+                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
+                    <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
 </div>

@@ -54,7 +54,7 @@
                         </a>
                         @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                         {
-                        <a style="float:left; padding-left:12px;" > - </a>
+                            <a style="float:left; padding-left:12px;" > - </a>
                             <a style="float:left" class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
                             <a style="float:left" class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
                         }

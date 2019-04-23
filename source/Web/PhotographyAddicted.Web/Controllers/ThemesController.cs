@@ -43,11 +43,6 @@ namespace PhotographyAddicted.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteTheme(PreviewThemeViewModel deletedTheme)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(deletedTheme);
-            }
-
             await themeService.DeleteTheme(deletedTheme);
 
             return this.RedirectToAction("PreviewThemes", "Themes");
@@ -56,6 +51,11 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult UpdateTheme(int id)
         {
             var updatedTheme = this.themeService.FindThemeBy(id);
+
+            if (updatedTheme == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
 
             if (updatedTheme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
@@ -101,6 +101,11 @@ namespace PhotographyAddicted.Web.Controllers
         public IActionResult PreviewTheme(int id)
         {
             var specificTheme = themeService.PreviewTheme(id);
+
+            if (specificTheme == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
 
             return this.View(specificTheme);
         }
