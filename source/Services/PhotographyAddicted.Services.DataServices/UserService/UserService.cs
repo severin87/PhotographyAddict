@@ -109,11 +109,11 @@ namespace PhotographyAddicted.Services.DataServices
 
        public PreviewUsersViewModel PreviewUsers(string input)
        {
-            PreviewUsersViewModel themes = new PreviewUsersViewModel();
+            PreviewUsersViewModel users = new PreviewUsersViewModel();
             
             if (input == null)
             {
-                themes.PreviewUsers = userDbset.All().Select(u =>
+                users.PreviewUsers = userDbset.All().Select(u =>
                 new PreviewUserViewModel
                 {
                     Id = u.Id,
@@ -135,7 +135,7 @@ namespace PhotographyAddicted.Services.DataServices
             }
             else
             {
-                themes.PreviewUsers = userDbset.All().Where(n => n.UserName.Contains(input)).Select(u =>
+                users.PreviewUsers = userDbset.All().Where(n => n.UserName.Contains(input)).Select(u =>
                 new PreviewUserViewModel
                 {
                     Id = u.Id,
@@ -152,11 +152,12 @@ namespace PhotographyAddicted.Services.DataServices
                     BannedDate = u.BannedDate,
                     IsBanned = u.IsBanned,
                     Images = u.Images,
-                    Favourite = u.Favourite,
+                    Favourite = u.Favourite,                    
                 });
+                users.input = input;
             }
 
-            return themes;
+            return users;
        }
     }
 }

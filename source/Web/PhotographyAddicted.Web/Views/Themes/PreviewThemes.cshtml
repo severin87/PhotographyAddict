@@ -25,7 +25,7 @@
                                     <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">Search</button>
                                     <a class="btn btn-info" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Clear"><i class="fas fa-eraser"></i></a>
                                 </div>
-                                <input placeholder="Search theme.." value="@Model.input" type="text" name="input" class="form-control" aria-describedby="basic-addon1" >
+                                <input placeholder="Search theme.." value="@Model.Input" type="text" name="input" class="form-control" aria-describedby="basic-addon1" >
                             </div>
                         </form>
                     </div>
@@ -45,7 +45,7 @@
             {
             <hr class="my-4">
             <div class="alert alert-info" role="alert">
-                There is no themes that include <a style="color:red">"@Model.input"</a>
+                There is no themes that include <a style="color:red">"@Model.Input"</a>
             </div>
             }
             else
