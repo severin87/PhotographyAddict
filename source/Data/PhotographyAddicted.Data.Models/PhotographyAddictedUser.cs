@@ -79,6 +79,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         //TODO: Nastroika dali sa syglasni s pravilata
 
+        //TODO: Proveri vsichki Contrroleri s action Preview dali imat zashtita on Null stoinosti.
         //TODO Chasa da se opravi.
         //TODO RAzchisti HomeControlera.
         //TODO: public IHttpContextAccessor httpContextAccessor; Vse oshte ne mi trqbva.

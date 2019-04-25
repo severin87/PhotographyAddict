@@ -88,6 +88,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var specificNew = newService.PreviewNew(Id);
 
+            if (specificNew == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             return this.View(specificNew);
         }
         

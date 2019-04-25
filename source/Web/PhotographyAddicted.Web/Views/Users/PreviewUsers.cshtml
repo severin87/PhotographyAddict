@@ -9,43 +9,6 @@
     ViewData["Title"] = "PreviewUsers";
 }
 
-@*<h2>PreviewUsers</h2>
-
-    <div>
-        <h4>IndexUserProfileViewModel</h4>
-        <hr />
-        <dl class="dl-horizontal"></dl>
-    </div>
-    <div class="search-container">
-        <form asp-controller="Users" asp-action="PreviewUsers">
-            <p>
-                Title: <input placeholder="Search.." type="text" name="input">
-                <button type="submit">Submit</button>
-                <a class="btn btn-default btn-sm" asp-controller="Users" asp-action="PreviewUsers">Clear!</a>
-            </p>
-        </form>
-    </div>
-    <hr />
-    <div>
-        @foreach (var user in Model.PreviewUsers)
-        {
-            <a>
-                @if (user.ProfilePicture != null)
-                {
-                    <img src="data:image;base64,@System.Convert.ToBase64String(user.ProfilePicture )" style="max-height: 110px; height: 70%; width: auto;" />
-                }
-            </a>
-            <h4>
-                @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - @userService.UserScores(user.Id)
-                <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
-            </h4>
-        }
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-        <a asp-action="Index">Back to List</a>
-    </div>
-    @this.User.IsInRole("Admin");*@
-
-
 <div class="row">
     <div class="col-md-6 offset-md-2">
         <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
@@ -57,145 +20,133 @@
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">Search</button>
-                                    <a class="btn btn-info" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Clear"><i class="fas fa-eraser"></i></a>
+                                    <a class="btn btn-info" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Clear">
+                                        <i class="fas fa-eraser"></i>
+                                    </a>
                                 </div>
                                 <input placeholder="Search user.." value="@Model.input" type="text" name="input" class="form-control" aria-describedby="basic-addon1">
                             </div>
                         </form>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    @if (this.User.Identity.IsAuthenticated)
-                    {
-                        <p style="float:right">
-                            <a class="btn btn-sm  btn-info " href="~/Themes/AddTheme" role="button" data-toggle="tooltip" data-placement="top" title="Add new theme">
-                                <i class="fas fa-plus-square"></i>  Theme
-                            </a>
-                        </p>
-                    }
-                </div>
+                </div>                
             </div>
             @if (Model.PreviewUsers.FirstOrDefault() == null)
             {
                 <hr class="my-4">
                 <div class="alert alert-info" role="alert">
-                    There is no user with nickname <a style="color:red">"@Model.input"</a>
+                    There is no user with nickname
+                    <a style="color:red">"@Model.input"</a>
                 </div>
             }
             else
             {
                 <hr class="my-4">
-                <div >
-                    @*@for (int i = 0; i < Model.PreviewUsers.Count(); i+=2)
-                        {
-                            var users = Model.PreviewUsers.ToList();
-                        <div class="card-deck">
-                            <div class="card" style="width: 10rem;">
-                                @if (users[i].ProfilePicture != null)
-                                {
-                                    <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i].ProfilePicture )" alt="Card image cap">
-
-                                }
-                                <div class="card-body">
-                                    <p class="card-text"><a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i+1].Id">@users[i+1].UserName</a><a style="float:right">@users[i+1].AverageScore</a></p>
-                                </div>
-                            </div>
-                            <div class="card" style="width: 10rem;">
-                                @if (users[i+1].ProfilePicture != null)
-                                {
-                                    <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i+1].ProfilePicture )" alt="Card image cap">
-
-                                }
-                                <div class="card-body">
-                                    <p class="card-text"><a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i+1].Id">@users[i+1].UserName</a><a style="float:right">@users[i+1].AverageScore</a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        }*@
+                <div>
                     @{
-                        int users = -1;
-                        foreach (var user in Model.PreviewUsers)
+                        var users = Model.PreviewUsers.OrderBy(x=>x.UserName).Take(16).ToList();
+                        for (int i = 0; i <  users.Count(); i += 4)
                         {
-                            users++;
-                            if (users%3 == 0)
-                            {
-                                <br>
-                                <div > nov red</div>
-                            }
-                            <div class="card" style="width: 12rem;">
-                                @if (user.ProfilePicture != null)
-                            {
-                                    <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(user.ProfilePicture )" alt="Card image cap">
+                            <div class="card-deck">
+                                <div class="card" style="width: 18rem;">
+
+                                    @if (users[i].ProfilePicture != null)
+                                    {
+                                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i].ProfilePicture)" alt="Card image cap">
+                                    }
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i].Id">@users[i].UserName</a>
+                                            <a style="float:right">@users[i].AverageScore</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                @if (i + 1 < Model.PreviewUsers.Count())
+                                {
+                                    <div class="card" style="width: 18rem;">
+                                        @if (users[i + 1].ProfilePicture != null)
+                                        {
+                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 1].ProfilePicture)" alt="Card image cap">
+                                        }
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 1].Id">@users[i + 1].UserName</a>
+                                                <a style="float:right">@users[i + 1].AverageScore</a>
+                                            </p>
+                                        </div>
+                                    </div>
 
                                 }
-                                <div class="card-body">
-                                    <p class="card-text"><a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">@user.UserName</a><a style="float:right">@user.AverageScore</a></p>
-                                </div>
+                                else
+                                {
+                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
+
+                                        <div class="card-body">
+                                            <p class="card-text">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                @if (i + 2 < Model.PreviewUsers.Count())
+                                {
+                                    <div class="card" style="width: 18rem;">
+                                        @if (users[i + 2].ProfilePicture != null)
+                                        {
+                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 2].ProfilePicture)" alt="Card image cap">
+                                        }
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 2].Id">@users[i + 2].UserName</a>
+                                                <a style="float:right">@users[i + 2].AverageScore</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
+
+                                        <div class="card-body">
+                                            <p class="card-text">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                @if (i + 3 < Model.PreviewUsers.Count())
+                                {
+                                    <div class="card" style="width: 18rem;">
+                                        @if (users[i + 3].ProfilePicture != null)
+                                        {
+                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 3].ProfilePicture)" alt="Card image cap">
+                                        }
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 3].Id">@users[i + 3].UserName</a>
+                                                <a style="float:right">@users[i + 3].AverageScore</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
+
+                                        <div class="card-body">
+                                            <p class="card-text">
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
                             </div>
+                            <br>
                         }
                     }
                 </div>
-                @*<div class="row">
-                        @foreach (var theme in Model.PreviewThemes.OrderByDescending(x => x.ThemeComments.LastOrDefault().CreationDate).Take(10))
-                        {
-                            <div class="col-md-12">
-                                <div class="alert alert-info" role="alert">
-                                    <div>
-                                        <a class="d-inline-block text-truncate themes " asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">
-
-                                            @if ((int)theme.ThemeCategory == 0)
-                                            {
-                                                <i class="far fa-paper-plane ">&nbsp</i>
-                                            }
-                                            else if ((int)theme.ThemeCategory == 1)
-                                            {
-                                                <i class="fas fa-palette">&nbsp</i>
-                                            }
-                                            else if ((int)theme.ThemeCategory == 2)
-                                            {
-                                                <i class="fas fa-desktop">&nbsp</i>
-                                            }
-                                            else if ((int)theme.ThemeCategory == 3)
-                                            {
-                                                <i class="fas fa-child">&nbsp</i>
-                                            }
-                                            else if ((int)theme.ThemeCategory == 4)
-                                            {
-                                                <i class="fas fa-camera-retro">&nbsp</i>
-                                            }
-
-                                            @theme.Title
-                                        </a>
-                                        @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-                                        {
-                                            <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                            <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
-                                        }
-                                    </div>
-
-                                    <hr style="margin-bottom:2px; margin-top:1px">
-                                    <div class="row" style=" color: black;">
-                                        <div class="col-md-6">
-                                            <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
-                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@theme.PhotographyAddictedUser.Id"
-                                                   data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">
-                                                    @theme.PhotographyAddictedUser.UserName
-                                                </a> - @commonService.CreationDate(theme.CreationDate)
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>*@
             }
         </div>
     </div>
-
     <div class="col-md-2">
         <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
             <div style="padding-top:7px;">
@@ -204,7 +155,6 @@
                     <hr />
                     @if (comment.Picture != null)
                     {
-
                         <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
                             <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
                         </a>
@@ -214,13 +164,3 @@
         </div>
     </div>
 </div>
-@*<a>
-    @if (user.ProfilePicture != null)
-    {
-          <img src="data:image;base64,@System.Convert.ToBase64String(user.ProfilePicture )" style="max-height: 110px; height: 70%; width: auto;" />
-    }
-    </a>
-       <h4>
-               @user.UserName - @userService.UserScores(user.Id) - @user.CreationDate - @userService.UserScores(user.Id)
-               <a asp-controller="Users" asp-action="PreviewUser" asp-route-id="@user.Id">Go to profile!!!</a>
-       </h4>*@
