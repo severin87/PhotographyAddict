@@ -85,6 +85,7 @@ namespace PhotographyAddicted.Services.DataServices
                     TextContent = u.TextContent,
                     PhotographyAddictedUserId = u.PhotographyAddictedUserId,
                 });
+                allNews.Input = input;
             }
 
             return allNews;

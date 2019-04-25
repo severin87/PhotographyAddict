@@ -1,59 +1,74 @@
 ﻿@model PhotographyAddicted.Services.Models.ThemesComments.AddThemeCommentViewModel
 @using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
 
+@inject INewService  newService
+@inject ICommonService commonService
 @inject IImageService imageService
 
 @{
     ViewData["Title"] = "AddThemeComment";
 }
 
-<div class="row">
-    <div class="col-md-6 offset-md-2">
-        <div class="jumbotron " style="min-height: 1250px; padding-top:15px; background-color:azure">
 
+
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <br>
-            <h3>Write new comment</h3>
-            <hr class="my-4">
-            <div class="row">
-                <div class="col-md-8 ">
-                    <form asp-action="AddThemeComment">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="input-group input-group-sm  mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text  aquaLabel" id="basic-addon1">Title</span>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <h3>Write your comment</h3>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <form asp-action="AddThemeComment">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    @*<span class="input-group-text  aquaLabel" id="basic-addon1" style="padding-right:43px;">Title</span>*@
+                                    <span class="input-group-text  aquaLabel" style="padding-right:11.25px; padding-left:10px;  " id="basic-addon1"><i class="far fa-clipboard"></i></span>
+                                </div>
+                                <input asp-for="UserOpinion" type="text" class="form-control" placeholder="Comment.." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Comment" />
+                                <span asp-validation-for="UserOpinion" class="text-danger"></span>
                             </div>
-                            <input asp-for="UserOpinion" type="text" class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" />
-                            <span asp-validation-for="UserOpinion" class="text-danger"></span>
-                        </div>
-                        <div hidden class="form-group">
-                            <label asp-for="ThemeId" class="control-label"></label>
-                            <input asp-for="ThemeId" class="form-control" />
-                            <span asp-validation-for="ThemeId" class="text-danger"></span>
-                        </div>
-                        <div>
-                            <button class="btn btn-info btn-sm" type="submit" style=" float:left; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Save changes">Publish</button>
-                        </div>
-                        <div>
-                            <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-Id="@Model.ThemeId" style=" margin-top:8px; float:right;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">Cancel</a>
-                        </div>
-                    </form>
+                            <div hidden class="form-group">
+                                <label asp-for="ThemeId" class="control-label"></label>
+                                <input asp-for="ThemeId" class="form-control" />
+                                <span asp-validation-for="ThemeId" class="text-danger"></span>
+                            </div>
+                            <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Add comment">Publish</button>
+                            <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewTheme" asp-route-Id="@Model.ThemeId" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">Cancel</a>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-2">
-        <div class="jumbotron " style="min-height: 1250px;  padding-top:15px; background-color:azure">
-            <div style="padding-top:7px;">
-                @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
+    <div class="col-md-3">
+        <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
+            <div style="padding-top:12px">
+                @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(30).OrderBy(x => Guid.NewGuid()).Take(5))
                 {
-                    <hr />
-                    @if (comment.Picture != null)
-                    {
-                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
-                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                    <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
+                        @commonService.CreationDate(comment.CreationDate)
+                        <svg height="1" width="218">
+                            <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                         </a>
-                    }
+                        <div class="col-md-7">
+                            <a class="news-style" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
+                            <br />
+                            <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                            <i class="far fa-comment-alt" style="font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        </div>
+                    </div>
                 }
             </div>
         </div>

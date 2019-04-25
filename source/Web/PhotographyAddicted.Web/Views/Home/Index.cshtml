@@ -17,17 +17,17 @@
     <div class="col-md-5 offset-md-2">
         <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <div style="padding-top: 5px;">
-                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id"  data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
+                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
                     <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
                          style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
                 </a>
             </div>
             <div style="padding-top: 5px;">
-                <a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id"  data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">Author: @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
-                <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id"  data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">Title: @imageService.PreviewImageOfTheDay().Title</a>
+                <a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">Author: @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
+                <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">Title: @imageService.PreviewImageOfTheDay().Title</a>
             </div>
             <hr class="my-4">
-            <div class="row" >
+            <div class="row">
                 @foreach (var theme in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.ThemeComments.LastOrDefault().CreationDate).Take(4))
                 {
                     <div class="col-md-12">
@@ -101,10 +101,9 @@
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                     </a>
                     <div class="col-md-7">
-                        <a class="news-style" style="font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
-                       <br />
+                        <a class="news-style-padding demo-1" style=" font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title</a>
                         <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
-                        <i class="far fa-comment-alt" style="font-size: 90%;"  data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        <i class="far fa-comment-alt" style=" font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
                     </div>
                 </div>
             }

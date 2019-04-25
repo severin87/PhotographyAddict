@@ -10,7 +10,7 @@ namespace PhotographyAddicted.Services.Models.News
     {
         public int Id { get; set; }
 
-        [MaxLength(40)]
+        [MaxLength(1000)]
         public string Title { get; set; }
 
         public byte[] NewImage { get; set; }
