@@ -34,7 +34,6 @@
                 <div class="col-md-3">
                     @if (this.User.Identity.IsAuthenticated)
                     {
-                        @*<a class="btn btn-default btn-sm" asp-controller="News" asp-action="AddNew">AddNew</a>*@
                         <p style="float:right">
                             <a class="btn btn-sm  btn-info " href="~/News/AddNew" role="button" data-toggle="tooltip" data-placement="top" title="Add new">
                                 <i class="fas fa-plus-square"></i>  New
@@ -55,7 +54,7 @@
                 <hr class="my-4">
                 <div class="row">
                     <div class="col-md-12">
-                        @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(10))
+                        @foreach (var comment in Model.PreviewNews.OrderByDescending(x => x.CreationDate))
                         {
                         <div class="alert alert-info" role="alert">                           
                             <div class="row">
