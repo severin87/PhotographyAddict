@@ -9,10 +9,10 @@ namespace PhotographyAddicted.Services.Models.News
     {
         public int Id { get; set; }
 
-        [MaxLength(30)]
+        [Required]
         public string Title { get; set; }
 
-        [Required]
+        
         public byte[] NewImage { get; set; }
 
         public string TextContent { get; set; }

@@ -66,11 +66,6 @@ namespace PhotographyAddicted.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteNew(PreviewNewViewModel input)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(input);
-            }
-
             await newService.DeleteNew(input);
 
             return this.RedirectToAction("PreviewNews", "News");
@@ -100,8 +95,9 @@ namespace PhotographyAddicted.Web.Controllers
         {
             return View();
         }
-                        
-        public async Task<IActionResult> AddNewPost(AddNewViewModel input, IFormFile NewImage)
+
+        [HttpPost]           
+        public async Task<IActionResult> AddNew(AddNewViewModel input, IFormFile NewImage)
         {
             if (ModelState.IsValid)
             {
