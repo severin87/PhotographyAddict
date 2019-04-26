@@ -36,8 +36,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                 using (var stream = new MemoryStream())
                 {
                     await Picture.CopyToAsync(stream);
-                    input.Picture = stream.ToArray();
-                    
+                    input.Picture = stream.ToArray();                    
                 }
             }
 

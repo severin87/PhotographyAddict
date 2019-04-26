@@ -21,7 +21,7 @@ namespace PhotographyAddicted.Services.DataServices
             this.newDbSet = newDbSet;
         }
 
-        public async Task AddNew(AddNewViewModel input, IFormFile NewImage)
+        public async Task<int> AddNew(AddNewViewModel input, IFormFile NewImage)
         {
             if (NewImage.Length > 0)
             {
@@ -31,7 +31,14 @@ namespace PhotographyAddicted.Services.DataServices
                     input.NewImage = stream.ToArray();
                 }
             }
-            
+
+            int byteCount = input.NewImage.Length;
+
+            if (byteCount > 265000)
+            {
+                return 0;
+            }
+
             var currentNew = new New
             {
                 Id =input.Id,
@@ -44,6 +51,8 @@ namespace PhotographyAddicted.Services.DataServices
 
             await newDbSet.AddAsync(currentNew);
             await newDbSet.SaveChangesAsync();
+
+            return currentNew.Id;
         }
         
         public async Task DeleteNew(PreviewNewViewModel input)

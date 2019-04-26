@@ -100,14 +100,19 @@ namespace PhotographyAddicted.Web.Controllers
         {
             return View();
         }
-                
-        [HttpPost]
-        public async Task<IActionResult> AddNew(AddNewViewModel input, IFormFile NewImage)
+                        
+        public async Task<IActionResult> AddNewPost(AddNewViewModel input, IFormFile NewImage)
         {
             if (ModelState.IsValid)
             {
-                input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                await newService.AddNew(input, NewImage);
+                input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);                
+
+                var newId = await newService.AddNew(input, NewImage);
+                if (newId == 0)
+                {
+                    ModelState.AddModelError(string.Empty, "Picture is bigger than 256kb");
+                    return this.View(input);
+                }
 
                 return this.RedirectToAction("PreviewNews", "News");
             }

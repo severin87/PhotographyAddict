@@ -16,7 +16,7 @@ namespace PhotographyAddicted.Services.DataServices
 
         PreviewNewViewModel FindNewBy(int Id);
 
-        Task AddNew(AddNewViewModel input, IFormFile NewImage);
+        Task<int> AddNew(AddNewViewModel input, IFormFile NewImage);
 
         Task UpdateNew(PreviewNewViewModel input);
 

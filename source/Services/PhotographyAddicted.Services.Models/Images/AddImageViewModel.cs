@@ -10,7 +10,6 @@ namespace PhotographyAddicted.Services.Models.Images
     public class AddImageViewModel
     {
         [Required]
-        [MaxLength(10)]
         public byte[] Picture { get; set; }
         [Required]
         public string Title { get; set; }
