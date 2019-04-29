@@ -1,55 +1,103 @@
 ﻿@model PhotographyAddicted.Services.Models.News.PreviewNewViewModel
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Data.Models
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+@using PhotographyAddicted.Services.DataServices.ImageService
+
+@inject IImageService imageService
+@inject ICommonService commonService
+
 
 @{
-    ViewData["Title"] = "PreviewNew";
+    ViewData["Title"] = "PreviewTheme";
 }
 
-<h2>ViewSpecificNew</h2>
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="jumbotron " style="min-height: 1250px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="row">
+                <div class="col-md-9" style="word-wrap: break-word; font-weight: bold;">
+                    @Model.Title
+                    <p>
+                        <a >
+                            <span style="font-size:90%; float:left; padding-top:5px"> @Model.ComentsCount - @Model.CreationDate  </span>
+                        </a>
+                        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                        {
+                            <a style="float:left; padding-left:12px;"> -  </a>
+                            <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="UpdateNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
+                            <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="DeleteNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
+                        }
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (this.User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn btn-sm  btn-info " style="float:right" role="button" data-toggle="tooltip" data-placement="top" title="Add comment" asp-controller="ThemesComments" asp-action="AddThemeComment" asp-route-id="@Model.Id"><i class="fas fa-plus-square"></i>  Comment</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                @foreach (var comment in Model.NewComments.Take(10))
+                {
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
 
-<div>
-    <h4>PreviewNewViewModel</h4>
-    <hr />
-    <h4>
-        <img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
-        @Model.Title - @Model.ComentsCount - @Model.CreationDate
-    </h4>
-    <br>
-    <h4>
-        @Model.TextContent
-    </h4>
+                            <div style="padding-bottom:8px; color:black">
+                                <a style="word-wrap: break-word;">
+                                    @comment.UserOpinion
+                                </a>
+                                @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                {
+                                    if (comment != Model.NewComments.FirstOrDefault())
+                                    {
+                                        <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                    }
+                                    <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                }
+                            </div>
 
-    <h1>
+                            <hr style="margin-bottom:2px; margin-top:1px">
+                            <div class="row" style=" color: black;">
+                                <div class="col-md-6">
+                                    <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
+                                        <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.PhotographyAddictedUser.Id"
+                                           data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
+                                            @comment.PhotographyAddictedUser.UserName
+                                        </a>
+                                        - @commonService.CreationDate(comment.CreationDate)
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
-        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-        {
-        <a class="btn btn-default btn-sm" asp-controller="News" asp-action="UpdateNew" asp-route-id="@Model.Id">Update </a>
-        <a class="btn btn-default btn-sm" asp-controller="News" asp-action="DeleteNew" asp-route-id="@Model.Id">Delete</a>
-        }
+    <div class="col-md-2">
+        <div class="jumbotron " style="min-height: 1250px;  padding-top:15px; background-color:azure">
+            <div style="padding-top:7px;">
+                @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                    <hr />
+                    @if (comment.Picture != null)
+                    {
 
-        @if (this.User.Identity.IsAuthenticated)
-        {
-        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="AddNewComment" asp-route-id="@Model.Id">Add coment! </a>
-        }
-    </h1>
-
-</div>
-<br>
-<div>
-    @foreach (var comment in Model.NewComments)
-    {
-    <h4>
-        @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-        {
-        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id">Delete</a>
-        <a class="btn btn-default btn-sm" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id">Edit</a>
-        }
-    </h4>
-    }
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
 </div>
