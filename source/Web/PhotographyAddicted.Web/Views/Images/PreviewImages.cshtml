@@ -7,104 +7,104 @@
     ViewData["Title"] = "PreviewImages";
 }
 
-<h2>PreviewImages</h2>
-
-<div>
-    <h4>PreviewImagesViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal"></dl>
-</div>
-<div>
-    @if (Model.PreviewImages.Count() != 0)
-    {
-
-        @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
-        {
-            <div class="search-container">
-                <form asp-controller="Images" asp-action="PreviewImages">
-                    <p>
-                        Title: <input placeholder="Search.." type="text" name="input">
-                        <button type="submit">Submit</button>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
-                    </p>
-                </form>
-            </div>
-        }
-
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <div>
-                @foreach (var item in Model.PreviewImages)
+                <h4>PreviewImagesViewModel</h4>
+                <hr />
+                <dl class="dl-horizontal"></dl>
+            </div>
+            <div>
+                @if (Model.PreviewImages.Count() != 0)
                 {
 
-                    if (item.Picture != null)
+                    @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
                     {
-                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                    }
-
-                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">View </a>
-                    if (item.ImageCategory != 0)
-                    {
-                        if (item.Title == null)
-                        {
-                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">ViewCategory </a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDays" asp-route-id="@((int)item.ImageCategory)">ViewCategoryTop </a>
-
-                        }
-                    }
-
-
-                    @item.Scores
-                    @item.Title
-
-                    if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-                    {
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Launch demo modal
-                        </button>
-                        int themeId = @item.Id;
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        ...
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <a class="btn btn-primary" asp-controller="Images" asp-action="DeleteImage" asp-route-Id="@themeId">Save changes</a>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="search-container">
+                            <form asp-controller="Images" asp-action="PreviewImages">
+                                <p>
+                                    Title: <input placeholder="Search.." type="text" name="input">
+                                    <button type="submit">Submit</button>
+                                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
+                                </p>
+                            </form>
                         </div>
                     }
-                }
 
+                    <div>
+                        @foreach (var item in Model.PreviewImages)
+                        {
+
+                            if (item.Picture != null)
+                            {
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+                            }
+
+                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">View </a>
+                            if (item.ImageCategory != 0)
+                            {
+                                if (item.Title == null)
+                                {
+                                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">ViewCategory </a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDays" asp-route-id="@((int)item.ImageCategory)">ViewCategoryTop </a>
+
+                                }
+                            }
+
+
+                            @item.Scores
+                            @item.Title
+
+                            if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                            {
+                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Launch demo modal
+                                </button>
+                                int themeId = @item.Id;
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <a class="btn btn-primary" asp-controller="Images" asp-action="DeleteImage" asp-route-Id="@themeId">Save changes</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="search-container">
+                        <form asp-controller="Images" asp-action="PreviewImages">
+                            <p>
+                                Title: <input placeholder="Search.." type="text" name="input">
+                                <button type="submit">Submit</button>
+                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
+                            </p>
+                        </form>
+                    </div>
+                }
             </div>
-    }
-    else
-    {
-        <div class="search-container">
-            <form asp-controller="Images" asp-action="PreviewImages">
-                <p>
-                    Title: <input placeholder="Search.." type="text" name="input">
-                    <button type="submit">Submit</button>
-                    <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImages">Clear!</a>
-                </p>
-            </form>
         </div>
-    }
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    </div>
 </div>

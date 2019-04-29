@@ -47,13 +47,13 @@
                         for (int i = 0; i <  users.Count(); i += 4)
                         {
                             <div class="card-deck">
-                                <div class="card" style="width: 18rem;">
+                                <div class="card" style="width: 18rem; border-color:transparent;border:3px;">
 
                                     @if (users[i].ProfilePicture != null)
                                     {
                                         <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i].ProfilePicture)" alt="Card image cap">
                                     }
-                                    <div class="card-body">
+                                    <div class="card-body" style="background-color:azure">
                                         <p class="card-text">
                                             <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i].Id">@users[i].UserName</a>
                                             <a style="float:right">@users[i].AverageScore</a>
