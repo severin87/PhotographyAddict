@@ -1,22 +1,71 @@
-﻿@model PhotographyAddicted.Services.Models.News.PreviewNewViewModel
+﻿
+
+@model PhotographyAddicted.Services.Models.News.PreviewNewViewModel
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
 
 @{
     ViewData["Title"] = "DeleteNew";
 }
 
-<h2>DeleteNew</h2>
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>DeleteNewViewModel</h4>
-    <hr />
-    <h4>
-        <img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 70px; height: 70%; width: auto;" />
-        @Model.Title - @Model.TextContent
-    </h4>
-    
-    <form asp-action="DeleteNew">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <div style="padding-bottom:8px; color:black">
+                    <a style="word-wrap: break-word;">
+                        <h5>Are you sure you want to delete:</h5>
+                        <h3>@Model.Title with @Model.NewComments.Count comments?</h3>
+                    </a>
+                </div>
+
+                <hr style="margin-bottom:2px; margin-top:1px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <form asp-action="DeleteNew">
+                                <input class="btn btn-info btn-sm" value="Yes" type="submit" style=" padding: 4px 12px;  margin-top:8px; margin-right:15px;" data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                <a class="btn btn-info btn-sm" asp-controller="News" asp-action="PreviewNews" style=" padding:4px 12.545px; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">No</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
+            <div style="padding-top:12px">
+                @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(30).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                    <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
+                        @commonService.CreationDate(comment.CreationDate)
+                        <svg height="1" width="218">
+                            <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
+                        </a>
+                        <div class="col-md-7">
+                            <a class="news-style" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
+                            <br />
+                            <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                            <i class="far fa-comment-alt" style="font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+

@@ -78,7 +78,7 @@ namespace PhotographyAddicted.Services.DataServices
                     Id = u.Id,
                     TextContent = u.TextContent,
                     PhotographyAddictedUserId = u.PhotographyAddictedUserId,
-
+                    NewComments = u.NewComments,
                 });
             }
             else
@@ -93,6 +93,7 @@ namespace PhotographyAddicted.Services.DataServices
                     Id = u.Id,
                     TextContent = u.TextContent,
                     PhotographyAddictedUserId = u.PhotographyAddictedUserId,
+                    NewComments = u.NewComments,
                 });
                 allNews.Input = input;
             }
@@ -123,7 +124,6 @@ namespace PhotographyAddicted.Services.DataServices
                    NewImage = m.NewImage,
                    NewComments = m.NewComments,
                    TextContent = m.TextContent,
-
                }).FirstOrDefault();
 
             return specificNew;
@@ -146,6 +146,7 @@ namespace PhotographyAddicted.Services.DataServices
                       Title = d.Title,
                       TextContent = d.TextContent,
                       NewImage = d.NewImage,
+                      NewComments = d.NewComments,
                   }).FirstOrDefault();
 
             return userNew;
