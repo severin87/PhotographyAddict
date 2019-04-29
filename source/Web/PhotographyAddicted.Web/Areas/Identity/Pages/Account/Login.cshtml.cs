@@ -91,8 +91,15 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 {
                     DateTime aha = signedUser.BannedDate.AddHours(signedUser.BanLengthDays * 24);
 
-                    ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.BannedDate.ToString("dddd, dd MMMM yyyy HH:mm:ss")}  till: {aha.ToString("dddd, dd MMMM yyyy HH:mm:ss")}");
-                    return Page();
+                    if (aha< DateTime.UtcNow)
+                    {
+                        signedUser.IsBanned = false;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, $"You are banned since: {signedUser.BannedDate.ToString("dddd, dd MMMM yyyy HH:mm:ss")}  till: {aha.ToString("dddd, dd MMMM yyyy HH:mm:ss")}");
+                        return Page();
+                    }
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(signedUser.UserName, 

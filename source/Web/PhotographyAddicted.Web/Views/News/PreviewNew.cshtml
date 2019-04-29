@@ -19,17 +19,21 @@
             <br>
             <div class="row">
                 <div class="col-md-9" style="word-wrap: break-word; font-weight: bold;">
-                    @Model.Title
+                    <a style="word-wrap: break-word; font-size: 140%;"> @Model.Title</a>
+                    <p style="padding-top:16px;"><img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 400px; height: 70%; width: auto;" /></p>
+                    <a>
+                        Comments: @Model.ComentsCount
+                    </a>
                     <p>
-                        <a >
-                            <span style="font-size:90%; float:left; padding-top:5px"> @Model.ComentsCount - @Model.CreationDate  </span>
+                        <a>
+                            <span style="font-size:90%; float:left; padding-top:5px">Published: @commonService.CreationDate(Model.CreationDate) </span>
                         </a>
-                        @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-                        {
-                            <a style="float:left; padding-left:12px;"> -  </a>
-                            <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="UpdateNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
-                            <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="DeleteNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
-                        }
+                            @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                            {
+                                <a style="float:left; padding-left:12px;"> -  </a>
+                                <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="UpdateNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
+                                <a style="float:left" class="btn btn-sm sButton" asp-controller="News" asp-action="DeleteNew" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
+                            }
                     </p>
                 </div>
                 <div class="col-md-3">
