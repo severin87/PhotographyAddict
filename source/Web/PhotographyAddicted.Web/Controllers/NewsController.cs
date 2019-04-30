@@ -43,7 +43,7 @@ namespace PhotographyAddicted.Web.Controllers
 
             await newService.UpdateNew(input);
 
-            return this.RedirectToAction("PreviewNews", "News");
+            return this.RedirectToAction("PreviewNew", new { id = input.Id });
         }
 
         public IActionResult DeleteNew(int Id)
