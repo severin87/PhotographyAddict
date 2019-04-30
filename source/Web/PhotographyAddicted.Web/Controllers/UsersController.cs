@@ -73,5 +73,11 @@ namespace PhotographyAddicted.Web.Controllers
                 return this.View(input); 
             }
         }
+
+        [AllowAnonymous]
+        public IActionResult PreviewUsersSearch(string input)
+        {
+            return RedirectToAction("PreviewUsers", "Users", new { input });
+        }
     }
 }

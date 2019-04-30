@@ -177,7 +177,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var images = imageService.PreviewTopImagesLasтThirtyDaysByCategory();
 
-            return View("PreviewImages", images);
+            return View(images);
         }
 
         [AllowAnonymous]
@@ -215,6 +215,12 @@ namespace PhotographyAddicted.Web.Controllers
             await imageService.AddImageScores(userId, imageId);
 
             return this.RedirectToAction("PreviewImage", new { id = imageId });
+        }
+
+        [AllowAnonymous]
+        public IActionResult PreviewImagesSearch(string input)
+        {
+            return RedirectToAction("PreviewImages", "Images", new { input });
         }
     }
 }

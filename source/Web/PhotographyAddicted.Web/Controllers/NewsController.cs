@@ -25,6 +25,11 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var updatedNew = this.newService.FindNewBy(id);
 
+            if (updatedNew == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return this.View(updatedNew);
@@ -116,6 +121,12 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 return this.View(input);
             }
+        }
+
+        [AllowAnonymous]
+        public IActionResult PreviewNewsSearch(string input)
+        {
+            return RedirectToAction("PreviewNews", "News", new { input });
         }
     }
 }

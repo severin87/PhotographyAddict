@@ -24,10 +24,16 @@ namespace PhotographyAddicted.Web.Controllers
 
             var updatedNew = this.newCommentService.ViewUpdateNewById(id);
 
+            if (updatedNew == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             if (updatedNew.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
                 return this.View(updatedNew);
             }
+
             return this.RedirectToAction("PreviewNew", "News", new { id = updatedNew.NewId });
         }
 

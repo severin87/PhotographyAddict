@@ -113,5 +113,11 @@ namespace PhotographyAddicted.Web.Controllers
             await photoStoryService.ChangeStatus(id);
             return RedirectToAction("PreviewPhotoStory", new { Id = id });
         }
+
+        [AllowAnonymous]
+        public IActionResult PreviewPhotoStoriesSearch(string input)
+        {
+            return RedirectToAction("PreviewPhotoStories", "PhotoStories", new { input });
+        }
     }
 }

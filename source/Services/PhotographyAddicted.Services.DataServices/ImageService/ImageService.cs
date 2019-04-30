@@ -206,6 +206,7 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
                     Settings = u.Settings,
                     VotedUsers = u.VotedUsers,
                 }).OrderByDescending(d => d.UploadedDate);
+                images.Input = input;
             }
 
             return images;
@@ -508,5 +509,6 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
             return topImage;
         }    
+
     }
 }

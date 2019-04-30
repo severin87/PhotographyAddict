@@ -125,7 +125,6 @@ namespace PhotographyAddicted.Web.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
         public IActionResult PreviewThemesSearch(string input)
         {
             return RedirectToAction("PreviewThemes", "Themes", new { input });
