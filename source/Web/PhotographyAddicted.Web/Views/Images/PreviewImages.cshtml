@@ -37,32 +37,27 @@
                     <div>
                         @foreach (var item in Model.PreviewImages)
                         {
-
-                            if (item.Picture != null)
-                            {
-                            }
-
                             if (item.ImageCategory != 0)
                             {
-                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">
-                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                                </a>
 
-                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">@item.ImageCategory</a>
+                                @*<a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">*@
+                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">@item.ImageCategory                            
+                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 160px; height: 70%; width: auto;" />
+                                </a>
                             }
                             else
                             {
-                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 200px; height: 70%; width: auto;" />
                             }
 
-                            @item.Scores
+                            @*@item.Scores
                             @item.Title
 
                             if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                             {
                                 <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
                                 <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
-                            }
+                            }*@
                         }
                     </div>
                 }

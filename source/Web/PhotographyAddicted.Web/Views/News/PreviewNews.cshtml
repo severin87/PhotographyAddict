@@ -15,7 +15,7 @@
 
 <div class="row">
     <div class="col-md-6 offset-md-2">
-        <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
+        <div class="jumbotron " style="min-height: 1600px; padding-top:15px; background-color:azure">
             <br>
             <div class="row">
                 <div class="col-md-9">
@@ -54,7 +54,7 @@
                 <hr class="my-4">
                 <div class="row">
                     <div class="col-md-12">
-                        @foreach (var comment in Model.PreviewNews.OrderByDescending(x => x.CreationDate))
+                        @foreach (var comment in Model.PreviewNews.OrderByDescending(x => x.CreationDate).Take(10))
                         {
                         <div class="alert alert-info" role="alert">                           
                             <div class="row">
@@ -89,7 +89,7 @@
     </div>
 
     <div class="col-md-2">
-        <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
+        <div class="jumbotron " style="min-height: 1600px;  padding-top:15px; background-color:azure">
             <div style="padding-top:7px;">
                 @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
                 {
