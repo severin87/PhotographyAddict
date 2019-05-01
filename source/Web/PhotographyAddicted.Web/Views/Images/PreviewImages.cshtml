@@ -17,68 +17,46 @@
                     @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
                     {
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="search-container">
-                                    <form asp-controller="Images" asp-action="PreviewImagesSearch">
-                                        <div class="input-group input-group-sm mb-3">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">Search</button>
-                                                <a class="btn btn-info" asp-controller="Images" asp-action="PreviewImages" data-toggle="tooltip" data-placement="bottom" title="Clear"><i class="fas fa-eraser"></i></a>
-                                            </div>
-                                            <input placeholder="Search image.." value="@Model.Input" type="text" name="input" class="form-control" aria-describedby="basic-addon1">
-                                        </div>
-                                    </form>
-                                </div>
+                            <div class="col-md-7">
+                                <partial name="PreviewImagesSearchPartial" />
+                            </div>
+                            <div class="col-md-5">
+                                <h4 class="headText-style">
+                                    Images
+                                </h4>
                             </div>
                         </div>
-                        <br />
-                        <hr />
                     }
-                    <div>
-                        @foreach (var item in Model.PreviewImages)
-                        {
-                            if (item.ImageCategory != 0)
+                    <hr class="my-4">
+                    <div class="row">
+                            @foreach (var item in Model.PreviewImages)
                             {
-
-                                @*<a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id ">*@
-                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)">@item.ImageCategory                            
-                                    <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 160px; height: 70%; width: auto;" />
-                                </a>
+                                <div class="col-md-3">
+                                    <div class="imageBoxMain">
+                                        <div class="row">
+                                            <div class="col-md-10 offset-md-1 d-inline-block text-truncate" style="font-size:75%; text-align:center; padding: 0.5px 3px; padding-top:2px;">
+                                                @item.Title
+                                                @*<a class="d-inline-block text-truncate" style="font-size:85%;">
+                                                    @item.Title - @item.PhotographyAddictedUser.UserName
+                                                </a>*@
+                                            </div>
+                                        </div>
+                                        <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id " data-toggle="tooltip" data-placement="bottom" title="See the photo!">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" class="imageCategoryMain" />
+                                        </a>
+                                    </div>
+                                    <a style="padding-left:6px;"></a>
+                                </div>
                             }
-                            else
-                            {
-                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 200px; height: 70%; width: auto;" />
-                            }
-
-                            @*@item.Scores
-                            @item.Title
-
-                            if (item.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-                            {
-                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@item.Id">Edit</a>
-                                <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@item.Id">Delete</a>
-                            }*@
-                        }
                     </div>
                 }
                 else
                 {
-                    <div class="search-container">
-                        <form asp-controller="Images" asp-action="PreviewImagesSearch">
-                            <div class="input-group input-group-sm mb-3">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Search">Search</button>
-                                    <a class="btn btn-info" asp-controller="Images" asp-action="PreviewImages" data-toggle="tooltip" data-placement="bottom" title="Clear"><i class="fas fa-eraser"></i></a>
-                                </div>
-                                <input placeholder="Search image.." value="@Model.Input" type="text" name="input" class="form-control" aria-describedby="basic-addon1">
-                            </div>
-                        </form>
-                    </div>
-                    <br />
-                    <hr />
+                    <partial name="PreviewImagesSearchPartial" />
+                    <hr class="my-4">
                     <div>
                         <div class="alert alert-info" role="alert">
-                            There is no themes that include <a style="color:red">"@Model.Input"</a>
+                            There is no image <a style="color:red">"@Model.Input"</a>
                         </div>
                     </div>
                 }
@@ -86,3 +64,5 @@
         </div>
     </div>
 </div>
+
+

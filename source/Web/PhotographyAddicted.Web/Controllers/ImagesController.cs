@@ -35,8 +35,7 @@ namespace PhotographyAddicted.Web.Controllers
             var deletedImage = imageService.FindImageById(Id);
 
             await imageService.DeleteImage(deletedImage);
-            deletedImage.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return this.RedirectToAction("PreviewUser", "Users", new { id = deletedImage.PhotographyAddictedUserId });
+            return this.RedirectToAction("PreviewUser", "Users", new { id = this.User.FindFirstValue(ClaimTypes.NameIdentifier) });
         }
 
         //public IActionResult DeleteImage(int Id)
@@ -161,7 +160,7 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var images = imageService.PreviewImagesByCategoriesAndDates();
 
-            return View("PreviewImages",images);
+            return View(images);
         }
 
         [AllowAnonymous]

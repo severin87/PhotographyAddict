@@ -19,7 +19,7 @@
             <div style="padding-top: 5px;">
                 <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
                     <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
-                         style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
+                         style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />               
                 </a>
             </div>
             <div style="padding-top: 5px;">
