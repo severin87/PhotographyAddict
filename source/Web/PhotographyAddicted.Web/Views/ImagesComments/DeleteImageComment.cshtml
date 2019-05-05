@@ -1,44 +1,73 @@
-﻿@model PhotographyAddicted.Services.Models.ImagesComments.DeleteImageCommentViewModel
+﻿
+
+@model PhotographyAddicted.Services.Models.ImagesComments.DeleteImageCommentViewModel
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
 
 @{
     ViewData["Title"] = "DeleteImageComment";
 }
 
-<h2>DeleteImageComment</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>DeleteUserNewCommentsViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UserOpinion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UserOpinion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImageId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotographyAddictedUserId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhotographyAddictedUserId)
-        </dd>
-    </dl>
-    
-    <form asp-action="DeleteImageComment">
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+
+                <div style="padding-bottom:8px; color:black">
+                    <a style="word-wrap: break-word;">
+                        <h5>Are you sure you want to delete:</h5>
+                        <h3 style="word-wrap: break-word;">@Model.UserOpinion</h3>
+                    </a>
+                </div>
+
+                <hr style="margin-bottom:2px; margin-top:1px">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <form asp-action="DeleteImageComment">
+                                <input class="btn btn-info btn-sm" value="Yes" type="submit" style=" padding: 4px 12px;  margin-top:8px; margin-right:15px;" data-toggle="tooltip" data-placement="bottom" title="Delete image comment">
+                                <a class="btn btn-info btn-sm" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@Model.ImageId" style=" padding:4px 12.545px; margin-top:8px;" data-toggle="tooltip" data-placement="bottom" title="Go to the image">No</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
+            <div style="padding-top:12px">
+                @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(30).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                    <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
+                        @commonService.CreationDate(comment.CreationDate)
+                        <svg height="1" width="218">
+                            <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
+                        </a>
+                        <div class="col-md-7">
+                            <a class="news-style" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
+                            <br />
+                            <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                            <i class="far fa-comment-alt" style="font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
+

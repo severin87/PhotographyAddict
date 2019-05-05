@@ -3,6 +3,7 @@ using PhotographyAddicted.Web.Areas.Identity.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PhotographyAddicted.Services.Models.Images
@@ -10,6 +11,7 @@ namespace PhotographyAddicted.Services.Models.Images
     public class AddImageViewModel
     {
         [Required]
+        [Column(TypeName = "image")]
         public byte[] Picture { get; set; }
         [Required]
         public string Title { get; set; }

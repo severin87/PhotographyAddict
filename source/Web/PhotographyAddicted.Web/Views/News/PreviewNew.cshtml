@@ -49,9 +49,10 @@
             </div>
             <hr class="my-4">
             <div class="row">
-                @foreach (var comment in Model.NewComments.Take(10))
-                {
-                    <div class="col-md-12">
+                <div class="col-md-12">
+                    <a style="color:#138496">Comments:</a>
+                    @foreach (var comment in Model.NewComments.Take(10))
+                    {
                         <div class="alert alert-info" role="alert">
 
                             <div style="padding-bottom:8px; color:black">
@@ -60,8 +61,8 @@
                                 </a>
                                 @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                                 {
-                                        <a class="btn btn-sm sButton" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                   
+                                    <a class="btn btn-sm sButton" asp-controller="NewsComments" asp-action="DeleteNewComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+
                                     <a class="btn btn-sm sButton" asp-controller="NewsComments" asp-action="UpdateNewComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
                                 }
                             </div>
@@ -79,9 +80,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </div>
+                    }
+                </div>
+                </div>
         </div>
     </div>
 

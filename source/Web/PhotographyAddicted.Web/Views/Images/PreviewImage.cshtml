@@ -1,155 +1,188 @@
 ﻿@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
 @using PhotographyAddicted.Services.DataServices.ImageService
-@inject IImageService imageService
-
+@using PhotographyAddicted.Services.DataServices.CommonService
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+
+@inject ICommonService commonService
+@inject IImageService imageService
 
 @{
     ViewData["Title"] = "PreviewImage";
 }
 
-<h2>ViewPictureDetails</h2>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture) "
+                 style="max-width: 900px; max-height: 650px; display: block;  margin-left: auto; margin-right: auto; " />
+            <hr class="my-4">
+            <h4>
+                @{
+                    string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-@{
-    if (this.User.Identity.IsAuthenticated)
-    {
-        string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    if (this.User.Identity.IsAuthenticated)
+                    {
+                        if (imageService.IsImageInFavouriteImage(userId, Model.Id))
+                        {
+                            <a class="badge badge-info" asp-controller="Images" asp-action="DeleteImageToFavourites"
+                               asp-route-userId="@userId" asp-route-imageId="@Model.Id"
+                               data-toggle="tooltip" data-placement="bottom" title="Remove image from favourites">
+                                <i class="fas fa-heart"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="badge badge-info" asp-controller="Images" asp-action="AddImageToFavourites"
+                               asp-route-userId="@userId" asp-route-imageId="@Model.Id"
+                               data-toggle="tooltip" data-placement="bottom" title="Add image to favourites">
+                                <i class="far fa-heart"></i>
+                            </a>
+                        }
+                    }
 
-        if (imageService.IsImageInFavouriteImage(userId, Model.Id))
-        {
-            <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="DeleteImageToFavourites"
-               asp-route-userId="@userId" asp-route-imageId="@Model.Id">DeleteImageToFavourites</a>
-        }
-        else
-        {
-            <a class="btn btn-default btn-sm" style="color:orangered" asp-controller="Images" asp-action="AddImageToFavourites"
-               asp-route-userId="@userId" asp-route-imageId="@Model.Id">AddImageToFavourites</a>
-        }
-    }
-}
+                    if (this.User.Identity.IsAuthenticated && (Model.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                    {
+                        if (!Model.VotedUsers.Any(x => x.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                        {
+                            <a class="badge badge-info" asp-controller="Images" asp-action="AddImageScores"
+                               asp-route-userId="@userId" asp-route-imageId="@Model.Id"
+                               data-toggle="tooltip" data-placement="bottom" title="Vote fot the image">
+                                <i class="far fa-star"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="badge  badgeImage" style="color:white" data-toggle="tooltip" data-placement="bottom" title="You already vote">
+                                <i class="fas fa-star"></i>
+                            </a>
+                        }
+                    }
 
-@{
-    if (this.User.Identity.IsAuthenticated && (Model.PhotographyAddictedUserId != this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
-    {
-        if (!Model.VotedUsers.Any(x => x.UserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier)))
-        {
-            string userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            <a class="btn btn-default btn-sm" style="color:green" asp-controller="Images" asp-action="AddImageScores"
-               asp-route-userId="@userId" asp-route-imageId="@Model.Id">Vote for this pic!</a>
-        }
-        else
-        {
-            <h3 style="color:red">You allready voted.</h3>
-        }
-    }
-}
-
-<p>
-    @Model.ImageCategory - @Model.UploadedDate
-</p>
-<p>
-    @Model.Title - @Model.PhotographyAddictedUser.UserName
-</p>
-
-<div class="modal-body" id="modal-body" style="cursor: zoom-out; width: 722px; height: 635px;">
-    <img class="img-responsive" style="max-height:100%; position: relative;
-    top: 50%; transform: translateY(-50%);" src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)">
-</div>
-<div>
-    <h4>ImagePreviewViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ImageCategory)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ImageCategory)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Scores)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Scores)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Equipment)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Equipment)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Settings)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Settings)
-        </dd>
-    </dl>
-</div>
-<div>
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="AddImageComment" asp-route-id="@Model.Id">Add coment! </a>
-    }
-</div>
-<hr />
-
-<div>
-    @foreach (var comment in Model.ImageComments)
-    {
-        <h4>
-            @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                    <a class="badge  badgeImage" style="color:white" data-toggle="tooltip" data-placement="bottom" title="Image scores">
+                        Scores: @Model.Scores
+                    </a>
+                    <a>&nbsp</a>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <a class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Add comment" asp-controller="ImagesComments" asp-action="AddImageComment" asp-route-id="@Model.Id"><i class="fas fa-plus-square"></i>  Comment</a>
+                    }
+                }
+                @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                {
+                    <a class="badge badge-info" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@Model.Id" data-toggle="modal" data-target="#exampleModal" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                    <a class="badge badge-info" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                }
+                <br />
+                <a class="badge  badgeImage" style="color:white" data-toggle="tooltip" data-placement="bottom" title="Image title">
+                    <i class="far fa-images"></i>    @Model.Title
+                </a>
+                <a class="badge  badgeImage" style="color:white" data-toggle="tooltip" data-placement="bottom" title="Uploaded date">
+                    <i class="fas fa-upload"></i>
+                    @commonService.CreationDate(Model.UploadedDate)
+                </a>
+                <a class="badge badge-info" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@Model.PhotographyAddictedUser.Id"
+                   data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">
+                    <i class="fas fa-user"></i>
+                    @Model.PhotographyAddictedUser.UserName
+                </a>
+                <a class="badge badge-info" asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)Model.ImageCategory)"
+                   data-toggle="tooltip" data-placement="bottom" title="Go to the @Model.ImageCategory category">
+                    <i class="fas fa-arrow-alt-circle-right"></i>
+                    @Model.ImageCategory
+                </a>
+            </h4>
+            <br />
+            @if (Model.Settings != null || Model.Equipment != null || Model.Description != null)
             {
-                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="DeleteImageComment" asp-route-id="@comment.Id">Delete</a>
-                <a class="btn btn-default btn-sm" asp-controller="ImagesComments" asp-action="UpdateImageComment" asp-route-id="@comment.Id">Edit</a>
+                @*<hr class="my-4">*@
+                <div class="alert alert-info" role="alert">
+                    @if (Model.Settings != null)
+                    {
+                        <a class="headText-style" style="font-size:130%">
+                            <i class="fas fa-cogs"></i>  @Model.Settings
+                        </a>
+                        @if (Model.Equipment != null || Model.Description != null)
+                        {
+                            <hr />
+                        }
+                    }
+                    @if (Model.Equipment != null)
+                    {
+                        <a class="headText-style" style="font-size:120%">
+                            <i class="fas fa-camera-retro"></i>  @Model.Equipment
+                        </a>
+                        @if (Model.Description != null)
+                        {
+                            <hr />
+                        }
+                    }
+                    @if (Model.Description != null)
+                    {
+                        <a class="headText-style" style="font-size:130%">
+                            <i class="far fa-file-alt"></i>  @Model.Description
+                        </a>
+                    }
+                </div>
             }
-        </h4>
-    }
-</div>
-<div>
-    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-    {
-        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="UpdateImage" asp-route-id="@Model.Id">Edit</a>
-        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="DeleteImage" asp-route-id="@Model.Id">Delete</a>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-            Launch demo modal
-        </button>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <a style="color:#138496">Comments:</a>
+                    @foreach (var comment in Model.ImageComments.Take(10))
+                    {
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete image!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a  class="btn btn-primary" asp-controller="Images" asp-action="DeleteImage" asp-route-Id="@Model.Id">Save changes</a>
+                        <div class="alert alert-info" role="alert">
+
+                            <div style="padding-bottom:8px; color:black">
+                                <a style="word-wrap: break-word;">
+                                    @comment.UserOpinion
+                                </a>
+                            </div>
+
+                            <hr style="margin-bottom:2px; margin-top:1px">
+
+                            <div class="row" style=" color: black;">
+                                <div class="col-md-12">
+                                    <div style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
+                                        <div>
+                                            <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.PhotographyAddictedUser.Id"
+                                               data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
+                                                @comment.PhotographyAddictedUser.UserName
+                                            </a>
+                                            <a style="font-weight:bold ">- @commonService.CreationDate(comment.CreationDate)</a>
+                                            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                            {
+                                                <a style="float:right; padding:0px 3px; margin-top:0px; margin-bottom:0px; font-size:115%" class="btn btn-sm sButton" asp-controller="ImagesComments" asp-action="DeleteImageComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                <a style="float:right;">&nbsp</a>
+                                                <a style="float:right; padding:0px 3px; margin-top:0px; margin-bottom:0px; font-size:115%" class="btn btn-sm sButton" asp-controller="ImagesComments" asp-action="UpdateImageComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+                </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this image?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer" style="padding-top:20px;">
+                            <a class="btn btn-info" asp-controller="Images" asp-action="DeleteImage" asp-route-Id="@Model.Id">Yes</a>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    }
-    <a asp-action="Index">Back to List</a>
+    </div>
 </div>

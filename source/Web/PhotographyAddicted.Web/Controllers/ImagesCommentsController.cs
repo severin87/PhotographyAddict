@@ -10,6 +10,7 @@ using PhotographyAddicted.Services.Models.ImagesComments;
 
 namespace PhotographyAddicted.Web.Controllers
 {
+    [Authorize]
     public class ImagesCommentsController : BaseController
     {
         private readonly IImageCommentService imageCommentService;
@@ -45,7 +46,6 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewImage", "Images", new { id = imageId });
         }
 
-        [Authorize]
         public IActionResult DeleteImageComment(int Id)
         {
             var deletedImageComment = imageCommentService.FindImageCommentById(Id);
@@ -63,7 +63,6 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewImage", "Images", new { id = deletedImageComment.ImageId });
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> DeleteImageComment(DeleteImageCommentViewModel input)
         {
@@ -77,7 +76,6 @@ namespace PhotographyAddicted.Web.Controllers
             return this.RedirectToAction("PreviewImage", "Images", new { id = imageId });
         }
 
-        [Authorize]
         public IActionResult AddImageComment(int Id)
         {
             var imageComment = new AddImageCommentViewModel()
@@ -88,7 +86,6 @@ namespace PhotographyAddicted.Web.Controllers
             return View(imageComment);
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddImageComment(AddImageCommentViewModel input)
         {

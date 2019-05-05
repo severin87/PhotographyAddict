@@ -13,33 +13,6 @@
     ViewData["Title"] = "PreviewTheme";
 }
 
-@*<h1>
-    @Model.Title - @Model.PhotographyAddictedUser.UserName - @Model.ThemeCategory - @Model.CreationDate
-
-    @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-    {
-        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@Model.Id">Update </a>
-        <a class="btn btn-default btn-sm" asp-controller="Themes" asp-action="DeleteTheme" asp-route-id="@Model.Id">Delete</a>
-    }
-
-    @if (this.User.Identity.IsAuthenticated)
-    {
-        <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="AddThemeComment" asp-route-id="@Model.Id">Add coment! </a>
-    }
-</h1>
-<h3>@Model.UserName : @Model.AuthorOpinion</h3>
-
-@foreach (var comment in Model.ThemeComments)
-{
-    <li>
-        @comment.PhotographyAddictedUser.UserName : @comment.UserOpinion - @comment.CreationDate
-        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
-        {
-            <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id">Delete</a>
-            <a class="btn btn-default btn-sm" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id">Update</a>
-        }
-    </li>
-}*@
 <div class="row">
     <div class="col-md-6 offset-md-2">
         <div class="jumbotron " style="min-height: 1250px; padding-top:15px; background-color:azure">
@@ -75,37 +48,38 @@
                         <div class="row">
                             @foreach (var comment in Model.ThemeComments.Take(10))
                             {
-                                <div class="col-md-12">
-                                    <div class="alert alert-info" role="alert">
+                            <div class="col-md-12">
+                                <a style="color:#138496">Comments:</a>
+                                <div class="alert alert-info" role="alert">
 
-                                        <div style="padding-bottom:8px; color:black">
-                                            <a style="word-wrap: break-word;">
-                                                @comment.UserOpinion
-                                            </a>
-                                            @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                    <div style="padding-bottom:8px; color:black">
+                                        <a style="word-wrap: break-word;">
+                                            @comment.UserOpinion
+                                        </a>
+                                        @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
+                                        {
+                                            if (comment != Model.ThemeComments.FirstOrDefault())
                                             {
-                                                if (comment != Model.ThemeComments.FirstOrDefault())
-                                                {
-                                                    <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                                }
-                                                <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                                <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                             }
-                                        </div>
+                                            <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                        }
+                                    </div>
 
-                                        <hr style="margin-bottom:2px; margin-top:1px">
-                                        <div class="row" style=" color: black;">
-                                            <div class="col-md-6">
-                                                <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
-                                                 <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.PhotographyAddictedUser.Id"
-                                                    data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
+                                    <hr style="margin-bottom:2px; margin-top:1px">
+                                    <div class="row" style=" color: black;">
+                                        <div class="col-md-6">
+                                            <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
+                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.PhotographyAddictedUser.Id"
+                                                   data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
                                                     @comment.PhotographyAddictedUser.UserName
-                                                 </a>  
+                                                </a>
                                                 - @commonService.CreationDate(comment.CreationDate)
-                                                </p>
-                                            </div>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                             }
                         </div>
         </div>

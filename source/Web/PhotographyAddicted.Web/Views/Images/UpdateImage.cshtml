@@ -1,62 +1,129 @@
-﻿@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
+﻿
+@model PhotographyAddicted.Services.Models.Images.PreviewImageViewModel
+@using PhotographyAddicted.Services.DataServices
 @using PhotographyAddicted.Data.Models
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@inject ICommonService commonService
+@inject IImageService imageService
+@inject INewService  newService
 
 @{
     ViewData["Title"] = "UpdateImage";
 }
 
-<h2>EditPictureInfo</h2>
-
-<h4>ImagePreviewViewModel</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="UpdateImage">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (Model.Picture != null)
-            {
-                <div class="form-group">
-                    <div class="modal-body" id="modal-body" style="cursor: zoom-out; width: 722px; height: 635px;">
-                        <img class="img-responsive" style="max-height:100%; position: relative; top: 50%; transform: translateY(-50%);" src="data:image;base64,@System.Convert.ToBase64String(Model.Picture)">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <h3>Update image</h3>    
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture) "
+                             style="max-width: 480px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
+                        <hr class="my-4">
+                        <form asp-action="UpdateImage" method="POST" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="far fa-clipboard"></i></span>
+                                </div>
+                                <input asp-for="Title" type="text" class="form-control" placeholder="Title.." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Title" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="far fa-file-alt"></i></span>
+                                </div>
+                                <input asp-for="Description" type="text" placeholder="Write here image description.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Description" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-camera-retro"></i></span>
+                                </div>
+                                <input asp-for="Equipment" type="text" placeholder="Write here equipment.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Equipment" />
+                                <span asp-validation-for="Equipment" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1">    <i class="fas fa-cogs"></i></span>
+                                </div>
+                                <input asp-for="Settings" type="text" placeholder="Write here settings.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Settings" />
+                                <span asp-validation-for="Settings" class="text-danger"></span>
+                            </div>
+                            <div hidden class="form-group">
+                                <label asp-for="PhotographyAddictedUserId" class="control-label"></label>
+                                <input asp-for="PhotographyAddictedUserId" class="form-control" />
+                                <span asp-validation-for="PhotographyAddictedUserId" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="inputGroupSelect01" style="padding-right:9.75px; background-color:#17a2b8; color:white;"><i class="fas fa-tasks"></i></label>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect01" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Category" asp-for="ImageCategory" asp-items="Html.GetEnumSelectList<ImageCategory>()">
+                                    <option selected="">Select Category..</option>
+                                </select>
+                                <span asp-validation-for="ImageCategory" class="text-danger"></span>
+                            </div>
+                            <div style="margin-top:4px;">
+                                <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Save image">Publish</button>
+                                <a class="btn btn-info btn-sm" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate"  style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to profile">Cancel</a>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            }
+            </div>
+        </div>
+    </div>
 
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="col-md-3">
+        <div class="jumbotron " style="min-height: 930px; padding-top:10px; background-color:azure">
+            <div style="padding-top:12px">
+                @foreach (var comment in newService.PreviewNews(null).PreviewNews.OrderByDescending(x => x.CreationDate).Take(30).OrderBy(x => Guid.NewGuid()).Take(5))
+                {
+                    <div style="font-size:x-small;  padding-top:13px; padding-bottom:13px;">
+                        @commonService.CreationDate(comment.CreationDate)
+                        <svg height="1" width="218">
+                            <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(216, 216, 216);stroke-width:1" />
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
+                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
+                        </a>
+                        <div class="col-md-7">
+                            <a class="news-style-padding demo-1" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
+                            <br />
+                            <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                            <i class="far fa-comment-alt" style="font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        </div>
+                    </div>
+                }
             </div>
-            <div class="form-group">
-                <label asp-for="ImageCategory" class="control-label"></label>
-                <select asp-for="ImageCategory" asp-items="Html.GetEnumSelectList<ImageCategory>()">
-                    <option selected="selected" class="form-control" value="">Select Category</option>
-                </select>
-                <span asp-validation-for="ImageCategory" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Equipment" class="control-label"></label>
-                <input asp-for="Equipment" class="form-control" />
-                <span asp-validation-for="Equipment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Settings" class="control-label"></label>
-                <input asp-for="Settings" class="form-control" />
-                <span asp-validation-for="Settings" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
+<style>
+    label {
+        padding: 4px 8px;
+        background-color: #17a2b8;
+        display: table;
+        color: white;
+        border-radius: 3px;
+    }
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    input[type="file"] {
+        display: none;
+    }
+
+    label:hover {
+        background-color: #138496;
+    }
+</style>
 
