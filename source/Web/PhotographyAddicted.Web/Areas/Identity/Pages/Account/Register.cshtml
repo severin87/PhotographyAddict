@@ -1,45 +1,111 @@
 ﻿@page
 @model RegisterModel
+
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@inject IImageService imageService
+@inject ICommonService commonService
+
 @{
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
-
 <div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.UserName"></label>
-                <input asp-for="Input.UserName" class="form-control" />
-                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <h3>Create a new account</h3>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="POST" enctype="multipart/form-data">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input asp-for="Input.UserName" type="text" class="form-control" placeholder="User name.." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="User name" />
+                                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                </div>
+                                <input asp-for="Input.Email" type="text" placeholder="Email.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Email" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input asp-for="Input.Password" type="password" id="userPassword" placeholder="Password.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Password" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                </div>
+                                <input asp-for="Input.ConfirmPassword" type="password" id="confirmUserPassword" placeholder="Confirm password.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Confirm password" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div style=" font-size:90%; ">
+                                Show Password <input  type="checkbox" onclick="myFunction()">
+                            </div>
+                            <div style="margin-top:4px;">
+                                <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Save image">Register</button>
+                                <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Index" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to homepage">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+        </div>
     </div>
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
 </div>
-<br>
-<div>
-<a class="btn btn-default" asp-area="Identity" asp-page="/Account/Login" style="color: white; background-color:blue">Register with Facebook login.</a>
-</div>
+<style>
+    label {
+        padding: 4px 8px;
+        background-color: #17a2b8;
+        display: table;
+        color: white;
+        border-radius: 3px;
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+
+    label:hover {
+        background-color: #138496;
+    }
+</style>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("userPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+        var x = document.getElementById("confirmUserPassword");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>
+
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
