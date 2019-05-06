@@ -53,9 +53,10 @@
                                 <input asp-for="Input.ConfirmPassword" type="password" id="confirmUserPassword" placeholder="Confirm password.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Confirm password" />
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
-                            <div style=" font-size:90%; ">
-                                Show Password <input  type="checkbox" onclick="myFunction()">
+                            <div style="font-size:95%">
+                                <input type="checkbox" onclick="myFunction()"> Show Password?
                             </div>
+                            <br />
                             <div style="margin-top:4px;">
                                 <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Save image">Register</button>
                                 <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Index" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to homepage">Cancel</a>
@@ -70,23 +71,6 @@
         <partial name="PreviewNewsPartial" />
     </a>
 </div>
-<style>
-    label {
-        padding: 4px 8px;
-        background-color: #17a2b8;
-        display: table;
-        color: white;
-        border-radius: 3px;
-    }
-
-    input[type="file"] {
-        display: none;
-    }
-
-    label:hover {
-        background-color: #138496;
-    }
-</style>
 
 <script>
     function myFunction() {
