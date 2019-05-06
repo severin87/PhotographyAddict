@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-9" style="word-wrap: break-word; font-weight: bold;">
                     <a style="word-wrap: break-word; font-size: 140%;"> @Model.Title</a>
-                    <p style="padding-top:16px;"><img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 400px; height: 70%; width: auto;" /></p>
+                    <p style="padding-top:16px;"><img src="data:image;base64,@System.Convert.ToBase64String(Model.NewImage )" style="max-height: 300px; max-width: 400px;" /></p>
                     <a>
                         Comments: @Model.ComentsCount
                     </a>
@@ -50,7 +50,10 @@
             <hr class="my-4">
             <div class="row">
                 <div class="col-md-12">
-                    <a style="color:#138496">Comments:</a>
+                    @if (Model.NewComments.FirstOrDefault() != null)
+                    {
+                        <a style="color:#138496">Comments:</a>
+                    }
                     @foreach (var comment in Model.NewComments.Take(10))
                     {
                         <div class="alert alert-info" role="alert">

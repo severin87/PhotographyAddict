@@ -128,7 +128,10 @@
             <hr class="my-4">
             <div class="row">
                 <div class="col-md-12">
-                    <a style="color:#138496">Comments:</a>
+                    @if (Model.ImageComments.FirstOrDefault() != null)
+                    {
+                        <a style="color:#138496">Comments:</a>
+                    }
                     @foreach (var comment in Model.ImageComments.Take(10))
                     {
 

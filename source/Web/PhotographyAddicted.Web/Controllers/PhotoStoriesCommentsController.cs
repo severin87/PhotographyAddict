@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices.PhotoStoryCommentService;
+using PhotographyAddicted.Services.DataServices.PhotoStoryService;
 using PhotographyAddicted.Services.Models.PhotoStoryComments;
 
 namespace PhotographyAddicted.Web.Controllers
@@ -14,10 +15,12 @@ namespace PhotographyAddicted.Web.Controllers
     public class PhotoStoriesCommentsController : BaseController
     {
         private readonly IPhotoStoryCommentService photoStoryCommentService;
+        private readonly IPhotoStoryService photoStoryService;
 
-        public PhotoStoriesCommentsController(IPhotoStoryCommentService photoStoryCommentService)
+        public PhotoStoriesCommentsController(IPhotoStoryCommentService photoStoryCommentService, IPhotoStoryService photoStoryService)
         {
             this.photoStoryCommentService = photoStoryCommentService;
+            this.photoStoryService = photoStoryService;
         }
 
         [AllowAnonymous]
@@ -25,11 +28,23 @@ namespace PhotographyAddicted.Web.Controllers
         {
             var photoStoryComment = photoStoryCommentService.PreviewPhotoStoryCommentById(Id);
 
+            if (photoStoryComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             return View(photoStoryComment);
         }
                 
         public IActionResult AddPhotoStoryComment(int id)
         {
+            var isPhotoStoryExist = photoStoryService.FindPhotoStoryById(id);
+
+            if (isPhotoStoryExist == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             var photoStoryComment = new AddPhotoStoryCommentViewModel()
             {
                 PhotoStoryId = id,
@@ -84,6 +99,12 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult UpdatePhotoStoryComment(int id)
         {
+            var isPhotoStoryExist = photoStoryCommentService.PreviewPhotoStoryCommentById(id);
+
+            if (isPhotoStoryExist == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
 
             var photoStory = this.photoStoryCommentService.PreviewPhotoStoryCommentById(id);
 

@@ -59,7 +59,7 @@
                         <div class="alert alert-info" role="alert">                           
                             <div class="row">
                                 <a class="col-md-2" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
-                                    <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 93px; width: auto" />
+                                    <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 93px; max-width: 93px;" />
                                 </a>
                                 <div class="col-md-10">
                                     <div class="row">

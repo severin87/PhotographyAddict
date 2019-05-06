@@ -14,15 +14,24 @@ namespace PhotographyAddicted.Web.Controllers
     public class ThemesCommentsController : BaseController
     {
         private readonly IThemeCommentService themeCommentService;
+        private IThemeService themeService;
 
-        public ThemesCommentsController(IThemeCommentService themeCommentService)
+        public ThemesCommentsController(IThemeCommentService themeCommentService, IThemeService themeService)
         {
+            this.themeService = themeService;
             this.themeCommentService = themeCommentService;
         }
 
-        public IActionResult UpdateThemeComment(int id)
+        public IActionResult UpdateThemeComment(int Id)
         {
-            var updatedThemeComment = this.themeCommentService.ViewUpdateThemeById(id);
+            var updateThemeComment = themeCommentService.FindThemeCommentById(Id);
+
+            if (updateThemeComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            var updatedThemeComment = this.themeCommentService.ViewUpdateThemeById(Id);
 
             if ((updatedThemeComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator")))
             {
@@ -47,6 +56,13 @@ namespace PhotographyAddicted.Web.Controllers
         
         public IActionResult AddThemeComment(int Id)
         {
+            var isThemeExist = themeService.FindThemeBy(Id);
+
+            if (isThemeExist == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             var newThemeComment = new AddThemeCommentViewModel()
             {
                 ThemeId = Id,

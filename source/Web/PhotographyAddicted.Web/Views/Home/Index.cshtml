@@ -98,7 +98,7 @@
                 </div>
                 <div class="row">
                     <a class="col-md-5" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
-                        <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
+                        <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; max-width: 110px;" />
                     </a>
                     <div class="col-md-7">
                         <a class="news-style-padding demo-1" style=" font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title</a>

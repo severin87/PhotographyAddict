@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhotographyAddicted.Services.DataServices;
+using PhotographyAddicted.Services.DataServices.ImageService;
 using PhotographyAddicted.Services.Models.ImagesComments;
 
 namespace PhotographyAddicted.Web.Controllers
@@ -14,16 +15,23 @@ namespace PhotographyAddicted.Web.Controllers
     public class ImagesCommentsController : BaseController
     {
         private readonly IImageCommentService imageCommentService;
+        private readonly IImageService imageService;
 
-        public ImagesCommentsController(IImageCommentService imageCommentService)
+        public ImagesCommentsController(IImageCommentService imageCommentService, IImageService imageService)
         {
             this.imageCommentService = imageCommentService;
+            this.imageService = imageService;
         }
 
         public IActionResult UpdateImageComment(int id)
         {
 
             var updatedImageComment = this.imageCommentService.ViewUpdateImageById(id);
+
+            if (updatedImageComment == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
 
             if (updatedImageComment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
             {
@@ -78,6 +86,13 @@ namespace PhotographyAddicted.Web.Controllers
 
         public IActionResult AddImageComment(int Id)
         {
+            var image = imageService.PreviewImage(Id);
+
+            if (image == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             var imageComment = new AddImageCommentViewModel()
             {
                 ImageId = Id,

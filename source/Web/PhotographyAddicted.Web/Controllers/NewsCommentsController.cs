@@ -13,10 +13,12 @@ namespace PhotographyAddicted.Web.Controllers
     public class NewsCommentsController : BaseController
     {
         private INewCommentService newCommentService;
+        private INewService newService;
 
-        public NewsCommentsController(INewCommentService newCommentService)
+        public NewsCommentsController(INewCommentService newCommentService, INewService newService)
         {
             this.newCommentService = newCommentService;
+            this.newService = newService;
         }
 
         public IActionResult UpdateNewComment(int id)
@@ -53,6 +55,13 @@ namespace PhotographyAddicted.Web.Controllers
         [Authorize]
         public IActionResult AddNewComment(int Id)
         {
+            var isNewExist = this.newService.FindNewBy(Id);
+
+            if (isNewExist == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
             var newThemeComment = new AddNewCommentViewModel()
             {
                 NewId = Id,
