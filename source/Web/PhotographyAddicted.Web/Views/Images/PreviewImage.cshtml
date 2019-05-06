@@ -15,7 +15,7 @@
     <div class="col-md-8 offset-md-2">
         <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
             <img src="data:image;base64,@System.Convert.ToBase64String(Model.Picture) "
-                 style="max-width: 900px; max-height: 650px; display: block;  margin-left: auto; margin-right: auto; " />
+                 style="max-width: 900px; max-height: 650px; display: block;" />  @*margin-left: auto; margin-right: auto;*@
             <hr class="my-4">
             <h4>
                 @{
@@ -169,7 +169,7 @@
 
                     }
                 </div>
-                </div>
+            </div>
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

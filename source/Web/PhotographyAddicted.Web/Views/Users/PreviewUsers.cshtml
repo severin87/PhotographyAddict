@@ -1,7 +1,9 @@
 ﻿@model PhotographyAddicted.Services.Models.Users.PreviewUsersViewModel
 @using PhotographyAddicted.Services.DataServices
 @using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
 
+@inject ICommonService commonService
 @inject IImageService imageService
 @inject IUserService  userService
 
@@ -28,7 +30,7 @@
                             </div>
                         </form>
                     </div>
-                </div>                
+                </div>
             </div>
             @if (Model.PreviewUsers.FirstOrDefault() == null)
             {
@@ -42,107 +44,50 @@
             {
                 <hr class="my-4">
                 <div>
-                    @{
-                        var users = Model.PreviewUsers.OrderBy(x=>x.UserName).Take(16).ToList();
-                        for (int i = 0; i <  users.Count(); i += 4)
-                        {
-                            <div class="card-deck">
-                                <div class="card" style="width: 18rem; border-color:transparent;border:3px;">
-
-                                    @if (users[i].ProfilePicture != null)
-                                    {
-                                        <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i].ProfilePicture)" alt="Card image cap">
-                                    }
-                                    <div class="card-body" style="background-color:azure">
-                                        <p class="card-text">
-                                            <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i].Id">@users[i].UserName</a>
-                                            <a style="float:right">@users[i].AverageScore</a>
-                                        </p>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach (var comment in Model.PreviewUsers.OrderBy(x => x.UserName).Take(10))
+                            {
+                                <div class="alert alert-info" role="alert">
+                                    <div class="row">
+                                        @if (comment.ProfilePicture !=null)
+                                        { 
+                                        <a class="col-md-2" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.ProfilePicture )" style="max-height: 93px; max-width: 93px;" />
+                                        </a>
+                                        }
+                                        else
+                                        {
+                                        <a class="col-md-2" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">
+                                            <img src="~/images/noImage.png" style="max-height: 93px; max-width: 93px;" />
+                                        </a>      
+                                        }
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <a style=" float:left" data-toggle="tooltip" data-placement="bottom" title="Scores">
+                                                            <i class="fas fa-poll"></i>  @comment.AverageScore
+                                                        </a>
+                                                        <a data-toggle="tooltip" data-placement="bottom" title="Image count">
+                                                            &nbsp <i class="fas fa-images"></i>  @comment.ImageCount
+                                                        </a>
+                                                        <a style="font-size:x-small; float:right; ">
+                                                            Joined date: @commonService.CreationDate(comment.CreationDate)
+                                                        </a>
+                                                        <br />
+                                                        <div style="font-size:x-large;">
+                                                            @comment.UserName
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                @if (i + 1 < Model.PreviewUsers.Count())
-                                {
-                                    <div class="card" style="width: 18rem;">
-                                        @if (users[i + 1].ProfilePicture != null)
-                                        {
-                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 1].ProfilePicture)" alt="Card image cap">
-                                        }
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 1].Id">@users[i + 1].UserName</a>
-                                                <a style="float:right">@users[i + 1].AverageScore</a>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                }
-                                else
-                                {
-                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
-
-                                        <div class="card-body">
-                                            <p class="card-text">
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                @if (i + 2 < Model.PreviewUsers.Count())
-                                {
-                                    <div class="card" style="width: 18rem;">
-                                        @if (users[i + 2].ProfilePicture != null)
-                                        {
-                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 2].ProfilePicture)" alt="Card image cap">
-                                        }
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 2].Id">@users[i + 2].UserName</a>
-                                                <a style="float:right">@users[i + 2].AverageScore</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
-
-                                        <div class="card-body">
-                                            <p class="card-text">
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                @if (i + 3 < Model.PreviewUsers.Count())
-                                {
-                                    <div class="card" style="width: 18rem;">
-                                        @if (users[i + 3].ProfilePicture != null)
-                                        {
-                                            <img class="card-img-top" src="data:image;base64,@System.Convert.ToBase64String(users[i + 3].ProfilePicture)" alt="Card image cap">
-                                        }
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@users[i + 3].Id">@users[i + 3].UserName</a>
-                                                <a style="float:right">@users[i + 3].AverageScore</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="card" style="background-color:azure; border-color:azure; width: 18rem;">
-
-                                        <div class="card-body">
-                                            <p class="card-text">
-
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                            <br>
-                        }
-                    }
+                            }
+                        </div>
+                    </div>
                 </div>
             }
         </div>
