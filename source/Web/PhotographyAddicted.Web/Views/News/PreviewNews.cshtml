@@ -56,7 +56,7 @@
                     <div class="col-md-12">
                         @foreach (var comment in Model.PreviewNews.OrderByDescending(x => x.CreationDate).Take(10))
                         {
-                        <div class="alert alert-info" role="alert">                           
+                          <div class="alert alert-info" role="alert">                           
                             <div class="row">
                                 <a class="col-md-2" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">
                                     <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 93px; max-width: 93px;" />
@@ -76,11 +76,10 @@
                                             <div style="padding-top:5px">
                                                 <a class="demo-2">@comment.Title</a>
                                                 <a class="demo-3">@comment.TextContent</a>
-                                            </div>
-                                        
+                                            </div>                                        
                                 </div>
-                                </div>
-                        </div>
+                            </div>
+                          </div>
                          }
                     </div>
                 </div>

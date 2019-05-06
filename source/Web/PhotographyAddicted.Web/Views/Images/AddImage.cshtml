@@ -102,7 +102,7 @@
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="max-height: 110px; width: auto" />
                     </a>
                     <div class="col-md-7">
-                        <a class="news-style-padding demo-1" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
+                        <a class="news-style" style="word-wrap: break-word; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new"> @comment.Title</a>
                         <br />
                         <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
                         <i class="far fa-comment-alt" style="font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>

@@ -7,7 +7,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
-        <button class="btn btn-link navbar-btn navbar-link logPartUser navbar-right" asp-controller="Users" asp-action="PreviewUserPost" asp-route-id="@UserManager.GetUserId(User) " data-toggle="tooltip" data-placement="bottom" title="@UserManager.GetUserName(User)">Hello @UserManager.GetUserName(User)!</button>
+        <button class="btn btn-link navbar-btn navbar-link logPartUser navbar-right  d-inline-block text-truncate" asp-controller="Users" asp-action="PreviewUserPost" asp-route-id="@UserManager.GetUserId(User) " data-toggle="tooltip" data-placement="bottom" title="@UserManager.GetUserName(User)">Hello @UserManager.GetUserName(User)!</button>
         <button type="submit" class="btn btn-link navbar-btn navbar-link navbar-right logPartUser" data-toggle="tooltip" data-placement="bottom" title="Logout">Logout</button>
     </form>
 }
