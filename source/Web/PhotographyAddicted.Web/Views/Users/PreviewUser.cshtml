@@ -2,13 +2,52 @@
 @using Microsoft.AspNetCore.Http
 @using System.Security.Claims
 @using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+@using PhotographyAddicted.Services.DataServices.ImageService
+
+@inject IImageService imageService
+@inject IUserService  userService
 @inject ICommonService commonService
 
 @{
     ViewData["Title"] = "PreviewUser";
 }
 
-<h2>ViewUserProfile</h2>
+<div class="row">
+    <div class="col-md-2 offset-md-2">
+        <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
+            <h5 class="text-truncate">@Model.UserName</h5>
+            <hr />
+            <div>
+                @if (Model.ProfilePicture != null)
+                {
+                    @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    {
+                        <a asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Change profile picture">
+                            <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 193px; max-width: 155px;" />
+                        </a>
+                    }
+                    else
+                    {
+                         <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 193px; max-width: 155px;" data-toggle="tooltip" data-placement="bottom" title="Profile picture" />
+                    }
+                }
+                else
+                {
+                    <a asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-placement="bottom" title="Add profile picture" >
+                         <img src="~/images/userNoImage.png" style="max-height: 213px; max-width: 155px;" data-toggle="tooltip"/>
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
+            <h5 class=" text-truncate" style="">@Model.UserName</h5>
+            <hr />
+        </div>
+    </div>
+</div>
 
 @if (Model.Favourite.FavouriteImages.Count() > 0)
 {
@@ -20,173 +59,175 @@ else
 }
 
 
-    <hr />
-    <div class="row">
-        <div class="column">
-            <div>
-
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.UserName)
+<hr />
+<div class="row">
+    <div class="column">
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.SelfDescription)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.UserName)
-                    </dd>
-                    @*<dt>
-                            @Html.DisplayNameFor(model => model.SelfDescription)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.SelfDescription)
-                        </dd>
-                        <dt>
-                            @Html.DisplayNameFor(model => model.Technique)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Technique)
-                        </dd>*@
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ProfilePicture)
-                    </dt>
-                    <dd>
-                        @if (Model.ProfilePicture != null)
-                        {
-                            <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 130px; height: 70%; width: auto;" />
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => model.ProfilePicture)
-                        }
+                        @Html.DisplayFor(model => model.SelfDescription)
                     </dd>
                     <dt>
-                        @Html.DisplayNameFor(model => model.CreationDate)
+                        @Html.DisplayNameFor(model => model.Technique)
                     </dt>
                     <dd>
-                        @Html.DisplayFor(model => model.CreationDate)
-                    </dd>
-                    @*<dt>
-                            @Html.DisplayNameFor(model => model.Blocked)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.Blocked)
-                        </dd>*@
-                    <dt>
-                        @Html.DisplayNameFor(model => model.LastLogin)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.LastLogin)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ImageCount)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.ImageCount)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.AverageScore)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.AverageScore)
-                    </dd>
-                    @*<dt>
-                            @Html.DisplayNameFor(model => model.IsBanned)
-                        </dt>
-                        <dd>
-                            @Html.DisplayFor(model => model.IsBanned)
-                        </dd>*@
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Rang)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Rang)
-                    </dd>
-                    <dt>
-                        @Model.UserName -
-                    </dt>
-                    <dd>
-                        @if (Model.Images.Count() > 0)
-                        {
-                            <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
-                        }
-                        else
-                        {
-                            <h4 style="color:red">Nqma snimki</h4>
-                        }
-
-                        @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                        {
-                            <div>
-                                | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
-                            </div>
-                        }
-                    </dd>
-                </dl>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                <div>
-                    <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
-                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
-                    <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages</a> |
-                    <a asp-controller="Home" asp-action="Index">Back to Home</a>
-                </div>
-            }
-        </div>
-        <div class="columnRight">
-            <div>
-                @if (Model != null)
-                {
-                    foreach (var item in Model.Images.OrderByDescending(p => p.Scores).Take(8))
+                        @Html.DisplayFor(model => model.Technique)
+                    </dd>*@
+                <dt>
+                    @Html.DisplayNameFor(model => model.ProfilePicture)
+                </dt>
+                <dd>
+                    @if (Model.ProfilePicture != null)
                     {
-                        if (item.Picture != null)
-                        {
-                            <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                        }
+                        <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 130px; height: 70%; width: auto;" />
+                    }
+                    else
+                    {
+                        <img src="~/images/userNoImage.png" style="max-height: 93px; max-width: 93px;" />
+                    }
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.CreationDate)
+                </dd>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.Blocked)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Blocked)
+                    </dd>*@
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastLogin)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LastLogin)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.ImageCount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ImageCount)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.AverageScore)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AverageScore)
+                </dd>
+                @*<dt>
+                        @Html.DisplayNameFor(model => model.IsBanned)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.IsBanned)
+                    </dd>*@
+                <dt>
+                    @Html.DisplayNameFor(model => model.Rang)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Rang)
+                </dd>
+                <dt>
+                    @Model.UserName -
+                </dt>
+                <dd>
+                    @if (Model.Images.Count() > 0)
+                    {
+                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
+                    }
+                    else
+                    {
+                        <h4 style="color:red">Nqma snimki</h4>
+                    }
+
+                    @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                    {
+                        <div>
+                            | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
+                        </div>
+                    }
+                </dd>
+            </dl>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <div>
+                <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
+                <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages</a> |
+                <a asp-controller="Home" asp-action="Index">Back to Home</a>
+            </div>
+        }
+    </div>
+    <div class="columnRight">
+        <div>
+            @if (Model != null)
+            {
+                foreach (var item in Model.Images.OrderByDescending(p => p.Scores).Take(8))
+                {
+                    if (item.Picture != null)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
                     }
                 }
-            </div>
+            }
         </div>
     </div>
-    <br>
-    <hr />
-    <div>
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.SelfDescription)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.SelfDescription)
-            </dd>
-            <br>
-            <dt>
-                @Html.DisplayNameFor(model => model.Technique)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Technique)
-            </dd>
-        </dl>
-    </div>
-    @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
-    {
-        <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
-    }
+</div>
+<br>
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SelfDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SelfDescription)
+        </dd>
+        <br>
+        <dt>
+            @Html.DisplayNameFor(model => model.Technique)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Technique)
+        </dd>
+    </dl>
+</div>
 
-    @if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
-    (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+@if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
+{
+    <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
+}
+
+@if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
+(this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+{
+    if (!Model.IsBanned)
     {
-        if (!Model.IsBanned)
-        {
-            <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="false" asp-route-name="@Model.UserName">BanUser</a>
-        }
-        else
-        {
-            <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="true" asp-route-name="@Model.UserName">UnBanUser</a>
-        }
+        <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="false" asp-route-name="@Model.UserName">BanUser</a>
     }
+    else
+    {
+        <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="true" asp-route-name="@Model.UserName">UnBanUser</a>
+    }
+}
+
+

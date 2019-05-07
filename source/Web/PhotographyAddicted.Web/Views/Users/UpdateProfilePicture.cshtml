@@ -1,11 +1,51 @@
 ﻿@model PhotographyAddicted.Services.Models.Users.PreviewUserViewModel
 @using PhotographyAddicted.Data.Models
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@inject ICommonService commonService
+@inject INewService  newService
 
 @{
     ViewData["Title"] = "UpdateProfilePicture";
 }
 
-<h2>ChangeProfilePicture</h2>
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <h3>Profil picture</h3>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <form asp-action="UpdateProfilePicture" method="POST" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="custom-file ">
+                                <label style="margin-bottom:0px;" data-toggle="tooltip" data-placement="bottom" title="Upload image">
+                                    Upload  <i class="far fa-images"></i>
+                                    <input class="custom-file-input" type="file" id="File" asp-for="ProfilePicture">
+                                </label>
+                                <a style="font-size:x-small; font-weight: bold; margin-top:0px;">Image should be square and less than 256kb.</a>
+                            </div>
+                            <div style="margin-top:4px;">
+                                <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Save picture">Save</button>
+                                <a class="btn btn-info btn-sm" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to profile">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
+</div>
+
 
 <hr />
 <div class="row">
