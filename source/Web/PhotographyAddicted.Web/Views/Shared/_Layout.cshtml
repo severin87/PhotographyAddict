@@ -1,5 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using System.Security.Claims
+@using PhotographyAddicted.Services.DataServices.MessageService
+
+@inject IMessageService messageService
 
 <!DOCTYPE html>
 <html>
@@ -29,25 +32,21 @@
 
                 @if (this.User.Identity.IsAuthenticated)
                 {
-                    <a class="nav-style"  asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                        <i style="font-size:110%; padding-left:10px" class="far fa-envelope"></i>
-                        <span class="badge " style="background-color:red; font-size:55%;  position: relative; bottom: 9px; left: -10px; ">58</span>
-                    </a>
+                    @if (messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier)) > 0)
+                    {
+                        <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
+                            <i style="font-size:110%; padding-left:10px" class="far fa-envelope"></i>
+                            <span class="badge " style="background-color:red; font-size:55%; color:white; position: relative; bottom: 9px; left: -10px; ">@messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier))</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
+                            <i style="font-size:110%; padding-left:10px; " class="far fa-envelope"></i>
+                        </a>
+                    }
                 }
-                else
-                {
-                    <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                        <i style="font-size:110%; padding-left:10px; " class="far fa-envelope"></i>
-                    </a>
-                }
-                @*@if (this.User.Identity.IsAuthenticated)
-                {
-                    <a class="nav-style" style="border-radius:3px; background-color:red;margin:0px 0px; padding:0px 4px; margin-left:-7px" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                        <i style="font-size:110%; " class="far fa-envelope"></i>
-                        <span style="color:white; font-size:65%;  position: relative; bottom: 7px; left: 0px; ">8</span>
-                    </a>
-                }*@
-                
+
             </div>
             <div class="col-md-3" style="text-align:right;  padding-top: 3px;">
                 <partial name="_LoginPartial" />

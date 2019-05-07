@@ -60,7 +60,8 @@ namespace PhotographyAddicted.Services.DataServices
                 Images = u.Images,
                 Favourite = u.Favourite,
             }).FirstOrDefault();
-            
+            //var sev = userDbset.All().Where(i => i.Id == id).Select(c =>c.RecepientConversation && c.SenderConversation).
+            //    .RecepientConversation.Select(m => m.Messages).Where(x => x.Select(j => j.RecepientId == id))
                 return user;
         }
 

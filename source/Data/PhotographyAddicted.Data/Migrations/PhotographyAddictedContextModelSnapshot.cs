@@ -246,6 +246,8 @@ namespace PhotographyAddicted.Data.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
+                    b.Property<bool>("IsReaded");
+
                     b.Property<string>("PhotographyAddictedUserId");
 
                     b.Property<string>("RecepientId");
