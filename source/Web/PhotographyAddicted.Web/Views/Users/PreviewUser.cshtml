@@ -62,7 +62,7 @@
                 }
                 @if (Model.Images.Count() != 0 && Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {
-                    <a asp-controller="Images" asp-action="AddImage" style="font-weight:bold" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="bottom" title="Upload image">
+                    <a asp-controller="Images" asp-action="AddImage" style="font-weight:bold" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="bottom" title="Upload new image">
                         Upload  <i class="far fa-images"></i>
                     </a>
                 }
@@ -72,6 +72,20 @@
                 }
 
             </div>
+            @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {                
+            <div class="btn-group" style="margin-top:10px;">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span data-toggle="tooltip" style="padding-right:20px; padding-left:9px;" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword" data-toggle="tooltip" data-placement="bottom" title="Profile">Set password</a>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/PersonalData" data-toggle="tooltip" data-placement="bottom" title="Data">Personal data</a>
+                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="TwoFactorAuthentication">Authentication</a>
+                    <a class="dropdown-item" asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Change profile picture">Profile picture</a>
+                </div>
+            </div>
+            }
             <div style="margin-top:10px;">
                 @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {
@@ -81,13 +95,9 @@
             <div style="margin-top:5px;">
                 @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
                 {
-                    @*<div>
-                        <a style="font-weight:bold; padding:4px 21px; padding-right:31.8px" class="btn btn-success" role="button" data-toggle="tooltip" data-placement="top" title="Become moderator" asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">Moderator  <i class="fas fa-arrow-up"></i></a>
-                    </div>*@
-
                     if (!await commonService.IsUserModerator(Model.Id))
                     {
-                        <a style="font-weight:bold; padding:4px 21px; padding-right:79px" class="btn btn-success" role="button" data-toggle="modal" data-target="#becomeModerator" data-placement="bottom"  title="Become moderator" asp-controller="Common" asp-action="BecomeModerator" asp-route-userId="@Model.Id">User <i class="fas fa-arrow-up"></i></a>
+                        <a style="font-weight:bold; padding:4px 21px; padding-right:79px" class="btn btn-success" role="button" data-toggle="modal" data-target="#becomeModerator" data-placement="bottom" title="Become moderator" asp-controller="Common" asp-action="BecomeModerator" asp-route-userId="@Model.Id">User <i class="fas fa-arrow-up"></i></a>
                     }
                     else
                     {
@@ -97,7 +107,7 @@
             </div>
             <div style="margin-top:5px;">
                 @if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
-       (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+     (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
                 {
                     <div>
                         @if (!Model.IsBanned)
@@ -111,10 +121,6 @@
                     </div>
                 }
             </div>
-            @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-            {
-                <a class="user-buttons" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
-            }
         </div>
     </div>
     <div class="col-md-6">
@@ -158,31 +164,25 @@
 
                 <br />
             </div>
-            <div class="alert alert-info" role="alert">
-
-            </div>
+            @if (@Model.SelfDescription != null)
+            {
+                <a style="color:#0c5460">Self-description:</a>
+                <div class="alert alert-info" role="alert">
+                    <a style="word-wrap: break-word;">@Model.SelfDescription</a>
+                </div>
+            }
+            @if (@Model.Technique != null)
+            {
+                <a style="color:#0c5460">Equipment:</a>
+                <div class="alert alert-info" role="alert">
+                    <a style="word-wrap: break-word;">@Model.Technique</a>
+                </div>
+            }
         </div>
     </div>
 </div>
 <br>
 <hr />
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SelfDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.SelfDescription)
-        </dd>
-        <br>
-        <dt>
-            @Html.DisplayNameFor(model => model.Technique)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Technique)
-        </dd>
-    </dl>
-</div>
 
 <div class="modal fade" id="becomeModerator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
