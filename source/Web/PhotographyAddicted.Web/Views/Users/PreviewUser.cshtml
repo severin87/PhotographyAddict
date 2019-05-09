@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-2 offset-md-2">
         <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
-            <h5 class="text-truncate">@Model.UserName</h5>
+            <h5 class="text-truncate" style="color: #138496">@Model.UserName</h5>
             <hr />
             <div>
                 @if (Model.ProfilePicture != null)
@@ -24,159 +24,117 @@
                     @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                     {
                         <a asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Change profile picture">
-                            <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 193px; max-width: 155px;" />
+                            <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="border-radius:4px; max-height: 193px; max-width: 155px;" />
                         </a>
                     }
                     else
                     {
-                         <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 193px; max-width: 155px;" data-toggle="tooltip" data-placement="bottom" title="Profile picture" />
+                        <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style=" max-height: 193px; max-width: 155px;" data-toggle="tooltip" data-placement="bottom" title="Profile picture" />
                     }
                 }
                 else
                 {
-                    <a asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-placement="bottom" title="Add profile picture" >
-                         <img src="~/images/userNoImage.png" style="max-height: 213px; max-width: 155px;" data-toggle="tooltip"/>
+                    <a asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-placement="bottom" title="Add profile picture">
+                        <img src="~/images/userNoImage.png" style="max-height: 213px; max-width: 155px;" data-toggle="tooltip" />
                     </a>
                 }
+            </div>
+            <hr />
+
+            <div class="list-group">
+                <a class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb; color:#0c5460;font-size:90%"> @commonService.CreationDate(Model.CreationDate) <i class="fas fa-user"></i></a>
+                @if (Model.Images.Count() > 0)
+                {
+                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Favorite <i class="fas fa-heart"></i></a>
+                }
+                else
+                {
+                    <a class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb;">No favorite  <i class="far fa-heart"></i></a>
+                }
+                 <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Images <i class="fas fa-images"></i></a>
+            
+                @*@if (Model.Images.Count() > 0)
+                {
+                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Images <i class="far fa-images"></i>:99 @Model.ImageCount</a>
+                }
+                else
+                {
+                    <a  class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb;">Images @Model.ImageCount</a>
+                }*@
+            </div>
+            <br />
+            <div style="background-color:#bee5eb; border-color:black; border-width:1px; border-radius:4px;">
+                @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a role="button" data-toggle="tooltip" data-placement="top" title="Send messages" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send <i style="" class="far fa-envelope"></i></a>
+
+                    <hr />
+                }
+                @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a class="user-buttons" role="button" data-toggle="tooltip" data-placement="top" title="Messages" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages <i style="" class="far fa-envelope"></i></a>
+                    <br />
+                    <a class="user-buttons" asp-controller="Images" asp-action="AddImage" data-toggle="tooltip" data-placement="bottom" title="Upload image">
+                        Upload  <i class="far fa-images"></i>
+                    </a>
+                    <br />
+                    <a class="user-buttons" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
+                }
+                @*@if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <div>
+                <a class="btn btn-primary btn-sm  " role="button" data-toggle="tooltip" data-placement="top" title="Send messages" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send <i style="" class="far fa-envelope"></i></a>
+            </div>
+        }
+        @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+        {
+            <a class="btn btn-primary btn-sm" role="button" data-toggle="tooltip" data-placement="top" title="Messages" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages <i style="" class="far fa-envelope"></i></a>
+            <br />
+            <a class="btn btn-info btn-sm" asp-controller="Images" asp-action="AddImage" data-toggle="tooltip" data-placement="bottom" title="Upload image">
+                Upload  <i class="far fa-images"></i>
+            </a>
+            <br /><br />
+            <a class="btn btn-info btn-sm" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
+        }*@
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
-            <h5 class=" text-truncate" style="">@Model.UserName</h5>
+            <h5 class=" text-truncate" style="">
+                <a style="color: #138496;">Scores: @Model.AverageScore</a>
+                <a style="color: #138496; float:right;">Last login: @commonService.CreationDate(Model.LastLogin)</a>
+            </h5>
             <hr />
+
+            <div class="row">
+                @foreach (var item in Model.Images.OrderByDescending(x=>x.Scores).Take(9))
+                {
+                    <div class="col-md-4">
+                        <div class="imageBoxMainUser">
+                            <div class="row">
+                                <div class="col-md-10 offset-md-1 d-inline-block text-truncate" style="font-size:75%; color:#0c5460; text-align:center; padding: 0.5px 3px; padding-top:2px;">
+                                    @item.Title
+                                </div>
+                            </div>
+                            <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@item.Id " data-toggle="tooltip" data-placement="bottom" title="See the photo!">
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" class="imageCategoryMainUser" />
+                            </a>
+                        </div>
+                        <a style="padding-left:6px;"></a>
+                    </div>
+                }
+            </div>
+            <div class="alert alert-info" role="alert">
+
+            </div>
         </div>
     </div>
 </div>
 
-@if (Model.Favourite.FavouriteImages.Count() > 0)
-{
-    <a asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id">@Model.UserName</a>
-}
-else
-{
-    <h4 style="color:red">Nqma snimki v lubimi.</h4>
-}
-
-
 <hr />
 <div class="row">
-    <div class="column">
-        <div>
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.UserName)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.UserName)
-                </dd>
-                @*<dt>
-                        @Html.DisplayNameFor(model => model.SelfDescription)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.SelfDescription)
-                    </dd>
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Technique)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Technique)
-                    </dd>*@
-                <dt>
-                    @Html.DisplayNameFor(model => model.ProfilePicture)
-                </dt>
-                <dd>
-                    @if (Model.ProfilePicture != null)
-                    {
-                        <img src="data:image;base64, @System.Convert.ToBase64String(Model.ProfilePicture)" style="max-height: 130px; height: 70%; width: auto;" />
-                    }
-                    else
-                    {
-                        <img src="~/images/userNoImage.png" style="max-height: 93px; max-width: 93px;" />
-                    }
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreationDate)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.CreationDate)
-                </dd>
-                @*<dt>
-                        @Html.DisplayNameFor(model => model.Blocked)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Blocked)
-                    </dd>*@
-                <dt>
-                    @Html.DisplayNameFor(model => model.LastLogin)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.LastLogin)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.ImageCount)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ImageCount)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.AverageScore)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.AverageScore)
-                </dd>
-                @*<dt>
-                        @Html.DisplayNameFor(model => model.IsBanned)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.IsBanned)
-                    </dd>*@
-                <dt>
-                    @Html.DisplayNameFor(model => model.Rang)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Rang)
-                </dd>
-                <dt>
-                    @Model.UserName -
-                </dt>
-                <dd>
-                    @if (Model.Images.Count() > 0)
-                    {
-                        <a class="btn btn-default btn-sm" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id">Pictures </a>
-                    }
-                    else
-                    {
-                        <h4 style="color:red">Nqma snimki</h4>
-                    }
-
-                    @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                    {
-                        <div>
-                            | <a class="btn btn-default btn-sm" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send message. </a>
-                        </div>
-                    }
-                </dd>
-            </dl>
-        </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            <div>
-                <a asp-controller="Images" asp-action="AddImage">Add image !!!</a> |
-                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Settings</a> |
-                <a asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages</a> |
-                <a asp-controller="Home" asp-action="Index">Back to Home</a>
-            </div>
-        }
-    </div>
+  
     <div class="columnRight">
         <div>
             @if (Model != null)
