@@ -42,61 +42,79 @@
             <hr />
 
             <div class="list-group">
-                <a class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb; color:#0c5460;font-size:90%"> @commonService.CreationDate(Model.CreationDate) <i class="fas fa-user"></i></a>
+                <a class="list-group-item list-group-item-action list-group-item-info " data-toggle="tooltip" data-placement="top" title="Joined date" style="font-weight:bold; background-color:#bee5eb; color:#0c5460;font-size:90%"> @commonService.CreationDate(Model.CreationDate) <i class="fas fa-user"></i></a>
                 @if (Model.Images.Count() > 0)
                 {
-                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Favorite <i class="fas fa-heart"></i></a>
+                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="top" title="Favorite images">Favorite <i class="fas fa-heart"></i></a>
                 }
                 else
                 {
-                    <a class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb;">No favorite  <i class="far fa-heart"></i></a>
+                    <a class="list-group-item list-group-item-action list-group-item-info " style="font-weight:bold; background-color:#bee5eb; color:#0c5460;" data-toggle="tooltip" data-placement="top" title="No favorite images">No favorite  <i class="far fa-heart"></i></a>
                 }
-                 <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Images <i class="fas fa-images"></i></a>
-            
-                @*@if (Model.Images.Count() > 0)
-                {
-                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id" class="list-group-item list-group-item-action list-group-item-info">Images <i class="far fa-images"></i>:99 @Model.ImageCount</a>
-                }
-                else
-                {
-                    <a  class="list-group-item list-group-item-action list-group-item-info disabled" style="font-weight:bold; background-color:#bee5eb;">Images @Model.ImageCount</a>
-                }*@
-            </div>
-            <br />
-            <div style="background-color:#bee5eb; border-color:black; border-width:1px; border-radius:4px;">
-                @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-                {
-                    <a role="button" data-toggle="tooltip" data-placement="top" title="Send messages" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send <i style="" class="far fa-envelope"></i></a>
 
-                    <hr />
+                @if (Model.Images.Count() > 0)
+                {
+                    <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserImages" asp-route-id="@Model.Id" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="top" title="Images">Images <i class="fas fa-images"></i></a>
+                }
+                @if (Model.Images.Count() == 0 && Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a style="font-weight:bold" asp-controller="Images" asp-action="AddImage" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="top" title="Add image">No images <i class="fas fa-images"></i></a>
+                }
+                @if (Model.Images.Count() != 0 && Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a asp-controller="Images" asp-action="AddImage" style="font-weight:bold" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="bottom" title="Upload image">
+                        Upload  <i class="far fa-images"></i>
+                    </a>
                 }
                 @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
                 {
-                    <a class="user-buttons" role="button" data-toggle="tooltip" data-placement="top" title="Messages" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages <i style="" class="far fa-envelope"></i></a>
-                    <br />
-                    <a class="user-buttons" asp-controller="Images" asp-action="AddImage" data-toggle="tooltip" data-placement="bottom" title="Upload image">
-                        Upload  <i class="far fa-images"></i>
-                    </a>
-                    <br />
-                    <a class="user-buttons" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
+                    <a style="font-weight:bold" class="list-group-item list-group-item-action list-group-item-info" role="button" data-toggle="tooltip" data-placement="top" title="Messages" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages <i style="" class="far fa-envelope"></i></a>
                 }
-                @*@if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            <div>
-                <a class="btn btn-primary btn-sm  " role="button" data-toggle="tooltip" data-placement="top" title="Send messages" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send <i style="" class="far fa-envelope"></i></a>
+
             </div>
-        }
-        @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
-        {
-            <a class="btn btn-primary btn-sm" role="button" data-toggle="tooltip" data-placement="top" title="Messages" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@Model.Id">Messages <i style="" class="far fa-envelope"></i></a>
-            <br />
-            <a class="btn btn-info btn-sm" asp-controller="Images" asp-action="AddImage" data-toggle="tooltip" data-placement="bottom" title="Upload image">
-                Upload  <i class="far fa-images"></i>
-            </a>
-            <br /><br />
-            <a class="btn btn-info btn-sm" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
-        }*@
+            <div style="margin-top:10px;">
+                @if (Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <a style="font-weight:bold; padding:4px 21px; padding-right:73.5px" class="btn btn-primary" role="button" data-toggle="tooltip" data-placement="top" title="Send message" asp-controller="Messages" asp-action="AddMessage" asp-route-recepientId="@Model.Id">Send <i class="far fa-envelope"></i></a>
+                }
             </div>
+            <div style="margin-top:5px;">
+                @if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
+                {
+                    @*<div>
+                        <a style="font-weight:bold; padding:4px 21px; padding-right:31.8px" class="btn btn-success" role="button" data-toggle="tooltip" data-placement="top" title="Become moderator" asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">Moderator  <i class="fas fa-arrow-up"></i></a>
+                    </div>*@
+
+                    if (!await commonService.IsUserModerator(Model.Id))
+                    {
+                        <a style="font-weight:bold; padding:4px 21px; padding-right:79px" class="btn btn-success" role="button" data-toggle="modal" data-target="#becomeModerator" data-placement="bottom"  title="Become moderator" asp-controller="Common" asp-action="BecomeModerator" asp-route-userId="@Model.Id">User <i class="fas fa-arrow-up"></i></a>
+                    }
+                    else
+                    {
+                        <a style="font-weight:bold; padding:4px 21px; padding-right:31.8px" class="btn btn-success" role="button" data-toggle="modal" data-target="#becomeUser" data-placement="bottom" title="Stop moderator rights" asp-controller="Common" asp-action="StopModeratorRights" asp-route-userId="@Model.Id">Moderator <i class="fas fa-arrow-down"></i></a>
+                    }
+                }
+            </div>
+            <div style="margin-top:5px;">
+                @if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
+       (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
+                {
+                    <div>
+                        @if (!Model.IsBanned)
+                        {
+                            <a style="font-weight:bold; padding:4px 21px; padding-right:46px" class="btn  btn-md-4 btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Ban user" asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="false" asp-route-name="@Model.UserName">Ban user  <i class="fas fa-ban"></i></a>
+                        }
+                        else
+                        {
+                            <a style="font-weight:bold; padding:4px 21px; padding-right:24px" class="btn btn-danger" role="button" data-toggle="tooltip" data-placement="top" title="Unban user" asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="true" asp-route-name="@Model.UserName">Unban user   <i class="fas fa-ban"></i></a>
+                        }
+                    </div>
+                }
+            </div>
+            @if (Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                <a class="user-buttons" asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></a>
+            }
         </div>
     </div>
     <div class="col-md-6">
@@ -108,7 +126,7 @@
             <hr />
 
             <div class="row">
-                @foreach (var item in Model.Images.OrderByDescending(x=>x.Scores).Take(9))
+                @foreach (var item in Model.Images.OrderByDescending(x => x.Scores).Take(9))
                 {
                     <div class="col-md-4">
                         <div class="imageBoxMainUser">
@@ -124,29 +142,25 @@
                         <a style="padding-left:6px;"></a>
                     </div>
                 }
+                @if (Model.Images.Count() == 0 && Model.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <div class="col-md-3">
+                        <a style="font-weight:bold; font-size:90%;" asp-controller="Images" asp-action="AddImage" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="top" title="Add image">No images. <i class="fas fa-images"></i></a>
+                    </div>
+                }
+                @if (Model.Images.Count() == 0 && Model.Id != this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    <div class="col-md-4">
+                        <a class="list-group-item list-group-item-action list-group-item-info" style="font-weight:bold; font-size:85%; background-color:#bee5eb" data-toggle="tooltip" data-placement="top" title="No images"> The user has no photos. </a>
+                    </div>
+                }
+                <br />
+
+                <br />
             </div>
             <div class="alert alert-info" role="alert">
 
             </div>
-        </div>
-    </div>
-</div>
-
-<hr />
-<div class="row">
-  
-    <div class="columnRight">
-        <div>
-            @if (Model != null)
-            {
-                foreach (var item in Model.Images.OrderByDescending(p => p.Scores).Take(8))
-                {
-                    if (item.Picture != null)
-                    {
-                        <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" style="max-height: 130px; height: 70%; width: auto;" />
-                    }
-                }
-            }
         </div>
     </div>
 </div>
@@ -170,22 +184,39 @@
     </dl>
 </div>
 
-@if (this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id))
-{
-    <a asp-controller="Common" asp-action="ModerationRights" asp-route-userId="@Model.Id">ModerationRights | </a>
-}
+<div class="modal fade" id="becomeModerator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure @Model.UserName to become a moderator?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer" style="padding-top:20px;">
+                <a class="btn btn-info" asp-controller="Common" asp-action="BecomeModerator" asp-route-userId="@Model.Id">Yes</a>
+                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-@if ((this.User.IsInRole("Moderator") && !await commonService.IsUserModerator(Model.Id)) ||
-(this.User.IsInRole("Admin") && !await commonService.IsUserAdmin(Model.Id)))
-{
-    if (!Model.IsBanned)
-    {
-        <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="false" asp-route-name="@Model.UserName">BanUser</a>
-    }
-    else
-    {
-        <a asp-controller="Common" asp-action="BanUser" asp-route-userId="@Model.Id" asp-route-isBanned="true" asp-route-name="@Model.UserName">UnBanUser</a>
-    }
-}
+<div class="modal fade" id="becomeUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Are you sure @Model.UserName stop moderator rights?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer" style="padding-top:20px;">
+                <a class="btn btn-info" asp-controller="Common" asp-action="StopModeratorRights" asp-route-userId="@Model.Id">Yes</a>
+                <button type="button" class="btn btn-info" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
