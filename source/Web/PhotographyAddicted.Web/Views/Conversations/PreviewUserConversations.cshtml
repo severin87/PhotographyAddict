@@ -1,0 +1,166 @@
+﻿@model PhotographyAddicted.Services.Models.Conversations.PreviewConversationsViewModel
+@using PhotographyAddicted.Services.DataServices
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@inject IUserService userService
+@inject ICommonService commonService
+@inject IImageService imageService
+@inject IUserService  userService
+
+@{
+    ViewData["Title"] = "PreviewUserConversations";
+}
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-2">
+        <div class="jumbotron " style="min-height: 1200px; padding-top:15px; background-color:azure">
+            <br>
+            <h3>
+                <a style="color:#0c5460;">Conversations with: </a>
+            </h3>
+        <hr class="my-4">
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var conversation in Model.PreviewConversations.OrderByDescending(x => x.Messages.LastOrDefault().CreationDate))
+                    {
+                        var comment = userService.PreviewUser(conversation.RecepientPhotographyAddictedUser.Id);
+
+                        if (conversation.RecepientPhotographyAddictedUser.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                        {
+                            comment = userService.PreviewUser(conversation.SenderPhotographyAddictedUser.Id);
+                        }
+
+                        int unReaded = conversation.Messages.Where(u => u.RecepientId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) && u.IsReaded == false).Count();
+
+                        @if (unReaded == 0)
+                        {
+                            <div class="alert alert-info" role="alert">
+                                <div class="row">
+                                    @if (comment.ProfilePicture != null)
+                                    {
+                                        <a class="col-md-2" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user conversation">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.ProfilePicture )" style="max-height: 93px; max-width: 93px;" />
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="col-md-2" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user conversation">
+                                            <img src="~/images/userNoImage.png" style="max-height: 93px; max-width: 93px;" />
+                                        </a>
+                                    }
+
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <a style=" float:left" data-toggle="tooltip" data-placement="bottom" title="Scores">
+                                                        <i class="fas fa-poll"></i>  @comment.AverageScore
+
+                                                    </a>
+                                                    <a data-toggle="tooltip" data-placement="bottom" title="Image count">
+                                                        &nbsp
+                                                        <i class="fas fa-images"></i>  @comment.ImageCount
+
+                                                    </a>
+                                                    <a style="font-size:x-small; float:right; ">
+                                                        Joined date: @commonService.CreationDate(comment.CreationDate)
+                                                    </a>
+                                                    <div style="font-size:x-large;">
+                                                        <a class="user" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the conversation">
+                                                            @comment.UserName
+                                                        </a>
+                                                    </div>
+                                                    <a style="color:#0c5460; max-width: 514px;" class="d-inline-block text-truncate themes"> @conversation.Messages.LastOrDefault().Text</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-primary" role="alert">
+                                <div class="row">
+                                    @if (comment.ProfilePicture != null)
+                                    {
+                                        <a class="col-md-2" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the conversation">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(comment.ProfilePicture )" style="max-height: 93px; max-width: 93px;" />
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="col-md-2" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the conversation">
+                                            <img src="~/images/userNoImage.png" style="max-height: 93px; max-width: 93px;" />
+                                        </a>
+                                    }
+
+                                    <div class="col-md-10">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                    <a data-toggle="tooltip" data-placement="bottom" title="Unreaded">
+
+                                                        <i style=" font-size:115%; padding-right:0px;  position: relative; top: 1px; " class="far fa-envelope"></i>
+                                                        <span class="badge " style="background-color:red; font-size:55%; color:white; position: relative; bottom: 9px; left: -10px; ">@unReaded</span>
+                                                    </a>
+                                                    <a style="" data-toggle="tooltip" data-placement="bottom" title="Scores">
+                                                        <i class="fas fa-poll"></i>  @comment.AverageScore
+
+                                                    </a>
+                                                    <a data-toggle="tooltip" data-placement="bottom" title="Image count">
+                                                        &nbsp;
+                                                        <i class="fas fa-images"></i>  @comment.ImageCount
+                                                    </a>
+                                                    <a style="font-size:x-small; float:right; ">
+                                                        Joined date: @commonService.CreationDate(comment.CreationDate)
+                                                    </a>
+
+                                                    <div style="font-size:x-large;">
+                                                        <a class="user" asp-controller="Conversations" asp-action="PreviewConversation" asp-route-conversationId="@conversation.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the conversation">
+                                                            @comment.UserName
+                                                        </a>
+                                                    </div>
+                                                    <a style="color:#0c5460; max-width: 514px;" class="d-inline-block text-truncate themes"> @conversation.Messages.LastOrDefault().Text</a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-2">
+    <div class="jumbotron " style="min-height: 1200px;  padding-top:15px; background-color:azure">
+        <div style="padding-top:7px;">
+            @foreach (var comment in imageService.PreviewImages(null).PreviewImages.OrderByDescending(x => x.UploadedDate).Take(40).OrderBy(x => Guid.NewGuid()).Take(5))
+            {
+
+                <hr />
+                @if (comment.Picture != null)
+                {
+
+                    <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the photo">
+                        <img src="data:image;base64,@System.Convert.ToBase64String(comment.Picture)" style="padding-bottom:3px; padding-top:3px; max-width: 240px; width: 100%; max-height: 240px; height: 100%; " />
+                    </a>
+                }
+            }
+
+        </div>
+    </div>
+</div>
+	</div>

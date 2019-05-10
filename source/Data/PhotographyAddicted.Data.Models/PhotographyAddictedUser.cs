@@ -75,6 +75,13 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         public virtual ICollection<Message> Messages { get; set; }
 
+        //Frontend
+        //TODO: Da se opravi cveta na bukvite na vsqkude.
+        //TODO: da se naglasi razmera na butonite.
+        //TODO: Da se namesti navbara sus mesindjura.
+        //TODO: Navsqkude da opravq preview pictures.
+
+
         //TODO: Ostava problema s mnogo visokite snimki pri pokazvaneto im v maluk variant ot strani.
 
         //TODO: Nastroika dali sa syglasni s pravilata

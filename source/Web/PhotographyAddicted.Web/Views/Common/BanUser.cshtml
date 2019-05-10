@@ -1,0 +1,81 @@
+﻿@model PhotographyAddicted.Services.Models.Common.BanUserViewModel
+
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject IUserService userService
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
+
+@{
+    ViewData["Title"] = "BanUser";
+}
+
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                @if (!Model.IsBanned)
+                {
+                    <h3 style="word-wrap: break-word; color:#0c5460">Are you sure you want to ban user: <b>@Model.UserName</b></h3>
+                }
+                else
+                {
+                    <h3 style="word-wrap: break-word; color:#0c5460">Are you sure you want to unban user: <b>@Model.UserName</b></h3>
+                }
+                
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <form asp-action="BanUser">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div hidden class="form-group">
+                                <label asp-for="UserId" class="control-label"></label>
+                                <input asp-for="UserId" class="form-control" />
+                                <span asp-validation-for="UserId" class="text-danger"></span>
+                            </div>
+
+                            <div hidden class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="IsBanned" /> @Html.DisplayNameFor(model => model.IsBanned)
+                                    </label>
+                                </div>
+                            </div>
+                            @if (!Model.IsBanned)
+                            {
+                                <div class="input-group input-group-sm  mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text  aquaLabel" style="padding-right:11.25px; padding-left:10px;  " id="basic-addon1"><i class="fas fa-ban"></i></span>
+                                    </div>
+                                    <input asp-for="BanLengthDays" type="text" class="form-control" value="1" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Ban days" />
+                                    <span asp-validation-for="BanLengthDays" class="text-danger"></span>
+                                </div>
+                            }
+                            @if (!Model.IsBanned)
+                            {
+                                <button class="btn btn-danger btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Send">Ban</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-danger btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Send">Unban</button>
+                            }
+                            <a class="btn btn-info btn-sm" asp-controller="Users" asp-action="PreviewUser" asp-route-Id="@Model.UserId" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Back to the user profile">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
+</div>
+
+
+

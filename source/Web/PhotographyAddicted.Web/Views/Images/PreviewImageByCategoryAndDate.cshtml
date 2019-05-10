@@ -1,0 +1,83 @@
+﻿@model PhotographyAddicted.Services.Models.Images.PreviewImagesViewModel
+@using PhotographyAddicted.Data.Models
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "PreviewImageByCategoryAndDate";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div>
+                @if (Model.PreviewImages.Count() != 0)
+                {
+                    @if (Model.PreviewImages.FirstOrDefault().ImageCategory != 0)
+                    {
+                        <div class="row">
+                            <div class="col-md-7">
+                                <partial name="PreviewImagesSearchPartial" />
+                            </div>
+                            <div class="col-md-5">
+                                <h4 class="headText-style">
+                                    Recent images by category
+                                </h4>
+                            </div>
+                        </div>
+                    }
+                    <hr class="my-4">
+                    <div class="row">
+                        @*@for (int i = 0; i < 12; i++)
+                        {
+                            <div>
+                                @if (i % 2 == 1)
+                                {
+                                    <div class="imageBox">
+                                        <a>@Model.PreviewImages.ToList()[i].ImageCategory</a>
+                                        <br>
+                                        <a asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)Model.PreviewImages.ToList()[i].ImageCategory)" data-toggle="tooltip" data-placement="bottom" title="See the photos from @Model.PreviewImages.ToList()[i].ImageCategory category!">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.PreviewImages.ToList()[i].Picture)" class="imageCategory" />
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="imageBox">
+                                        <a>@Model.PreviewImages.ToList()[i].ImageCategory</a>
+                                        <a asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)Model.PreviewImages.ToList()[i].ImageCategory)" data-toggle="tooltip" data-placement="bottom" title="See the photos from @Model.PreviewImages.ToList()[i].ImageCategory category!">
+                                            <img src="data:image;base64,@System.Convert.ToBase64String(Model.PreviewImages.ToList()[i].Picture)" class="imageCategory" />
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        }*@
+                        @foreach (var item in Model.PreviewImages)
+                            {
+                        <div class="imageBox">
+                            <a >
+                                @item.ImageCategory
+                            </a>
+                            <a asp-controller="Images" asp-action="PreviewCategoryImages" asp-route-id="@((int)item.ImageCategory)" data-toggle="tooltip" data-placement="bottom" title="See the photos from @item.ImageCategory category!">
+                                <img src="data:image;base64,@System.Convert.ToBase64String(item.Picture)" class="imageCategory" />
+                            </a>
+                        </div>
+                            }
+                    </div>
+                }
+                else
+                {
+                    <partial name="PreviewImagesSearchPartial" />
+                    <hr class="my-4">
+                    <div>
+                        <div class="alert alert-info" role="alert">
+                            There is no image <a style="color:red">"@Model.Input"</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

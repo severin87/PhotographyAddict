@@ -1,0 +1,61 @@
+﻿@model PhotographyAddicted.Services.Models.Messages.AddMessageViewModel
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject IUserService userService
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
+
+@{
+    ViewData["Title"] = "AddMessage";
+}
+
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <h3>
+                    <a style="word-wrap: break-word;">
+                        Send a message to @userService.PreviewUser(Model.RecepientId).UserName
+                    </a>
+                </h3>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <form asp-action="AddMessage">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="input-group input-group-sm  mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text  aquaLabel" style="padding-right:11.25px; padding-left:10px;  " id="basic-addon1"><i class="far fa-clipboard"></i></span>
+                                </div>
+                                <input asp-for="Text" type="text" class="form-control" placeholder="Message.." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Message" />
+                                <span asp-validation-for="Text" class="text-danger"></span>
+                            </div>
+                            <div hidden class="form-group">
+                                <label asp-for="RecepientId" class="control-label"></label>
+                                <input asp-for="RecepientId" class="form-control" />
+                                <span asp-validation-for="RecepientId" class="text-danger"></span>
+                            </div>
+                            <div hidden class="form-group">
+                                <label asp-for="PhotographyAddictedUserId" class="control-label"></label>
+                                <input asp-for="PhotographyAddictedUserId" class="form-control" />
+                                <span asp-validation-for="PhotographyAddictedUserId" class="text-danger"></span>
+                            </div>
+                            <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Send">Send</button>
+                            <a class="btn btn-info btn-sm" asp-controller="Users" asp-action="PreviewUser" asp-route-Id="@Model.RecepientId" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Back to the user profile">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
+</div>
+

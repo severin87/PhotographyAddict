@@ -1,0 +1,22 @@
+﻿@model string
+@using PhotographyAddicted.Services.DataServices.CommonService
+@inject ICommonService commonService
+
+@{
+    ViewData["Title"] = "ModerationRights";
+}
+
+<h2>BecomeModerator</h2>
+<h1>Do you want to make this contribution a moderator!</h1>
+
+@if (this.User.IsInRole("Admin"))
+{
+    if (!await commonService.IsUserModerator(Model))
+    {
+        <a asp-controller="Common" asp-action="BecomeModerator" asp-route-userId="@Model">BecomeModerator.</a>
+    }
+    else
+    {
+        <a asp-controller="Common" asp-action="StopModeratorRights" asp-route-userId="@Model">BecomeUser</a>
+    }
+}
