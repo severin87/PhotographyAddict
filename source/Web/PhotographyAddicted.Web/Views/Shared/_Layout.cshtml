@@ -20,8 +20,8 @@
     <div class="container-fluid">
         <div class="row" style="background-color:#0c5460; min-height:40px">
             <div class="col-md-5 offset-md-2 ">
-                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 10px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Home page">
-                    <img src="~/images/Asa3.png" />
+                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 30px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Home page">
+                    <img src="~/images/logoTransperant_1.svg" style="padding-left:7.5px; max-height:41px; max-width:62px;"/>
                 </a>
                 <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Go to the forum">Форум</a>
                 <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Go to the authors">Authors</a>
@@ -35,14 +35,14 @@
                     @if (messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier)) > 0)
                     {
                         <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                            <i style="font-size:110%; padding-left:30px" class="far fa-envelope"></i>
+                            <i style="font-size:110%; padding-left:25px" class="far fa-envelope"></i>
                             <span class="badge " style="background-color:red; font-size:55%; color:white; position: relative; bottom: 9px; left: -10px; ">@messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier))</span>
                         </a>
                     }
                     else
                     {
                         <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                            <i style="font-size:110%; padding-left:30px; " class="far fa-envelope"></i>
+                            <i style="font-size:110%; padding-left:25px; " class="far fa-envelope"></i>
                         </a>
                     }
                 }

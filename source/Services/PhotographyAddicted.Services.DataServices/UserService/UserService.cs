@@ -59,6 +59,8 @@ namespace PhotographyAddicted.Services.DataServices
                 IsBanned = u.IsBanned,
                 Images = u.Images,
                 Favourite = u.Favourite,
+                SenderConversation = u.SenderConversation,
+                RecepientConversation = u.RecepientConversation,
             }).FirstOrDefault();
             //var sev = userDbset.All().Where(i => i.Id == id).Select(c =>c.RecepientConversation && c.SenderConversation).
             //    .RecepientConversation.Select(m => m.Messages).Where(x => x.Select(j => j.RecepientId == id))
@@ -82,8 +84,8 @@ namespace PhotographyAddicted.Services.DataServices
         //        ImageCount = u.Images.Count(),
         //        LastLogin = u.LastLogin,
         //        ProfilePicture = u.ProfilePicture,
-        //        Rang = u.Rang,
         //        UserName = u.UserName,                
+        //        Rang = u.Rang,
         //    });
 
         //    return userInfos;

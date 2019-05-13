@@ -207,20 +207,21 @@
     width: 202px;
     height: 180px;
     font-weight: bold;
-    background-color: #b4e8f0;
-    /*border: 3px solid #17a2b8;*/
+    background-color: #bee5eb;
+    border: 1px solid #96c1c8;
     border-radius: 3px;
 }
 
-    .imageBoxMain:hover {
-        /*  color: #138496;
-        border-radius: 3px*/
-        background-color: #abdde5;
-    }
-
+.imageBoxMainUser:hover {
+    /*  color: #138496;
+        border-radius: 3px;
+        */
+    background-color: #abdde5;
+}
+    
 .imageCategoryMain {
-    max-width: 190px;
-    max-height: 148px;
+    max-width: 182px;
+    max-height: 142px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -284,7 +285,7 @@ user-buttons:hover {
 }
 
 .imageCategoryMainUser {
-    max-width: 184px;
+    max-width: 182px;
     max-height: 142px;
     display: block;
     margin-left: auto;

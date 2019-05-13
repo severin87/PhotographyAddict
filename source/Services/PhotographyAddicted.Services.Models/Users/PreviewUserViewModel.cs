@@ -7,6 +7,12 @@ namespace PhotographyAddicted.Services.Models.Users
 {
     public class PreviewUserViewModel
     {
+        public PreviewUserViewModel()
+        {
+            SenderConversation = new HashSet<Conversation>();
+            RecepientConversation = new HashSet<Conversation>();
+        }
+
         public string Id { get; set; }
 
         public string UserName { get; set; }
@@ -37,5 +43,9 @@ namespace PhotographyAddicted.Services.Models.Users
         public virtual Favourite Favourite { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
+
+        public virtual ICollection<Conversation> SenderConversation { get; set; }
+
+        public virtual ICollection<Conversation> RecepientConversation { get; set; }
     }
 }
