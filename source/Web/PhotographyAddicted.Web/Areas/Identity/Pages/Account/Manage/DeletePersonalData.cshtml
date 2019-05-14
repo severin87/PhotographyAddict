@@ -1,11 +1,9 @@
-﻿@page
+﻿@*@page
 @model DeletePersonalDataModel
 @{
     ViewData["Title"] = "Delete Personal Data";
     ViewData["ActivePage"] = ManageNavPages.DeletePersonalData;
 }
-
-<h4>@ViewData["Title"]</h4>
 
 <div class="alert alert-warning" role="alert">
     <p>
@@ -19,16 +17,69 @@
         <div asp-validation-summary="All" class="text-danger"></div>
         @if (Model.RequirePassword)
         {
-        <div class="form-group">
-            <label asp-for="Input.Password"></label>
-            <input asp-for="Input.Password" class="form-control" />
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
-        </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
         }
         <button class="btn btn-danger" type="submit">Delete data and close my account</button>
     </form>
+</div>*@
+
+@page
+@model DeletePersonalDataModel
+
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
+
+@{
+    ViewData["Title"] = "Delete Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.DeletePersonalData;
+}
+
+<div class="row">
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <div class="alert alert-warning" role="alert">
+                    <p>
+                        <span class="glyphicon glyphicon-warning-sign"></span>
+                        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+                    </p>
+                </div>
+                <hr class="my-4">
+                <form id="delete-user" method="post" class="form-group">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    @if (Model.RequirePassword)
+                    {
+                        <div class="input-group input-group-sm  mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text  aquaLabel" id="basic-addon1"><i style="padding-left:1.75px; padding-right:1.75px; " class="fas fa-unlock-alt"></i></span>
+                            </div>
+                            <input asp-for="Input.Password" class="form-control" placeholder="Password .." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Password" />
+                        </div>
+
+                        @*<div class="form-group">
+                            <input asp-for="Input.Password" class="form-control" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>*@
+                    }
+                    <button class="btn btn-danger" type="submit" data-toggle="tooltip" data-placement="bottom" title="Delete and close the account">Delete data and close my account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
 </div>
 
-@section Scripts {
-<partial name="_ValidationScriptsPartial" />
-}

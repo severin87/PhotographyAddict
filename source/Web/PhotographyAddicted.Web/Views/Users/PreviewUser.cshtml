@@ -106,7 +106,7 @@
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/index" data-toggle="tooltip" data-placement="bottom" title="Profile information">Profile info</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword" data-toggle="tooltip" data-placement="bottom" title="Set password">Set password</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/PersonalData" data-toggle="tooltip" data-placement="bottom" title="Data">Personal data</a>
-                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="Two factor authentication">Authentication</a>
+                        @*<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="Two factor authentication">Authentication</a>*@
                         <a class="dropdown-item" asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Change profile picture">Profile picture</a>
                     </div>
                 </div>

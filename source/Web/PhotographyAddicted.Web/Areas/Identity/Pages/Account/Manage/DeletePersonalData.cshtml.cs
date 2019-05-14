@@ -78,9 +78,15 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            
+
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword)
             {
+                if (Input.Password == null)
+                {
+                    return Page();
+                }
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
                     ModelState.AddModelError(string.Empty, "Password not correct.");

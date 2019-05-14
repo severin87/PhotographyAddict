@@ -1,27 +1,43 @@
 ﻿@page
 @model PersonalDataModel
+
+@using PhotographyAddicted.Services.DataServices.ImageService
+@using PhotographyAddicted.Services.DataServices.CommonService
+@using PhotographyAddicted.Services.DataServices
+
+@inject INewService  newService
+@inject ICommonService commonService
+@inject IImageService imageService
+
+
 @{
     ViewData["Title"] = "Personal Data";
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h4>@ViewData["Title"]</h4>
-
 <div class="row">
-    <div class="col-md-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
-        <form asp-page="DownloadPersonalData" method="post" class="form-group">
-            <button class="btn btn-default" type="submit">Download</button>
-        </form>
-        <p>
-            <a asp-page="DeletePersonalData" class="btn btn-default">Delete</a>
-        </p>
+    <div class="col-md-5 offset-md-2">
+        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+            <br>
+            <div class="alert alert-info" role="alert">
+                <br>
+                <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+                <p>
+                    <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+                </p>
+                <hr class="my-4">
+                <form asp-page="DownloadPersonalData" method="post" class="form-group">
+                    <button class="btn btn-info" type="submit" data-toggle="tooltip" data-placement="bottom" title="Download user's info">Download</button>
+                </form>
+                <p>
+                    <a asp-page="DeletePersonalData" class="btn btn-danger" style="padding-right:10px; "  data-toggle="tooltip" data-placement="bottom" title="Delete profile">Delete &nbsp;<i class="fas fa-user-times"></i></a>
+                </p>
+            </div>
+        </div>
     </div>
+
+    <a>
+        <partial name="PreviewNewsPartial" />
+    </a>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
