@@ -103,10 +103,10 @@
                         <span data-toggle="tooltip" style="padding-right:20px; padding-left:9px;" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></span>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/index" data-toggle="tooltip" data-placement="bottom" title="Profile">Profile</a>
-                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword" data-toggle="tooltip" data-placement="bottom" title="Profile">Set password</a>
+                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/index" data-toggle="tooltip" data-placement="bottom" title="Profile information">Profile info</a>
+                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword" data-toggle="tooltip" data-placement="bottom" title="Set password">Set password</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/PersonalData" data-toggle="tooltip" data-placement="bottom" title="Data">Personal data</a>
-                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="TwoFactorAuthentication">Authentication</a>
+                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="Two factor authentication">Authentication</a>
                         <a class="dropdown-item" asp-controller="Users" asp-action="UpdateProfilePicture" asp-route-id="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Change profile picture">Profile picture</a>
                     </div>
                 </div>
@@ -206,7 +206,6 @@
     </div>
 </div>
 <br>
-<hr />
 
 <div class="modal fade" id="becomeModerator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

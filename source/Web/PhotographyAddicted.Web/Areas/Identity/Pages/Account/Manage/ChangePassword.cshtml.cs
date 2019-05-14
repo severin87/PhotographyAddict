@@ -1,13 +1,15 @@
 ﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PhotographyAddicted.Web.Areas.Identity.Data;
+using System.Security.Claims;
+
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
@@ -95,7 +97,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account.Manage
             _logger.LogInformation("User changed their password successfully.");
             StatusMessage = "Your password has been changed.";
 
-            return RedirectToPage();
+            //return RedirectToPage();
+            return RedirectToAction("PreviewUser", "Users", new { Id = _userManager.GetUserId(User) });
         }
     }
 }
