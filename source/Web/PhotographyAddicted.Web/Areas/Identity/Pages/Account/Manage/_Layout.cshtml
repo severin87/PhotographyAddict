@@ -1,22 +1,98 @@
-﻿@{ 
-    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
-}
+﻿@*@{
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
 
-<h2>Manage your account</h2>
+    <h2>Manage your account</h2>
 
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+    <div>
+        <h4>Change your account settings</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
         </div>
     </div>
-</div>
+
+    @section Scripts {
+        @RenderSection("Scripts", required: false)
+    }*@
+
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@using PhotographyAddicted.Services.DataServices.MessageService
+
+@inject IMessageService messageService
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link href="~/css/navBar.css" rel="stylesheet" asp-append-version="true" />
+    <title>@ViewData["Title"] - PhotographyAddicted.Web</title>
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" asp-append-version="true">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="background-color:#0c5460; min-height:40px">
+            <div class="col-md-5 offset-md-2 ">
+                <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 30px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Home page">
+                    <img src="~/images/logoTransperant_1.svg" style="padding-left:7.5px; max-height:41px; max-width:62px;" />
+                </a>
+                <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Go to the forum">Форум</a>
+                <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Go to the authors">Authors</a>
+                <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews" data-toggle="tooltip" data-placement="bottom" title="Go to the news">News</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate" data-toggle="tooltip" data-placement="bottom" title="Go to the recent photos">Photos</a>
+                <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory" data-toggle="tooltip" data-placement="bottom" title="Go to the top photos for the last 30 days">Top photos</a>
+                @*<a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories" data-toggle="tooltip" data-placement="bottom" title="Go to the stories">Stories</a>*@
+
+                @if (this.User.Identity.IsAuthenticated)
+                {
+                    @if (messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier)) > 0)
+                    {
+                        <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
+                            <i style="font-size:110%; padding-left:25px" class="far fa-envelope"></i>
+                            <span class="badge " style="background-color:red; font-size:55%; color:white; position: relative; bottom: 9px; left: -10px; ">@messageService.Unreaded(this.User.FindFirstValue(ClaimTypes.NameIdentifier))</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
+                            <i style="font-size:110%; padding-left:25px; " class="far fa-envelope"></i>
+                        </a>
+                    }
+                }
+
+            </div>
+            <div class="col-md-3" style="text-align:right;  padding-top: 3px;">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+        <partial name="_CookieConsentPartial" />
+        <div class="container-fluid">
+            @RenderBody()
+            <div class="col-md-8 offset-md-2">
+                <hr />
+                <footer>
+                    <p>&copy; 2019 - PhotographyAddicted.Web</p>
+                </footer>
+            </div>
+        </div>
+        @RenderSection("Scripts", required: false)
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </div>
+</body>
+</html>
 
 @section Scripts {
-    @RenderSection("Scripts", required: false)
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -81,14 +81,14 @@
                         }
                         else
                         {
-                            <a class="nav-style" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
-                                <i style="font-size:110%; padding-left:25px; " class="far fa-envelope"></i>
+                            <a style="font-weight:bold; padding-right:0px;" class="list-group-item list-group-item-action list-group-item-info" asp-controller="Conversations" asp-action="PreviewUserConversations" asp-route-userId="@this.User.FindFirstValue(ClaimTypes.NameIdentifier)" data-toggle="tooltip" data-placement="bottom" title="Messages">
+                                Messages <i style="font-size:110%; " class="far fa-envelope"></i>
                             </a>
                         }
                     }
                     else
                     {
-                        <a style="font-weight:bold; padding-right:0px; background-color:#bee5eb; color:#0c5460;" class="list-group-item list-group-item-action list-group-item-info " data-toggle="tooltip" data-placement="bottom" title="No messages">
+                        <a style="font-weight:bold; padding-right:0px; background-color:#bee5eb; color:#0c5460;" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="bottom" title="No messages">
                             Messages <i style="font-size:110%; " class="far fa-envelope"></i>
                             <span class="badge " style="background-color:red; font-size:55%; color:white; position: relative; bottom: 9px; left: -10px; ">0</span>
                         </a>
@@ -103,6 +103,7 @@
                         <span data-toggle="tooltip" style="padding-right:20px; padding-left:9px;" data-placement="bottom" title="Settings">Settings  <i class="fas fa-cogs"></i></span>
                     </button>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/index" data-toggle="tooltip" data-placement="bottom" title="Profile">Profile</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/SetPassword" data-toggle="tooltip" data-placement="bottom" title="Profile">Set password</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/PersonalData" data-toggle="tooltip" data-placement="bottom" title="Data">Personal data</a>
                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/TwoFactorAuthentication" data-toggle="tooltip" data-placement="bottom" title="TwoFactorAuthentication">Authentication</a>
