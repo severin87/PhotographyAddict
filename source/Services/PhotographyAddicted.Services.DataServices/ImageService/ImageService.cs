@@ -376,9 +376,9 @@ namespace PhotographyAddicted.Services.DataServices.ImageService
 
             if (favourite == null)
             {
-                Favourite sev = new Favourite() { PhotographyAddictedUserId = userId };
+                Favourite favoriteImage = new Favourite() { PhotographyAddictedUserId = userId };
 
-                await favouriteDbSet.AddAsync(sev);
+                await favouriteDbSet.AddAsync(favoriteImage);
                 await favouriteDbSet.SaveChangesAsync();
             }
         }

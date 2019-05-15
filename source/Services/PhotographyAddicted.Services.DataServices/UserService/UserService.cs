@@ -62,8 +62,6 @@ namespace PhotographyAddicted.Services.DataServices
                 SenderConversation = u.SenderConversation,
                 RecepientConversation = u.RecepientConversation,
             }).FirstOrDefault();
-            //var sev = userDbset.All().Where(i => i.Id == id).Select(c =>c.RecepientConversation && c.SenderConversation).
-            //    .RecepientConversation.Select(m => m.Messages).Where(x => x.Select(j => j.RecepientId == id))
                 return user;
         }
 
@@ -93,6 +91,10 @@ namespace PhotographyAddicted.Services.DataServices
         
         public int UserScores(string id)
         {
+            if (userDbset.All().Where(i => i.Id == id).Count() == 0)
+            {
+                return 0;
+            }
             int userImagesCount = userDbset.All()
                    .Where(i => i.Id == id).FirstOrDefault().Images.Count();
             var userScores = 0;

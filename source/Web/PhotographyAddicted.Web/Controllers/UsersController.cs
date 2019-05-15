@@ -36,13 +36,17 @@ namespace PhotographyAddicted.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> PreviewUser(string Id)
         {
+            var user = userService.PreviewUser(Id);
             if (await commonService.IsUserBanned(this.User.Identity.Name))
             {
                 return Redirect("../../Identity/Account/Login");
             }
 
-            var user = userService.PreviewUser(Id);
-
+            if (user == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+           
             return View(user);
         }
         

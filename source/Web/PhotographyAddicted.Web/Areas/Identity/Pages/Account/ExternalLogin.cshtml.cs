@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using PhotographyAddicted.Services.DataServices.ImageService;
 using PhotographyAddicted.Web.Areas.Identity.Data;
 
 namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
@@ -16,6 +17,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
+        private readonly IImageService imageService;
         private readonly SignInManager<PhotographyAddictedUser> _signInManager;
         private readonly UserManager<PhotographyAddictedUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
@@ -23,11 +25,13 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
         public ExternalLoginModel(
             SignInManager<PhotographyAddictedUser> signInManager,
             UserManager<PhotographyAddictedUser> userManager,
-            ILogger<ExternalLoginModel> logger)
+            ILogger<ExternalLoginModel> logger,
+            IImageService imageService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            this.imageService = imageService;
         }
 
         [BindProperty]
@@ -132,6 +136,8 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                        await imageService.AddFavorite(user.Id);
                         return LocalRedirect(returnUrl);
                     }
                 }
@@ -139,10 +145,12 @@ namespace PhotographyAddicted.Web.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
 
+            }
+           
             LoginProvider = info.LoginProvider;
             ReturnUrl = returnUrl;
+
             return Page();
         }
     }

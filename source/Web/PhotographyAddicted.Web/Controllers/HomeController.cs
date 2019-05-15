@@ -37,12 +37,14 @@ namespace PhotographyAddicted.Web.Controllers
 
                 await this.roleManager.CreateAsync(new IdentityRole("Admin"));
 
+                await this.roleManager.CreateAsync(new IdentityRole("Moderator"));
                 var userInfo = await userManager.GetUserAsync(this.User);
 
-                
+
                 await userManager.AddToRoleAsync(userInfo, "Admin");
-                await  userManager.IsInRoleAsync(userInfo, "Moderator");
-                return Json(userInfo.PasswordHash);
+               //await  userManager.IsInRoleAsync(userInfo, "Moderator");
+                return this.RedirectToAction("Index", "Home");
+                //  return Json(userInfo.PasswordHash);
             }
             else
             {
@@ -73,7 +75,7 @@ namespace PhotographyAddicted.Web.Controllers
             {
                 return Redirect("../Identity/Account/Login");
             }
-           
+
             return View();
         }
 

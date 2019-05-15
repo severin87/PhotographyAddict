@@ -24,33 +24,27 @@
                 <div class="row">
                     <div class="col-md-12 ">
                         <form asp-action="AddTheme">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="input-group input-group-sm  mb-3">
                                 <div class="input-group-prepend">
-                                    @*<span class="input-group-text  aquaLabel" id="basic-addon1" style="padding-right:43px;">Title</span>*@
                                     <span class="input-group-text  aquaLabel" style="padding-right:11.25px; padding-left:10px;  " id="basic-addon1"><i class="far fa-clipboard"></i></span>
                                 </div>
                                 <input asp-for="Title" type="text" class="form-control" placeholder="Title.." aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Title" />
-                                <span asp-validation-for="Title" class="text-danger"></span>
-                            </div>
+                               </div>
                             <div class="input-group input-group-sm  mb-3">
                                 <div class="input-group-prepend">
-                                    @*<label class="input-group-text" for="inputGroupSelect01" style="padding-right:13px; background-color:#17a2b8; color:white;">Category</label>*@
                                     <label class="input-group-text" for="inputGroupSelect01" style="padding-right:9.75px; background-color:#17a2b8; color:white;"><i class="fas fa-tasks"></i></label>
                                 </div>
                                 <select class="custom-select" id="inputGroupSelect01" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Category" asp-for="ThemeCategory" asp-items="Html.GetEnumSelectList<ThemeCategory>()">
                                     <option selected="">Select Category..</option>
                                 </select>
-                                <span asp-validation-for="ThemeCategory" class="text-danger"></span>
                             </div>
                             <div class="input-group input-group-sm  mb-3">
                                 <div class="input-group-prepend">
-                                    @*<span class="input-group-text  aquaLabel" id="basic-addon1">Comment</span>*@
                                     <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="far fa-comments"></i></span>
                                 </div>
                                 <input asp-for="AuthorOpinion" type="text" placeholder="Write here first theme comment.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="FIrst comment" />
-                                <span asp-validation-for="AuthorOpinion" class="text-danger"></span>
-                            </div>
+                               </div>
                             <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Save theme">Publish</button>
                             <a class="btn btn-info btn-sm" asp-controller="Themes" asp-action="PreviewThemes" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to themes">Cancel</a>
                         </form>

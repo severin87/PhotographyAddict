@@ -16,17 +16,20 @@
 <div class="row">
     <div class="col-md-5 offset-md-2">
         <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
-            <div style="padding-top: 5px;">
-                <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
-                    <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
-                         style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />               
-                </a>
-            </div>
-            <div style="padding-top: 5px;">
-                <a class="zle">Author:&nbsp</a><a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">  @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
-                <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">     @imageService.PreviewImageOfTheDay().Title</a>
-                <a class="zle" style="float:right">Title:&nbsp</a>
-            </div>
+            @if (imageService.PreviewImageOfTheDay() != null)
+            {
+                <div style="padding-top: 5px;">
+                    <a asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">
+                        <img src="data:image;base64,@System.Convert.ToBase64String(imageService.PreviewImageOfTheDay().Picture) "
+                             style="max-width: 525px; max-height: 350px; display: block;  margin-left: auto; margin-right: auto; " />
+                    </a>
+                </div>
+                <div style="padding-top: 5px;">
+                    <a class="zle">Author:&nbsp</a><a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">  @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
+                    <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">     @imageService.PreviewImageOfTheDay().Title</a>
+                    <a class="zle" style="float:right">Title:&nbsp</a>
+                </div>
+            }
             <hr class="my-4">
             <div class="row">
                 @foreach (var theme in themeService.PreviewThemes(null).PreviewThemes.OrderByDescending(x => x.ThemeComments.LastOrDefault().CreationDate).Take(4))
@@ -34,7 +37,7 @@
                     <div class="col-md-12">
                         <div class="alert alert-info" role="alert">
                             <div>
-                                <a class="d-inline-block text-truncate themes"  asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">
+                                <a class="d-inline-block text-truncate themes" asp-controller="Themes" asp-action="PreviewTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the theme">
 
                                     @if ((int)theme.ThemeCategory == 0)
                                     {

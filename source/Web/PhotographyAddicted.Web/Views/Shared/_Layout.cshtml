@@ -21,14 +21,16 @@
         <div class="row" style="background-color:#0c5460; min-height:40px">
             <div class="col-md-5 offset-md-2 ">
                 <a href="https://localhost:44385/" style="text-decoration: unset; padding-right: 30px; padding-left: 2px;" data-toggle="tooltip" data-placement="bottom" title="Home page">
-                    <img src="~/images/logoTransperant_1.svg" style="padding-left:7.5px; max-height:41px; max-width:62px;"/>
+                    <img src="~/images/logoTransperant_1.svg" style="padding-left:7.5px; max-height:41px; max-width:62px;" />
                 </a>
                 <a class="nav-style" asp-area="" asp-controller="Themes" asp-action="PreviewThemes" data-toggle="tooltip" data-placement="bottom" title="Go to the forum">Форум</a>
                 <a class="nav-style" asp-area="" asp-controller="Users" asp-action="PreviewUsers" data-toggle="tooltip" data-placement="bottom" title="Go to the authors">Authors</a>
                 <a class="nav-style" asp-area="" asp-controller="News" asp-action="PreviewNews" data-toggle="tooltip" data-placement="bottom" title="Go to the news">News</a>
                 <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewImageByCategoryAndDate" data-toggle="tooltip" data-placement="bottom" title="Go to the recent photos">Photos</a>
                 <a class="nav-style" asp-area="" asp-controller="Images" asp-action="PreviewTopImagesLasтThirtyDaysByCategory" data-toggle="tooltip" data-placement="bottom" title="Go to the top photos for the last 30 days">Top photos</a>
+
                 @*<a class="nav-style" asp-area="" asp-controller="PhotoStories" asp-action="PreviewPhotoStories" data-toggle="tooltip" data-placement="bottom" title="Go to the stories">Stories</a>*@
+                @*<a class="nav-style" asp-area="" asp-controller="Home" asp-action="Idtu" data-toggle="tooltip" data-placement="bottom" title="Go to the forum">Ha</a>*@
 
                 @if (this.User.Identity.IsAuthenticated)
                 {
