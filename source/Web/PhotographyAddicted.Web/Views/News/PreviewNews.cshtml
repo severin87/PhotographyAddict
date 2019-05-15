@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    @if (this.User.Identity.IsAuthenticated)
+                    @if (this.User.IsInRole("Moderator"))
                     {
                         <p style="float:right">
                             <a class="btn btn-sm  btn-info " href="~/News/AddNew" role="button" data-toggle="tooltip" data-placement="top" title="Add new">

@@ -48,6 +48,9 @@
                 </div>
             </div>
             <hr class="my-4">
+            <div style="word-wrap: break-word;">
+                @Model.TextContent
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     @if (Model.NewComments.FirstOrDefault() != null)
