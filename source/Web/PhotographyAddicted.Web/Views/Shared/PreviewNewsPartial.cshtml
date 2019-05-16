@@ -23,8 +23,8 @@
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="height: 110px; max-width: 110px;" />
                     </a>
                     <div class="col-md-7">
-                        <a class="news-style-padding demo-1" style=" font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title</a>
-                        <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                        <a class="news-style-padding demo-1" style="color:#0c5460; font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title @comment.TextContent</a>
+                        <a style="color:#0c5460; font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
                         <i class="far fa-comment-alt" style=" font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
                     </div>
                 </div>

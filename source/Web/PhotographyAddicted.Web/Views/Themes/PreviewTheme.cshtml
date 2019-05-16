@@ -19,17 +19,20 @@
             <br>
             <div class="row">
                 <div class="col-md-9" style="word-wrap: break-word; font-weight: bold;">
-                    @Model.Title 
-                    <p >
-                        <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@Model.PhotographyAddictedUser.Id"
-                           data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
-                            <span style="font-size:90%; float:left; padding-top:5px">Author: @Model.UserName   </span>
-                        </a>
+                    <a style="color:#0c5460;">@Model.Title</a> 
+                    <p>
+                        <span style="font-size:90%;">
+                            <a style="float:left; color:#0c5460; padding-top:6px;">Author: </a>
+                            <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@Model.PhotographyAddictedUser.Id"
+                               data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
+                                <span style=" float:left; padding-top:6px;">&nbsp; @Model.UserName   </span>
+                            </a>
+                        </span>
                         @if (Model.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                         {
-                            <a style="float:left; padding-left:12px;" > - </a>
-                            <a style="float:left" class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
-                            <a style="float:left" class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
+                            <a style="float:left; padding-left:10px;">&nbsp;</a>
+                            <a style="float:left; color:#0c5460;" class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i></a>
+                            <a style="float:left; color:#0c5460;" class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@Model.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"> </i> </a>
                         }
                     </p>
                 </div>
@@ -53,23 +56,23 @@
                                     <div class="alert alert-info" role="alert">
 
                                         <div style="padding-bottom:8px; color:black">
-                                            <a style="word-wrap: break-word;">
+                                            <a style="color:#0c5460; word-wrap: break-word;">
                                                 @comment.UserOpinion
                                             </a>
                                             @if (comment.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                                             {
                                                 if (comment != Model.ThemeComments.FirstOrDefault())
                                                 {
-                                                    <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                    <a class="btn btn-sm sButton" style="color:#0c5460;" asp-controller="ThemesComments" asp-action="DeleteThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                 }
-                                                <a class="btn btn-sm sButton" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                                <a class="btn btn-sm sButton" style="color:#0c5460;" asp-controller="ThemesComments" asp-action="UpdateThemeComment" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
                                             }
                                         </div>
 
                                         <hr style="margin-bottom:2px; margin-top:1px">
                                         <div class="row" style=" color: black;">
                                             <div class="col-md-6">
-                                                <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px">
+                                                <p style=" font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px; color:#0c5460; ">
                                                     <a class="nav-styleLittle" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@comment.PhotographyAddictedUser.Id"
                                                        data-toggle="tooltip" data-placement="bottom" title="Go to user profile">
                                                         @comment.PhotographyAddictedUser.UserName

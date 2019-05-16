@@ -31,6 +31,16 @@
                         </form>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <p style="float:right">
+                            <a asp-controller="Users" asp-action="PreviewUsers" asp-route-input="TopAuthors" class="btn btn-sm  btn-info " role="button" data-toggle="tooltip" data-placement="top" title="Add new theme">
+                                Top authors
+                            </a>
+                        </p>
+                    }
+                </div>
             </div>
             @if (Model.PreviewUsers.FirstOrDefault() == null)
             {
@@ -46,7 +56,7 @@
                 <div>
                     <div class="row">
                         <div class="col-md-12">
-                            @foreach (var comment in Model.PreviewUsers.OrderBy(x => x.UserName).Take(10))
+                            @foreach (var comment in Model.PreviewUsers.Take(10))
                             {
                                 <div class="alert alert-info" role="alert">
                                     <div class="row">

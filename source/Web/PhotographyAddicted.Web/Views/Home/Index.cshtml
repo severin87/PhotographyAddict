@@ -25,9 +25,9 @@
                     </a>
                 </div>
                 <div style="padding-top: 5px;">
-                    <a class="zle">Author:&nbsp</a><a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">  @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
+                    <a class="zle" style="color:#0c5460;">Author:&nbsp</a><a class="news-style" style="float:left; font-weight: bold;" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile">  @imageService.PreviewImageOfTheDay().PhotographyAddictedUser.UserName</a>
                     <a class="news-style" style="float:right; font-weight: bold;" asp-controller="Images" asp-action="PreviewImage" asp-route-id="@imageService.PreviewImageOfTheDay().Id" data-toggle="tooltip" data-placement="bottom" title="See the photo of the day!">     @imageService.PreviewImageOfTheDay().Title</a>
-                    <a class="zle" style="float:right">Title:&nbsp</a>
+                    <a class="zle" style="color:#0c5460; float:right;">Title:&nbsp</a>
                 </div>
             }
             <hr class="my-4">
@@ -64,27 +64,27 @@
                                 </a>
                                 @if (theme.PhotographyAddictedUserId == this.User.FindFirstValue(ClaimTypes.NameIdentifier) || this.User.IsInRole("Moderator"))
                                 {
-                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash-alt"></i></a>
-                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-wrench"></i> </a>
+                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="DeleteTheme" asp-route-Id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Delete"><i style="color:#0c5460;" class="fas fa-trash-alt"></i></a>
+                                    <a class="btn btn-sm sButton" asp-controller="Themes" asp-action="UpdateTheme" asp-route-id="@theme.Id" data-toggle="tooltip" data-placement="bottom" title="Update"><i style="color:#0c5460;" class="fas fa-wrench"></i> </a>
                                 }
                             </div>
 
                             <hr style="margin-bottom:2px; margin-top:1px">
                             <div class="row" style=" color: black;">
                                 <div class="col-md-6">
-                                    <p style="  font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px"><a class="nav-styleLittle" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id">@theme.PhotographyAddictedUser.UserName</a> - @commonService.CreationDate(theme.CreationDate)</p>
+                                    <p style="color:#0c5460; font-size:x-small; font-weight: bold; margin-bottom:2px; margin-top:2px"><a class="nav-styleLittle" data-toggle="tooltip" data-placement="bottom" title="Go to the user profile" asp-controller="Users" asp-action="PreviewUser" asp-route-id="@imageService.PreviewImageOfTheDay().PhotographyAddictedUser.Id">@theme.PhotographyAddictedUser.UserName</a> - @commonService.CreationDate(theme.CreationDate)</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p style=" font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
+                                    <p style="color:#0c5460;  font-size:x-small; font-weight: bold; float:right; margin-bottom:2px; margin-top:2px">Comments: @theme.ThemeComments.Count()</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
             </div>
-            <p style="margin-top:4px">
-                <hr class="my-4">
-            </p>
+            <div style="margin-top:69px">
+                <hr>
+            </div>
         </div>
     </div>
     <div class="col-md-3">
@@ -105,9 +105,9 @@
                         <img src="data:image;base64,@System.Convert.ToBase64String(comment.NewImage )" style="height: 110px; max-width: 110px;" />
                     </a>
                     <div class="col-md-7">
-                        <a class="news-style-padding demo-1" style=" font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title</a>
-                        <a style="font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
-                        <i class="far fa-comment-alt" style=" font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
+                        <a class="news-style-padding demo-1" style=" font-size: 85%; font-weight: bold;" asp-controller="News" asp-action="PreviewNew" asp-route-id="@comment.Id" data-toggle="tooltip" data-placement="bottom" title="Go to the new">@comment.Title <span> <br /></span> @comment.TextContent</a>
+                        <a style="color: #0c5460; font-size: 70%; font-weight: bold; font: bold Georgia;">@comment.ComentsCount</a>
+                        <i class="far fa-comment-alt" style="color: #0c5460; font-size: 90%;" data-toggle="tooltip" data-placement="bottom" title="New comments"></i>
                     </div>
                 </div>
             }

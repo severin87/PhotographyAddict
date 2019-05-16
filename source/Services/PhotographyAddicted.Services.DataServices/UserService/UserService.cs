@@ -136,10 +136,35 @@ namespace PhotographyAddicted.Services.DataServices
                     IsBanned = u.IsBanned,
                     Images = u.Images,
                     Favourite = u.Favourite,
-                });
+                }).OrderBy(x => x.UserName);
             }
             else
             {
+                if (input == "TopAuthors")
+                {
+                    users.PreviewUsers = userDbset.All().Select(u =>
+                 new PreviewUserViewModel
+                 {
+                     Id = u.Id,
+                     UserName = u.UserName,
+                     ProfilePicture = u.ProfilePicture,
+                     Technique = u.Technique,
+                     SelfDescription = u.SelfDescription,
+                     ImageCount = u.Images.Count(),
+                     Rang = u.Rang,
+                     AverageScore = u.AverageScore,
+                     CreationDate = u.CreationDate,
+                     LastLogin = u.LastLogin,
+                     BanLengthDays = u.BanLengthDays,
+                     BannedDate = u.BannedDate,
+                     IsBanned = u.IsBanned,
+                     Images = u.Images,
+                     Favourite = u.Favourite,
+                 }).OrderByDescending(u => u.AverageScore).ToList();
+
+                    return users;
+                }
+
                 users.PreviewUsers = userDbset.All().Where(n => n.UserName.Contains(input)).Select(u =>
                 new PreviewUserViewModel
                 {
@@ -158,8 +183,8 @@ namespace PhotographyAddicted.Services.DataServices
                     IsBanned = u.IsBanned,
                     Images = u.Images,
                     Favourite = u.Favourite,                    
-                });
-                users.input = input;
+                }).OrderBy(x => x.UserName);
+                users.input = input;                
             }
 
             return users;

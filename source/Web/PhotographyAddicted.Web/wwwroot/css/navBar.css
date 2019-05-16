@@ -14,7 +14,7 @@
     }
 
 .news-style {
-    color: black;
+    color: #0c5460;
     padding-bottom: 15px;
     font: bold Georgia;
     text-decoration: unset;
@@ -27,7 +27,7 @@
     }
 
 .login-style {
-    color: #138496;
+    color: #0c5460;
     font-size: 91%;
     padding-top: 12px;
     font: Georgia;
@@ -41,7 +41,7 @@
 
 
 .headText-style {
-    color: #138496;
+    color: #0c5460;
 }
 
 .badgeImage {
@@ -55,7 +55,7 @@
     }*/
 
 .news-style-padding {
-    color: black;
+    color: #0c5460;
     font: bold Georgia;
     text-decoration: unset;
     font-size: 90%;
@@ -67,12 +67,10 @@
     }
 
 .zle {
-    color: black;
-    font: bold Georgia;
+    font: bold Georgia #0c5460;
     font-size: 90%;
     float: left;
     font-weight: bold;
-    color: black;
     text-decoration: unset;
 }
     
@@ -113,8 +111,8 @@
     font-weight: bold;
     margin-bottom: 1px;
     margin-top: 2px;
-    color: black;
-    max-width: 410px;
+    color: #0c5460;
+    max-width: 530px;
 }
 
     .themes:hover {
@@ -124,7 +122,7 @@
 
 
 .nav-styleLittle {
-    color: black;
+    color:#0c5460;
 }
 
     .nav-styleLittle:hover {
