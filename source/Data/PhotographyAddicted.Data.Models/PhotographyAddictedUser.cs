@@ -86,6 +86,7 @@ namespace PhotographyAddicted.Web.Areas.Identity.Data
 
         //TODO: Nastroika dali sa syglasni s pravilata
 
+        //TODO: Vseki den bazata da si pravi backUp 
         //TODO: Pokazvane na maluk variant na snimka kogato se uploadva.
         //TODO: UpdateComments na vsichki mesta sa izlishni.
         //TODO: Da sloja snimka na usarite bez profilni snimki.

@@ -129,22 +129,26 @@ namespace PhotographyAddicted.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddImage(AddImageViewModel input, IFormFile Picture)
         {
-            if (ModelState.IsValid)
-            {
-                input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var imageId = await imageService.AddImage(input, Picture);
-                if (imageId == 0)
-                {
-                    ModelState.AddModelError(string.Empty, "Picture is bigger than 256kb");
-                    return this.View(input);
-                }
-
-                return RedirectToAction("PreviewUser", "Users", new { Id = input.PhotographyAddictedUserId });
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 return this.View(input);
             }
+
+            if (Picture == null)
+            {
+                ModelState.AddModelError(string.Empty, "Picture is required");
+                return this.View(input);
+            }
+
+            input.PhotographyAddictedUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var imageId = await imageService.AddImage(input, Picture);
+            if (imageId == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Picture is bigger than 256kb");
+                return this.View(input);
+            }
+
+            return RedirectToAction("PreviewUser", "Users", new { Id = input.PhotographyAddictedUserId });
         }
 
         [AllowAnonymous]

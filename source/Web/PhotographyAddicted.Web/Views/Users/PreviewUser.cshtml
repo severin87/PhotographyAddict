@@ -45,7 +45,7 @@
 
             <div class="list-group" style="padding:0px 0px;">
                 <a class="list-group-item list-group-item-action list-group-item-info " data-toggle="tooltip" data-placement="top" title="Joined date" style="font-weight:bold; background-color:#bee5eb; color:#0c5460;font-size:90%"> @commonService.CreationDate(Model.CreationDate) <i class="fas fa-user"></i></a>
-                @if (Model.Images.Count() > 0)
+                @if (Model.Favourite.FavouriteImages.Count() > 0)
                 {
                     <a style="font-weight:bold" asp-controller="Images" asp-action="PreviewUserFavoriteImages" asp-route-userId="@Model.Id" class="list-group-item list-group-item-action list-group-item-info" data-toggle="tooltip" data-placement="top" title="Favorite images">Favorite <i class="fas fa-heart"></i></a>
                 }
