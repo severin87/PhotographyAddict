@@ -86,7 +86,7 @@ namespace PhotographyAddicted.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTheme(AddThemeViewModel input) 
         {
-            if (input.Title == null)
+            if (input.Title== null)
             {
                 return this.RedirectToAction("Index", "Home");
             }
