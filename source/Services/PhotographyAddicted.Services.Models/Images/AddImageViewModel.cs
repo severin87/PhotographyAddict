@@ -9,8 +9,7 @@ using System.Text;
 namespace PhotographyAddicted.Services.Models.Images
 {
     public class AddImageViewModel
-    {
-
+    {        
         public byte[] Picture { get; set; }
 
         [Required]
