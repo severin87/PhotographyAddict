@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>aspnet-PhotographyAddicted.Web-96B2D322-FC07-475D-A01F-AB0617CEB4F4</UserSecretsId>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
