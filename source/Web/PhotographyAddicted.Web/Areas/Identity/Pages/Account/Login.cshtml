@@ -13,91 +13,111 @@
     ViewData["Title"] = "Log in";
 }
 
-
-<div class="row">
-    <div class="col-md-5 offset-md-2">
-        <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
-            <br>
-            <div class="alert alert-info" role="alert">
-                <div class="row">
-                    <div class="col-md-6 " style="margin-top:1px;">
-                      <a style="font-size:170%;">Log in</a>   
-                    </div>
-                    <div class="col-md-6 ">
-                        @if ((Model.ExternalLogins?.Count ?? 0) > 0)
-                        {
-                            <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary btn-sm" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account" style="margin-top:8px; float:right;">@provider.DisplayName</button>
-                                }
-                            </form>
-                        }
+@{
+    if (this.User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-5 offset-md-2">
+                <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+                    <br>
+                    <div class="alert alert-info" role="alert">
+                        <div class="row">
+                            <div class="col-md-12 " style="margin-top:1px;">
+                                <a style="font-size:170%;">You are already logged.</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <hr class="my-4">
-                <div class="row">
-                    <div class="col-md-12 ">
-                        <form method="POST">
-                            <div asp-validation-summary="All" class="text-danger"></div>
-                            <div class="input-group input-group-sm  mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-at"></i></span>
-                                </div>
-                                <input asp-for="Input.Email" type="text" placeholder="Email.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Email" />
-                                </div>
-                            <div class="input-group input-group-sm  mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input asp-for="Input.Password" type="password" id="userPassword" placeholder="Password.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Password" />
+            </div>                           
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-5 offset-md-2">
+                <div class="jumbotron " style="min-height: 930px; padding-top:15px; background-color:azure">
+                    <br>
+                    <div class="alert alert-info" role="alert">
+                        <div class="row">
+                            <div class="col-md-6 " style="margin-top:1px;">
+                                <a style="font-size:170%;">Log in</a>
                             </div>
-                            <div class="form-group">
-                                <div class="checkbox">
-                                        <input asp-for="Input.RememberMe" />
-                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
-                                </div>
+                            <div class="col-md-6 ">
+                                @if ((Model.ExternalLogins?.Count ?? 0) > 0)
+                                {
+                                    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                        @foreach (var provider in Model.ExternalLogins)
+                                        {
+                                            <button type="submit" class="btn btn-primary btn-sm" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account" style="margin-top:8px; float:right;">@provider.DisplayName</button>
+                                        }
+                                    </form>
+                                }
                             </div>
-                            <div style="margin-top:4px;">
-                                <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Login">Login</button>
-                                <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Index" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to homepage">Cancel</a>
+                        </div>
+                        <hr class="my-4">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <form method="POST">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="input-group input-group-sm  mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-at"></i></span>
+                                        </div>
+                                        <input asp-for="Input.Email" type="text" placeholder="Email.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Email" />
+                                    </div>
+                                    <div class="input-group input-group-sm  mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text  aquaLabel" id="basic-addon1"><i class="fas fa-key"></i></span>
+                                        </div>
+                                        <input asp-for="Input.Password" type="password" id="userPassword" placeholder="Password.." class="form-control" aria-describedby="basic-addon1" style="border-top-right-radius: 3px; border-bottom-right-radius: 3px;" data-toggle="tooltip" data-placement="bottom" title="Password" />
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <input asp-for="Input.RememberMe" />
+                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:4px;">
+                                        <button class="btn btn-info btn-sm" type="submit" style="margin-right:15px;  margin-top:8px; padding: 4px 8px; " data-toggle="tooltip" data-placement="bottom" title="Login">Login</button>
+                                        <a class="btn btn-info btn-sm" asp-controller="Home" asp-action="Index" style=" margin-top:8px; padding:4px 9.875px;" data-toggle="tooltip" data-placement="bottom" title="Go to homepage">Cancel</a>
+                                    </div>
+                                    <div class="form-group login-style">
+                                        <span>
+                                            <a class="login-style " asp-page="./ForgotPassword">Forgot your password?</a>
+                                        </span>
+                                        <p style="margin-top:4px;">
+                                            <a class="login-style " asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user?</a>
+                                        </p>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group login-style">
-                                <span>
-                                    <a class="login-style " asp-page="./ForgotPassword">Forgot your password?</a>
-                                </span>
-                                <p style="margin-top:4px;">
-                                    <a class="login-style " asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user?</a>
-                                </p>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
+            <a>
+                <partial name="PreviewNewsPartial" />
+            </a>
         </div>
-    </div>
-    <a>
-        <partial name="PreviewNewsPartial" />
-    </a>
-</div>
 
-<script>
-    function myFunction() {
-        var x = document.getElementById("userPassword");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-        var x = document.getElementById("confirmUserPassword");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
+        <script>
+            function myFunction() {
+                var x = document.getElementById("userPassword");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+                var x = document.getElementById("confirmUserPassword");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
     }
-</script>
-
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
